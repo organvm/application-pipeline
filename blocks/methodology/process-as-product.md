@@ -17,6 +17,6 @@ The 49 published essays documenting the eight-organ system aren't marketing, doc
 
 This includes failures. The Aetheria post-mortem honestly documents a project that traveled the full Theory→Art→Commerce pipeline and partially failed. The course corrections across 33 named development sprints are published alongside the successes. The governance amendments that modified the original constitution are visible in the ADR (Architecture Decision Record) archive.
 
-Radical transparency at system scale: every decision, sprint, failure, and course correction is documented and published. ~739K+ words, 33 sprint specs, 12 ADRs, a constitution with amendments — the entire institutional memory is public.
+Radical transparency at system scale: every decision, sprint, failure, and course correction is documented and published. ~6K+ words, 33 sprint specs, 12 ADRs, a constitution with amendments — the entire institutional memory is public.
 
 This isn't a portfolio of finished works. It's a working demonstration that making the creative process visible, governable, and reproducible is itself a rigorous artistic practice.

@@ -15,7 +15,7 @@ tier: single
 
 ## Opening
 
-I designed an orchestration system that coordinates 113 repositories across 8 GitHub organizations through a machine-readable registry, automated dependency validation, seed.yaml contracts declaring produces/consumes edges, and a pulse daemon computing system density every 15 minutes across 1,833 tracked entities. An MCP server with 88 tools exposes the full system graph to any AI agent session. The system exists so one person can steer 113 repos with the coherence a team of 10 would bring — and the infrastructure that makes this possible is the most interesting engineering artifact.
+I designed an orchestration system that coordinates 148 repositories across 8 GitHub organizations through a machine-readable registry, automated dependency validation, seed.yaml contracts declaring produces/consumes edges, and a pulse daemon computing system density every 15 minutes across 1,833 tracked entities. An MCP server with 88 tools exposes the full system graph to any AI agent session. The system exists so one person can steer 113 repos with the coherence a team of 10 would bring — and the infrastructure that makes this possible is the most interesting engineering artifact.
 
 **Key framing note:** Emphasize the architecture, not the code. The distinctive thing isn't writing Python — it's designing a system where registry, contracts, governance, and observability compose into something one person can actually operate.
 

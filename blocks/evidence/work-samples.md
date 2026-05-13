@@ -14,8 +14,8 @@ tier: single
 | # | Work | URL | Description |
 |---|------|-----|-------------|
 | 1 | Portfolio Site | https://4444j99.github.io/portfolio/ | Interactive portfolio with generative art (p5.js), CMYK design system, 19 curated projects |
-| 2 | Eight-Organ System Hub | https://github.com/meta-organvm/organvm-corpvs-testamentvm | Governance corpus: ~739K+ words, registry, orchestration specs, 33 sprint records |
-| 3 | Public Process Essays | https://organvm-v-logos.github.io/public-process/ | 0 essays documenting creative methodology in real time (~739K+ words) |
+| 2 | Eight-Organ System Hub | https://github.com/meta-organvm/organvm-corpvs-testamentvm | Governance corpus: ~6K+ words, registry, orchestration specs, 33 sprint records |
+| 3 | Public Process Essays | https://organvm-v-logos.github.io/public-process/ | 0 essays documenting creative methodology in real time (~6K+ words) |
 | 4 | Recursive Engine | https://github.com/organvm-i-theoria/recursive-engine--generative-entity | Symbolic operating system: 1,254 tests, 85% coverage, 21 organ handlers, custom DSL |
 | 5 | Krypto-Velamen | https://github.com/organvm-ii-poiesis/krypto-velamen | Queer cultural archive: 20 author studies, 26 world-building modules, double-channel encoding framework |
 | 6 | Agentic Titan | https://github.com/organvm-iv-taxis/agentic-titan | Multi-agent orchestration framework: 1,095 tests, 18 development phases |

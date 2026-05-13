@@ -21,7 +21,7 @@ tier: single
 
 ## Key Claims
 
-- **Scale:** ~739K+ words of structured documentation across 113 repos — not padded prose, but architecture plans, SOPs, session logs, governance rules, registry data, and generated context files
+- **Scale:** ~6K+ words of structured documentation across 148 repos — not padded prose, but architecture plans, SOPs, session logs, governance rules, registry data, and generated context files
 - **Auto-generation:** contextmd system generates CLAUDE.md/GEMINI.md/AGENTS.md from templates + registry; no manual sync across the system
 - **Variable binding:** Live metrics (22,885 code files, 2,349 test files, 104 CI/CD workflows) propagate into all documentation automatically via Python binding layer
 - **Validation:** Every doc format has a JSON Schema contract; automated CI validation on all corpus docs
@@ -30,7 +30,7 @@ tier: single
 
 ## Lead Evidence
 
-- organvm-corpvs-testamentvm: ~739K+ words, validation scripts, 2,240-line registry-v2.json with JSON Schema
+- organvm-corpvs-testamentvm: ~6K+ words, validation scripts, 2,240-line registry-v2.json with JSON Schema
 - contextmd/generator.py: Auto-generation engine — Jinja2 templates + registry data + variable resolution
 - metrics/propagate.py: Variable binding pipeline that pushes computed metrics into markdown/JSON docs
 - praxis-perpetua/: 6 SOPs, 5 templates, session archive — process docs treated as first-class artifacts
@@ -42,7 +42,7 @@ tier: single
 - Not a dedicated technical writer by prior job title — documentation engineering emerged from systems architecture practice
 - No enterprise docs platform experience (Confluence, Notion, Readme.io) — all docs-as-code in git/Markdown
 - Independent practice — no peer review with other writers or doc engineers
-- "~739K+ words" includes generated/templated content, not all original prose
+- "~6K+ words" includes generated/templated content, not all original prose
 
 ## Documentation-Resume Translation
 

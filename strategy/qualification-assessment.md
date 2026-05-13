@@ -23,7 +23,7 @@ Detailed version: `organvm-corpvs-testamentvm/docs/applications/09-qualification
 |-----|---------|-------------|
 | No production users | Beta not yet deployed, 291 tests pass | "Feature-complete, preparing for beta deployment" |
 | No collaborative team engineering | All 5 years solo | "Independent engineering practice" |
-| No published book | 49 essays (~739K+ words) | "Sustained nonfiction practice" / "book-length corpus" |
+| No published book | 49 essays (~6K+ words) | "Sustained nonfiction practice" / "book-length corpus" |
 | No gallery exhibitions | Portfolio site + generative art | "Digital exhibition" via portfolio site |
 | No institutional affiliation | Adjunct instructor | "Independent practitioner" |
 | Limited ML knowledge | Uses LLM APIs, doesn't train models | "AI orchestration" not "ML engineering" |

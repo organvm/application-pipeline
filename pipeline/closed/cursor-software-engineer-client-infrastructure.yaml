@@ -1,10 +1,10 @@
 id: cursor-software-engineer-client-infrastructure
 name: Cursor Software Engineer, Client Infrastructure
 track: job
-status: deferred
+status: drafting
 deferral:
   reason: strategic_hold
-  date: "2026-04-01"
+  date: '2026-04-01'
 identity_position: independent-engineer
 outcome: expired
 target:
@@ -12,7 +12,8 @@ target:
   url: https://jobs.ashbyhq.com/cursor
   application_url: https://jobs.ashbyhq.com/cursor/e08262e8-c089-488d-9b59-9e21f7702b64
   portal: ashby
-  location: SF / NY / Remote. Job posting removed as of 2026-02-25 — listing returns 404.
+  location: "SF / NY / Remote. Job posting removed as of 2026-02-25 \u2014 listing\
+    \ returns 404."
   location_class: us-remote
 deadline:
   date: null
@@ -24,10 +25,10 @@ amount:
 fit:
   score: 8.3
   identity_position: independent-engineer
-  framing: Independent engineer who builds CLI client infrastructure daily — this
-    application pipeline, MCP servers, agentic orchestration frameworks — with 103
-    public repos, 3,600+ tests, and 94 CI/CD pipelines demonstrating sustained client-side
-    tooling discipline in TypeScript and Python.
+  framing: "Independent engineer who builds CLI client infrastructure daily \u2014\
+    \ this application pipeline, MCP servers, agentic orchestration frameworks \u2014\
+    \ with 103 public repos, 3,600+ tests, and 94 CI/CD pipelines demonstrating sustained\
+    \ client-side tooling discipline in TypeScript and Python."
   dimensions:
     mission_alignment: 9
     evidence_match: 10
@@ -40,7 +41,7 @@ fit:
     portal_friction: 5
 submission:
   effort_level: standard
-  blocks_used: 
+  blocks_used:
     framing: framings/software-engineer-at-organvm
     evidence: evidence/differentiators
     work_samples: evidence/work-samples
@@ -66,5 +67,14 @@ tags:
 - auto-sourced
 - curated-fit
 source: source_jobs.py
-last_touched: "2026-02-26"
+last_touched: '2026-04-23'
 follow_up: []
+outreach:
+  linkedin_searches:
+  - role: Engineering Manager Platform
+    search_url: https://www.linkedin.com/search/results/people/?keywords=Engineering%20Manager%20Platform%20Cursor&origin=GLOBAL_SEARCH_HEADER
+  - role: VP Engineering
+    search_url: https://www.linkedin.com/search/results/people/?keywords=VP%20Engineering%20Cursor&origin=GLOBAL_SEARCH_HEADER
+  contact_name: null
+  contact_url: null
+  status: pending

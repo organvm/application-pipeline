@@ -10,9 +10,9 @@ tier: single
 
 # Evidence: System Overview
 
-The ORGANVM eight-organ system coordinates 113 repositories across 8 GitHub organizations. Each organ governs a domain — from epistemological theory (ORGAN-I) through generative art (ORGAN-II), commercial products (ORGAN-III), orchestration governance (ORGAN-IV), public documentation (ORGAN-V), community infrastructure (ORGAN-VI), marketing distribution (ORGAN-VII), to meta-system governance (META).
+The ORGANVM eight-organ system coordinates 148 repositories across 8 GitHub organizations. Each organ governs a domain — from epistemological theory (ORGAN-I) through generative art (ORGAN-II), commercial products (ORGAN-III), orchestration governance (ORGAN-IV), public documentation (ORGAN-V), community infrastructure (ORGAN-VI), marketing distribution (ORGAN-VII), to meta-system governance (META).
 
-The system operates on an AI-conductor model: AI generates volume, human directs architecture and reviews output. This methodology enabled a single operator to build, document, and validate 113 repositories — demonstrating production-grade systems thinking at scale.
+The system operates on an AI-conductor model: AI generates volume, human directs architecture and reviews output. This methodology enabled a single operator to build, document, and validate 148 repositories — demonstrating production-grade systems thinking at scale.
 
 ## Evidence
 
@@ -20,7 +20,7 @@ The system operates on an AI-conductor model: AI generates volume, human directs
 |-------|-------|
 | 113 repos, 8 orgs | registry-v2.json |
 | 49 published essays | public-process/_posts/ |
-| ~739K+ words | Aggregate measurement |
+| ~6K+ words | Aggregate measurement |
 | 33 sprints | docs/specs/sprints/01-33 |
 | 23,470 tests | agentic-titan (1,095) + recursive-engine (1,254) |
 | 0 dependency violations | Automated weekly validation |
