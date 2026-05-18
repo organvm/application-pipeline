@@ -94,7 +94,7 @@ Salary range $280,000-$400,000. PRIORITY: Tier 4 -- Deprioritize. "Forward-deplo
 | **Greenhouse Answers** | `scripts/.greenhouse-answers/cloudflare-models-engineer-developer-relations.yaml` |
 | **Portfolio URL** | https://4444j99.github.io/portfolio/ |
 
-**Framing:** AI model integration engineer with ~739K+ words of technical communication -- building agentic orchestration frameworks and MCP server infrastructure while documenting the methodology transparently for other developers.
+**Framing:** AI model integration engineer with ~6K+ words of technical communication -- building agentic orchestration frameworks and MCP server infrastructure while documenting the methodology transparently for other developers.
 
 **Greenhouse Answers Status:** 0 FILL IN placeholders -- ready for API submission.
 
@@ -185,12 +185,12 @@ Salary range $240,000-$290,000. PRIORITY: Tier 3 -- Apply If Time Permits (submi
 | **Greenhouse Answers** | `scripts/.greenhouse-answers/together-ai.yaml` |
 | **Portfolio URL** | https://4444j99.github.io/portfolio/ |
 
-**Framing:** Independent engineer with DX and documentation expertise -- ~739K+ words, 49 essays, 113 repos with 100% documentation coverage.
+**Framing:** Independent engineer with DX and documentation expertise -- ~6K+ words, 49 essays, 113 repos with 100% documentation coverage.
 
 **Greenhouse Answers Status:** 0 FILL IN placeholders -- ready for API submission.
 
 **Notes:**
-Salary range $160,000-$240,000. PRIORITY: Tier 2 -- Apply with Targeted Narrative (submit fourth). DX + documentation is a real strength. ~739K+ words, 100% README coverage, 49 essays. The DX role values someone who makes complex systems understandable. Gap to bridge: "Lead" implies team management experience, which is missing.
+Salary range $160,000-$240,000. PRIORITY: Tier 2 -- Apply with Targeted Narrative (submit fourth). DX + documentation is a real strength. ~6K+ words, 100% README coverage, 49 essays. The DX role values someone who makes complex systems understandable. Gap to bridge: "Lead" implies team management experience, which is missing.
 
 **Additional Materials:** `materials/resumes/multimedia-specialist.pdf`
 
@@ -259,7 +259,7 @@ Salary undisclosed. PRIORITY: Tier 2 -- Apply with Targeted Narrative (submit th
 | **Greenhouse Answers** | N/A (Ashby portal) |
 | **Portfolio URL** | https://4444j99.github.io/portfolio/ |
 
-**Framing:** Documentation-first engineer with a knowledge architecture spanning 113 repos, 43 validated dependency edges, and ~739K+ words -- building the kind of structured, navigable systems that developer experience demands at platform scale.
+**Framing:** Documentation-first engineer with a knowledge architecture spanning 113 repos, 43 validated dependency edges, and ~6K+ words -- building the kind of structured, navigable systems that developer experience demands at platform scale.
 
 **Notes:** Location: Hyderabad, India
 
@@ -279,7 +279,7 @@ Salary undisclosed. PRIORITY: Tier 2 -- Apply with Targeted Narrative (submit th
 | **Greenhouse Answers** | N/A (Ashby portal) |
 | **Portfolio URL** | https://4444j99.github.io/portfolio/ |
 
-**Framing:** Active OpenAI API consumer and developer experience engineer with 113 repos, 94 CI/CD pipelines, and ~739K+ words of documentation -- building AI-integrated CLI tools daily and understanding firsthand where the developer experience friction lives.
+**Framing:** Active OpenAI API consumer and developer experience engineer with 113 repos, 94 CI/CD pipelines, and ~6K+ words of documentation -- building AI-integrated CLI tools daily and understanding firsthand where the developer experience friction lives.
 
 **Notes:** Location: San Francisco
 
@@ -359,7 +359,7 @@ Salary undisclosed. PRIORITY: Tier 2 -- Apply with Targeted Narrative (submit th
 | **Greenhouse Answers** | N/A (Ashby portal) |
 | **Portfolio URL** | https://4444j99.github.io/portfolio/ |
 
-**Framing:** Developer relations trifecta: 113 public repos demonstrating engineering credibility, ~739K+ words demonstrating communication range, and 11 years teaching 2,000+ students demonstrating community instinct -- all verifiable, all public.
+**Framing:** Developer relations trifecta: 113 public repos demonstrating engineering credibility, ~6K+ words demonstrating communication range, and 11 years teaching 2,000+ students demonstrating community instinct -- all verifiable, all public.
 
 **Notes:** Location: Remote
 
@@ -385,10 +385,10 @@ Workable portals are manual web submissions.
 | **Greenhouse Answers** | N/A (Workable portal) |
 | **Portfolio URL** | https://4444j99.github.io/portfolio/ |
 
-**Framing:** Independent engineer and developer advocate -- ~739K+ words documentation, 49 essays, 11 years teaching, open-source infrastructure at scale.
+**Framing:** Independent engineer and developer advocate -- ~6K+ words documentation, 49 essays, 11 years teaching, open-source infrastructure at scale.
 
 **Notes:**
-Salary range $120,000-$160,000. PRIORITY: Tier 1 -- Apply Now (submit second). Role where the full body of work is evidence. 49 essays (~739K+ words) = sustained technical writing. 11 years teaching 2,000+ students = proven communication. 113 public repos = open-source at scale. Dev advocacy is the intersection of engineering + communication + community -- all three demonstrated strengths. Honest gaps: Limited ML knowledge (but dev advocacy doesn't require training models). No prior dev advocate title (but teaching IS advocacy).
+Salary range $120,000-$160,000. PRIORITY: Tier 1 -- Apply Now (submit second). Role where the full body of work is evidence. 49 essays (~6K+ words) = sustained technical writing. 11 years teaching 2,000+ students = proven communication. 113 public repos = open-source at scale. Dev advocacy is the intersection of engineering + communication + community -- all three demonstrated strengths. Honest gaps: Limited ML knowledge (but dev advocacy doesn't require training models). No prior dev advocate title (but teaching IS advocacy).
 
 **Special:** Portal field requires a writing sample in addition to resume and cover letter.
 

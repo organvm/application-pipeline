@@ -29,7 +29,7 @@ The ORGANVM system embodies sustainability by design. Digital infrastructure wit
 - **Community infrastructure:** ORGAN-VI reading groups and community channels provide free knowledge-sharing platforms
 
 ### Governance
-- **Constitutional governance:** Machine-readable governance rules with automated validation — 50 dependency edges, 0 violations
+- **Constitutional governance:** Machine-readable governance rules with automated validation — 62 dependency edges, 0 violations
 - **Radical transparency:** Every architectural decision documented, every governance change auditable
 - **Promotion state machine:** Formal lifecycle management prevents scope creep and ensures only validated work reaches public visibility
 

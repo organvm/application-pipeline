@@ -24,7 +24,7 @@ The AI-conductor model is human oversight by design. Human directs architecture,
 ### Article 13: Transparency
 Radical transparency is a core architectural principle:
 - 49 published essays documenting methodology (~142K words)
-- ~739K+ words of total documentation across 103 public repositories
+- ~6K+ words of total documentation across 103 public repositories
 - 100% CLAUDE.md coverage explaining every repository's purpose and operation
 - Architectural Decision Records documenting every significant design choice
 

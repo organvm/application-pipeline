@@ -15,12 +15,12 @@ tier: single
 
 ## Opening
 
-I built and operate a system that coordinates 113 repositories, 8 GitHub organizations, and ~739K+ words of documentation — as a single practitioner. This isn't a weekend project; it's sustained institutional-scale operation with automated governance, daily metrics refresh, a 15-minute pulse daemon, and a 17-criterion maturity scorecard. The question isn't whether one person can do this — it's what becomes possible when the infrastructure is designed to make it natural.
+I built and operate a system that coordinates 113 repositories, 8 GitHub organizations, and ~6K+ words of documentation — as a single practitioner. This isn't a weekend project; it's sustained institutional-scale operation with automated governance, daily metrics refresh, a 15-minute pulse daemon, and a 17-criterion maturity scorecard. The question isn't whether one person can do this — it's what becomes possible when the infrastructure is designed to make it natural.
 
 **Key framing note:** The distinction is between "built" and "operates." Many people build things; few operate complex systems solo. The operational capacity — daily refresh, pulse monitoring, advisory evaluation, stakeholder portal, application pipeline — is the differentiator.
 
 ## Key Claims
-- **Operational scale:** 113 repos, 8 orgs, ~739K+ words, all maintained by one person
+- **Operational scale:** 113 repos, 8 orgs, ~6K+ words, all maintained by one person
 - **AI-conductor methodology:** Human directs architecture, AI generates volume, human reviews — the method that makes solo institutional-scale possible
 - **Continuous operation:** Pulse daemon (15min), daily CI refresh, advisory system, staleness detection
 - **Full-stack pipeline:** Application engine (2,078 entries), portfolio site, stakeholder portal with AI chat, system dashboard

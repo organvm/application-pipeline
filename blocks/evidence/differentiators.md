@@ -19,6 +19,6 @@ tier: single
 
 4. **Governance as creative medium.** Registry design, dependency graphs, promotion pipelines, and constitutional constraints are treated as generative structures — the way a composer's harmonic rules shape what melodies can emerge.
 
-5. **Radical transparency at system scale.** Every decision, sprint, failure, and course correction is documented and published. ~739K+ words, 33 sprint specs, 12 ADRs, a constitution with amendments.
+5. **Radical transparency at system scale.** Every decision, sprint, failure, and course correction is documented and published. ~6K+ words, 33 sprint specs, 12 ADRs, a constitution with amendments.
 
 6. **Cross-domain integration.** The eight-organ model bridges theory, art, commerce, governance, public process, community, and marketing. Most practitioners work in one domain; this system treats the boundaries between domains as creative sites.

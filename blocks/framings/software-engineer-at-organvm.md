@@ -15,7 +15,7 @@ tier: single
 
 ## Opening
 
-22,885 code files. 4,274 test files across 70 of 113 repositories. 104 CI/CD pipelines. 50 validated dependency edges with zero violations — all designed, built, and maintained by a single practitioner. This is not freelance consulting or contract work: it is sustained independent production at the scale of a small engineering team, built over five years using Python and TypeScript across 113 repositories coordinated through 8 GitHub organizations.
+22,885 code files. 4,274 test files across 70 of 113 repositories. 104 CI/CD pipelines. 50 validated dependency edges with zero violations — all designed, built, and maintained by a single practitioner. This is not freelance consulting or contract work: it is sustained independent production at the scale of a small engineering team, built over five years using Python and TypeScript across 148 repositories coordinated through 8 GitHub organizations.
 
 **Pattern interrupt note:** Lead with the numbers before naming the solo context. "Solo practitioner" fires a "contractor" pattern in ATS and hiring managers — delay it until after the scale has registered. Always pair the solo framing with the institutional-scale evidence: "not as a team member, but at the scale of a team."
 
@@ -24,7 +24,7 @@ tier: single
 - **CI/CD at scale:** 94 automated quality pipelines across active repositories
 - **Architectural governance:** 50 validated dependency edges, 0 back-edge violations, 0 circular dependencies — enforced by automated validation
 - **Systems architecture:** 113 repos organized into 8 domain-specific organizations with a formal promotion state machine (LOCAL → CANDIDATE → PUBLIC_PROCESS → GRADUATED → ARCHIVED)
-- **Documentation rigor:** 100% CLAUDE.md coverage, 100% seed.yaml coverage, ~739K+ words of documentation and essays
+- **Documentation rigor:** 100% CLAUDE.md coverage, 100% seed.yaml coverage, ~6K+ words of documentation and essays
 - **Structured methodology:** 33 named development sprints with spec documents, retrospectives, and measurable deliverables
 
 ## Lead Evidence
@@ -44,10 +44,10 @@ tier: single
 
 | System Metric | Engineering Frame |
 |---------------|-------------------|
-| 22,885 code files | Sustained production-grade Python and TypeScript across 113 repositories |
+| 22,885 code files | Sustained production-grade Python and TypeScript across 148 repositories |
 | 4,274 test files (70 of 113 repositories) | Testing-first methodology with dedicated test suites across the system |
 | 104 CI/CD workflows | Automated quality gates on every active repository |
-| 50 dependency edges, 0 violations | Architectural governance via validated dependency graph |
+| 62 dependency edges, 0 violations | Architectural governance via validated dependency graph |
 | 23,470 tests in flagships | 23,470 tests in flagship repos with 85% coverage on critical paths |
 | 33 sprints | Structured development methodology across 33 named sprints |
 | 100% CLAUDE.md + seed.yaml | Developer documentation standards maintained across entire system |

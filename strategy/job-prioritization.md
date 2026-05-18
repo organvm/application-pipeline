@@ -17,7 +17,7 @@ Strategic analysis of all active job entries, ranked by fit-to-effort ROI.
 | 3 | anthropic-staff-swe-dev-prod | 8.4 | NYC | 37-script CLI suite evidence; obsession with reducing friction |
 | 4 | cursor-swe-reliability | 8.4 | SF | Built self-healing state machines for 113+ repos; guardrails focus |
 | 5 | datadog-sr-tech-curriculum | 8.4 | Remote | 11yr teaching + AI-driven curriculum engine bridge |
-| 6 | anthropic-developer-education-lead | 7.4 | SF / NYC | Teaching background is DIRECT match — 11yr, 2K students, ~739K+ words |
+| 6 | anthropic-developer-education-lead | 7.4 | SF / NYC | Teaching background is DIRECT match — 11yr, 2K students, ~6K+ words |
 | 7 | anthropic-founding-developer-relations-lead | 7.2 | SF / NYC | Devrel trifecta: writing + teaching + OSS. "Founding" favors builders |
 | 8 | anthropic-developer-relations-mcp | 7.0 | SF | Daily MCP user, custom servers, claude-code integration |
 | 9 | huggingface-dev-advocate | 6.2 | Remote | Full body of work as evidence (already staged, materials ready) |

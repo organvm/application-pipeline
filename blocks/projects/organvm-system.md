@@ -13,7 +13,7 @@ tier: full
 113-repository creative system coordinated across 8 GitHub organizations through automated governance.
 
 ## Short (100 words)
-The ORGANVM system coordinates 113 repositories across 8 GitHub organizations — spanning theory, generative art, commercial products, governance, public process, community, and marketing. A machine-readable registry serves as single source of truth. Automated dependency validation enforces architectural rules (no circular dependencies, no back-edges). A formal promotion state machine governs how work moves between organs. 104 CI/CD pipelines, 23,470 tests, 33 development sprints, and ~739K+ words of documentation — all built by a single practitioner using AI tools as compositional instruments.
+The ORGANVM system coordinates 148 repositories across 8 GitHub organizations — spanning theory, generative art, commercial products, governance, public process, community, and marketing. A machine-readable registry serves as single source of truth. Automated dependency validation enforces architectural rules (no circular dependencies, no back-edges). A formal promotion state machine governs how work moves between organs. 104 CI/CD pipelines, 23,470 tests, 33 development sprints, and ~6K+ words of documentation — all built by a single practitioner using AI tools as compositional instruments.
 
 ## Full
 The eight-organ system coordinates:

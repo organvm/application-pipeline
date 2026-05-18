@@ -513,7 +513,7 @@ Every evaluator — VC, grant panelist, hiring manager — makes an initial deci
 
 ### Cathedral Advantage
 
-The deep systemic work (113 repos, 23,470 tests, ~739K+ words, 49 essays, 33 sprints) provides:
+The deep systemic work (113 repos, 23,470 tests, ~6K+ words, 49 essays, 33 sprints) provides:
 1. **Vertical depth** that evaluators demand in 2026
 2. **Proprietary data** (the system itself is a dataset)
 3. **Authentic narrative** (not AI-generated, not a wrapper)

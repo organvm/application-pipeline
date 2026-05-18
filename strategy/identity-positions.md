@@ -17,7 +17,7 @@ Nine framings of the same body of work for different audiences. Derived from cov
 
 **For:** Art grants, residencies, prizes
 **Narrative:** "I build creative systems — the governance IS the artwork"
-**Evidence:** 127-repo eight-organ system as living creative work, 49 essays, MFA
+**Evidence:** 148-repo eight-organ system as living creative work, 49 essays, MFA
 **Targets:** Creative Capital, Artadia, FCA, NYSCA/NYFA, Eyebeam, Fire Island, Headlands, Prix Ars, S+T+ARTS, ZKM, LACMA
 
 **Opening line template:**
@@ -71,7 +71,7 @@ Nine framings of the same body of work for different audiences. Derived from cov
 **Targets:** Anthropic, OpenAI, Runway, Together AI, Cohere, HuggingFace
 
 **Opening line template:**
-> 22,885 code files. 4,274 test files across 70 of 113 repositories. 104 CI/CD pipelines. 50 validated dependency edges with zero violations — all designed, built, and maintained by a single practitioner. This is not freelance consulting or contract work: it is sustained independent production at engineering-team scale, five years of Python and TypeScript across 113 repositories coordinated through 8 GitHub organizations.
+> 22,885 code files. 4,274 test files across 70 of 113 repositories. 104 CI/CD pipelines. 50 validated dependency edges with zero violations — all designed, built, and maintained by a single practitioner. This is not freelance consulting or contract work: it is sustained independent production at engineering-team scale, five years of Python and TypeScript across 148 repositories coordinated through 8 GitHub organizations.
 
 **Pattern interrupt:** Lead with the output scale before naming the solo context. The reviewer's "contractor" pattern fires on "solo practitioner" — delay that phrase until after the numbers have established the scale.
 
@@ -80,13 +80,13 @@ Nine framings of the same body of work for different audiences. Derived from cov
 ## 6. Documentation Engineer
 
 **For:** Technical writing, docs-as-code, content architecture, developer documentation roles
-**Narrative:** "~739K+ words of production-grade documentation across 113 repos — documentation governance as a system design practice"
+**Narrative:** "~6K+ words of production-grade documentation across 148 repos — documentation governance as a system design practice"
 **Evidence:** 739K words, CLAUDE.md/GEMINI.md/AGENTS.md governance in every repo, MFA in Creative Writing, 100+ college courses in composition, contextmd auto-generation engine, `<!-- v:KEY -->` variable binding system, 49 published essays
 **What to emphasize:** Documentation architecture (not just writing), docs-as-code methodology, information architecture across 8 orgs, automated context file generation, variable propagation system
 **Targets:** Stripe (docs team), Anthropic (docs), Vercel (docs), Cloudflare (docs), any company with docs-as-product philosophy
 
 **Opening line template:**
-> 765,655+ words of public documentation across 113 repositories, governed by machine-readable context files and a variable binding system that propagates live metrics into every document. This isn't technical writing bolted onto code — it's documentation architecture: an auto-generating system where every repo's CLAUDE.md, README, and pitch deck derives from the same source of truth.
+> 6,200+ words of public documentation across 148 repositories, governed by machine-readable context files and a variable binding system that propagates live metrics into every document. This isn't technical writing bolted onto code — it's documentation architecture: an auto-generating system where every repo's CLAUDE.md, README, and pitch deck derives from the same source of truth.
 
 ---
 
@@ -112,7 +112,7 @@ Nine framings of the same body of work for different audiences. Derived from cov
 **Targets:** Staff Platform Engineer, Developer Productivity, Engineering Effectiveness, DevEx teams
 
 **Opening line template:**
-> I designed an orchestration system that coordinates 113 repositories across 8 GitHub organizations through a machine-readable registry, automated dependency validation, a formal promotion state machine, and a pulse daemon that computes system density every 15 minutes. The system exists so one person can steer 113 repos with the same coherence a team of 10 would bring — and the infrastructure that makes this possible is itself the most interesting engineering artifact.
+> I designed an orchestration system that coordinates 148 repositories across 8 GitHub organizations through a machine-readable registry, automated dependency validation, a formal promotion state machine, and a pulse daemon that computes system density every 15 minutes. The system exists so one person can steer 113 repos with the same coherence a team of 10 would bring — and the infrastructure that makes this possible is itself the most interesting engineering artifact.
 
 ---
 
@@ -125,7 +125,7 @@ Nine framings of the same body of work for different audiences. Derived from cov
 **Targets:** Entrepreneur First, On Deck, Y Combinator (for future product), fractional CTO engagements, advisory boards
 
 **Opening line template:**
-> I built and operate a system that coordinates 113 repositories, 8 GitHub organizations, and ~739K+ words of documentation — as a single practitioner. This isn't a weekend project; it's sustained institutional-scale operation with automated governance, daily metrics refresh, a 15-minute pulse daemon, and a 17-criterion maturity scorecard. The question isn't whether one person can do this — it's what becomes possible when the infrastructure is designed to make it natural.
+> I built and operate a system that coordinates 113 repositories, 8 GitHub organizations, and ~6K+ words of documentation — as a single practitioner. This isn't a weekend project; it's sustained institutional-scale operation with automated governance, daily metrics refresh, a 15-minute pulse daemon, and a 17-criterion maturity scorecard. The question isn't whether one person can do this — it's what becomes possible when the infrastructure is designed to make it natural.
 
 ---
 
