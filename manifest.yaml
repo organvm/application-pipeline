@@ -1,0 +1,1427 @@
+# Codex Project Manifest — Application Pipeline Ecosystem
+# Generated: 2026-05-19
+# Scope: application-pipeline + all cross-referenced external repos, plans, sessions, directories
+
+manifest:
+  id: "PROJ-2026-001"
+  version: "2.0.0"
+  created: "2026-03-01T00:00:00Z"
+  updated: "2026-05-19T00:00:00Z"
+
+  project:
+    name: "application-pipeline"
+    description: "Career application pipeline — personal infrastructure for managing grant, residency, fellowship, job, and writing applications as a structured conversion pipeline. Implements Cathedral→Storefront philosophy."
+    status: active
+    owner: "@4444J99"
+    parent: "~/Workspace/4444J99/application-pipeline/"
+    remote: "git@github.com:4444J99/application-pipeline.git"
+    branch: "main"
+    head: "a349df58"
+
+  ecosystem:
+    description: "This manifest covers the pipeline repo AND all cross-referenced external locations: institution home, canonical corpus, public process, teaching repos, organ repos, plans, sessions, and memory scopes."
+
+# ============================================================================
+# SECTION 1: APPLICATION PIPELINE REPO (Primary)
+# ============================================================================
+
+files:
+  # --- ROOT ARCHITECTURAL PILLARS ---
+  - id: "FILE-001"
+    path: "CLAUDE.md"
+    type: config
+    title: "Primary Agent Instructions"
+    summary: "28KB governance document — three-pillar model, pipeline state machine, identity positions, script dependency graph, resume workflow, commands table, CI/CI, governance, dependencies"
+    notes: |
+      The single most important file in the repo. Every agent session loads this first.
+      Contains stale citations to meta-organvm/praxis-perpetua/ (should be ~/Code/organvm/praxis-perpetua/).
+      Last updated: 2026-04-02.
+    tags: [governance, agent-instructions, architecture]
+
+  - id: "FILE-002"
+    path: "CODEX.md"
+    type: config
+    title: "Codex Agent Instructions"
+    summary: "1.9KB — Codex-specific configuration"
+    tags: [governance, agent-instructions]
+
+  - id: "FILE-003"
+    path: ".opencode.md"
+    type: config
+    title: "Opencode Agent Instructions"
+    summary: "2.2KB — Opencode-specific configuration"
+    tags: [governance, agent-instructions]
+
+  - id: "FILE-004"
+    path: "README.md"
+    type: doc
+    title: "Project README"
+    summary: "5.9KB — Project overview and quick start"
+    tags: [documentation]
+
+  - id: "FILE-005"
+    path: "Makefile"
+    type: config
+    title: "Build Automation"
+    summary: "3.3KB — test, lint, validate, verify, refresh-all, refresh-intelligence targets"
+    tags: [ci, automation]
+
+  - id: "FILE-006"
+    path: "pyproject.toml"
+    type: config
+    title: "Python Package Configuration"
+    summary: "1.3KB — editable install, dev dependencies, ruff config"
+    tags: [config, packaging]
+
+  - id: "FILE-007"
+    path: "MANIFEST.sha256"
+    type: generated
+    title: "Integrity Witness"
+    summary: "SHA-256 checksums for all pipeline files — last updated 2026-05-18"
+    tags: [integrity, audit]
+
+  - id: "FILE-008"
+    path: "attack-order-2026-04-13.md"
+    type: doc
+    title: "Attack Order (April 13)"
+    summary: "10.2KB — strategic action plan for April 13 session"
+    tags: [planning, strategy]
+
+  - id: "FILE-009"
+    path: "follow-up-actions-2026-04-03.md"
+    type: doc
+    title: "Follow-up Actions (April 3)"
+    summary: "10.2KB — action items from April 3 session"
+    tags: [planning, session-artifact]
+
+  - id: "FILE-010"
+    path: "follow-up-actions-2026-04-13.md"
+    type: doc
+    title: "Follow-up Actions (April 13)"
+    summary: "10.6KB — action items from April 13 session"
+    tags: [planning, session-artifact]
+
+  - id: "FILE-011"
+    path: "follow-up-actions-2026-04-15.md"
+    type: doc
+    title: "Follow-up Actions (April 15)"
+    summary: "4.9KB — action items from April 15 session"
+    tags: [planning, session-artifact]
+
+  # --- PIPELINE STATE MACHINE ---
+  - id: "FILE-012"
+    path: "pipeline/_schema.yaml"
+    type: config
+    title: "Pipeline Entry Schema"
+    summary: "YAML schema defining all fields for pipeline entries — the authoritative data contract"
+    tags: [schema, validation, core]
+
+  - id: "FILE-013"
+    path: "pipeline/INDEX.md"
+    type: doc
+    title: "Pipeline Index"
+    summary: "Human-readable index of all pipeline entries"
+    tags: [documentation, navigation]
+
+  - id: "FILE-014"
+    path: "pipeline/active/"
+    type: source
+    title: "Active Pipeline Entries"
+    summary: "20 YAML entries — entries in research/qualified/drafting/staged status"
+    notes: |
+      These are the actionable entries. Scripts operate on these.
+      Max 10 should be actionable at any time (precision over volume rule).
+    tags: [state-machine, actionable]
+
+  - id: "FILE-015"
+    path: "pipeline/submitted/"
+    type: source
+    title: "Submitted Entries"
+    summary: "16 YAML entries — applications that have been submitted"
+    tags: [state-machine, terminal]
+
+  - id: "FILE-016"
+    path: "pipeline/closed/"
+    type: source
+    title: "Closed Entries"
+    summary: "1,707 YAML entries — accepted/rejected/withdrawn/expired"
+    tags: [state-machine, terminal, historical]
+
+  - id: "FILE-017"
+    path: "pipeline/research_pool/"
+    type: source
+    title: "Research Pool"
+    summary: "356 YAML entries — auto-sourced entries awaiting triage"
+    tags: [state-machine, research, intake]
+
+  - id: "FILE-018"
+    path: "pipeline/archive/"
+    type: source
+    title: "Archived Entries"
+    summary: "2 YAML entries — superseded entries"
+    tags: [state-machine, archive]
+
+  - id: "FILE-019"
+    path: "pipeline/drafts/"
+    type: source
+    title: "Draft Entries"
+    summary: "Work-in-progress entries not yet promoted to active"
+    tags: [state-machine, draft]
+
+  - id: "FILE-020"
+    path: "pipeline/submissions/"
+    type: source
+    title: "Submission Records"
+    summary: "Generated submission artifacts"
+    tags: [state-machine, output]
+
+  # --- SCRIPTS (163 Python files) ---
+  - id: "FILE-021"
+    path: "scripts/pipeline_lib.py"
+    type: source
+    title: "Pipeline Library (Decomposed)"
+    summary: "Shared foundation — every script imports from this. Decomposed into focused modules."
+    notes: |
+      Core functions: load_entries(), load_profile(), load_block(), load_variant(), load_legacy_script()
+      Also provides path constants and ID maps (PROFILE_ID_MAP, LEGACY_ID_MAP).
+      Decomposed into: pipeline_entry_state.py, pipeline_freshness.py, pipeline_market.py
+    tags: [core, library, foundation]
+    depends_on: ["FILE-012"]
+
+  - id: "FILE-022"
+    path: "scripts/apply.py"
+    type: source
+    title: "Application Generator"
+    summary: "Canonical application flow — clearance gate, standards audit, answer generation, cover letter, outreach, overlap check, PDF build, continuity test"
+    notes: |
+      ALWAYS use this to generate application packages. Never create files manually.
+      Flags: --target <id>, --batch, --dry-run
+    tags: [core, pipeline, submission]
+    depends_on: ["FILE-021", "FILE-035"]
+
+  - id: "FILE-023"
+    path: "scripts/standup.py"
+    type: source
+    title: "Daily Standup"
+    summary: "Generates daily standup report — stale entries, campaign targets, follow-up dashboard, precision compliance"
+    notes: |
+      Decomposed: standup_constants.py, standup_work_sections.py, standup_relationship_sections.py
+    tags: [daily, reporting]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-024"
+    path: "scripts/score.py"
+    type: source
+    title: "Scoring Engine"
+    summary: "9-dimension scoring with three-pillar dispatch (job/grant/consulting weights)"
+    notes: |
+      Flags: --target <id>, --all, --auto-qualify, --include-pool
+      Recalibrated 2026-03-15: minimum 7.0 (was 9.0)
+    tags: [core, scoring]
+    depends_on: ["FILE-021", "FILE-060"]
+
+  - id: "FILE-025"
+    path: "scripts/advance.py"
+    type: source
+    title: "State Machine Advance"
+    summary: "Forward-only progression with validation. Requires 1+ outreach action before submitted."
+    tags: [core, state-machine]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-026"
+    path: "scripts/campaign.py"
+    type: source
+    title: "Campaign Generator"
+    summary: "Identifies best targets for submission based on score, deadline, network proximity"
+    tags: [daily, targeting]
+    depends_on: ["FILE-021", "FILE-027"]
+
+  - id: "FILE-027"
+    path: "scripts/enrich.py"
+    type: source
+    title: "Entry Enrichment"
+    summary: "Fetches additional data for pipeline entries (portal info, org intelligence)"
+    tags: [enrichment]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-028"
+    path: "scripts/compose.py"
+    type: source
+    title: "Content Composer"
+    summary: "Composes application content from blocks, profiles, and legacy scripts"
+    notes: |
+      Fallback pattern: blocks → profile → legacy scripts
+    tags: [composition, content]
+    depends_on: ["FILE-021", "FILE-040"]
+
+  - id: "FILE-029"
+    path: "scripts/draft.py"
+    type: source
+    title: "Draft Generator"
+    summary: "Generates draft applications from profiles and blocks"
+    tags: [composition, content]
+    depends_on: ["FILE-021", "FILE-040"]
+
+  - id: "FILE-030"
+    path: "scripts/tailor_resume.py"
+    type: source
+    title: "Resume Tailoring"
+    summary: "Generates tailored HTML resumes in batch-03/ for specific targets"
+    notes: |
+      Flags: --target <id>, --wire
+      NEVER use base resumes for final submissions.
+    tags: [resume, composition]
+    depends_on: ["FILE-021", "FILE-050"]
+
+  - id: "FILE-031"
+    path: "scripts/build_resumes.py"
+    type: source
+    title: "Resume PDF Builder"
+    summary: "Builds PDFs from HTML resumes using headless Chrome"
+    tags: [resume, pdf]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-032"
+    path: "scripts/submit.py"
+    type: source
+    title: "Submission Recorder"
+    summary: "Records submission with metrics check"
+    tags: [submission]
+    depends_on: ["FILE-021", "FILE-033"]
+
+  - id: "FILE-033"
+    path: "scripts/check_metrics.py"
+    type: source
+    title: "Metrics Checker"
+    summary: "Verifies block consistency with covenant-ark metrics"
+    tags: [validation, metrics]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-034"
+    path: "scripts/followup.py"
+    type: source
+    title: "Follow-up Logger"
+    summary: "Logs outreach actions to signals/outreach-log.yaml"
+    notes: |
+      Flags: --log <id> --channel --contact --note
+    tags: [outreach, crm]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-035"
+    path: "scripts/greenhouse_submit.py"
+    type: source
+    title: "Greenhouse ATS Submitter"
+    summary: "Submits to Greenhouse portals using public Job Board API"
+    tags: [ats, submission]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-036"
+    path: "scripts/lever_submit.py"
+    type: source
+    title: "Lever ATS Submitter"
+    summary: "Submits to Lever portals"
+    tags: [ats, submission]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-037"
+    path: "scripts/ashby_submit.py"
+    type: source
+    title: "Ashby ATS Submitter"
+    summary: "Submits to Ashby portals"
+    tags: [ats, submission]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-038"
+    path: "scripts/alchemize.py"
+    type: source
+    title: "Greenhouse Alchemizer"
+    summary: "Full Greenhouse flow: scrape → map blocks → generate synthesis → integrate"
+    tags: [ats, ai, composition]
+    depends_on: ["FILE-021", "FILE-035"]
+
+  - id: "FILE-039"
+    path: "scripts/run.py"
+    type: source
+    title: "Quick Command Runner"
+    summary: "Quick alias interface for all pipeline commands"
+    tags: [cli, convenience]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-040"
+    path: "scripts/build_block_index.py"
+    type: source
+    title: "Block Index Builder"
+    summary: "Regenerates block tag index from blocks/ directory"
+    tags: [blocks, indexing]
+    depends_on: ["FILE-040"]
+
+  # --- IRA / DIAGNOSTIC SCRIPTS ---
+  - id: "FILE-041"
+    path: "scripts/diagnose.py"
+    type: source
+    title: "System Diagnostic (847 lines)"
+    summary: "9-dimension diagnostic using system grading rubric. Imports diagnose_ira.py"
+    tags: [ira, diagnostic, core]
+    depends_on: ["FILE-042", "FILE-061"]
+
+  - id: "FILE-042"
+    path: "scripts/diagnose_ira.py"
+    type: source
+    title: "Inter-Rater Agreement Analysis (643 lines)"
+    summary: "ICC, Cohen's kappa, Fleiss kappa. partition_dimensions() separates objective/subjective"
+    tags: [ira, statistics, core]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-043"
+    path: "scripts/standards.py"
+    type: source
+    title: "Standards Validator (806 lines)"
+    summary: "5-level oversight, triad regulators, ≥2/3 quorum. Wired into apply.py as Level 1 gate"
+    tags: [ira, standards, core]
+    depends_on: ["FILE-041", "FILE-042"]
+
+  - id: "FILE-044"
+    path: "scripts/generate_ratings.py"
+    type: source
+    title: "Rating Generator"
+    summary: "Generates ratings from rater personas defined in strategy/rater-personas.yaml"
+    tags: [ira, ratings]
+    depends_on: ["FILE-041", "FILE-062"]
+
+  - id: "FILE-045"
+    path: "scripts/audit_system.py"
+    type: source
+    title: "Audit System (707 lines)"
+    summary: "Multi-level audit framework"
+    tags: [ira, audit]
+    depends_on: ["FILE-021"]
+
+  # --- NETWORK / CRM SCRIPTS ---
+  - id: "FILE-046"
+    path: "scripts/network_graph.py"
+    type: source
+    title: "Network Graph Engine"
+    summary: "BFS/DFS path-finding, Granovetter weak-ties hop-decay scoring"
+    notes: |
+      Ingests contacts + outreach, stores to signals/network.yaml
+    tags: [network, crm, graph]
+    depends_on: ["FILE-021", "FILE-070"]
+
+  - id: "FILE-047"
+    path: "scripts/crm.py"
+    type: source
+    title: "CRM Manager"
+    summary: "Contact management — add, list, update contacts"
+    tags: [crm]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-048"
+    path: "scripts/research_contacts.py"
+    type: source
+    title: "Contact Researcher"
+    summary: "Identifies recruiters and contacts for specific targets"
+    tags: [crm, research]
+    depends_on: ["FILE-021"]
+
+  - id: "FILE-049"
+    path: "scripts/recruiter_filter.py"
+    type: source
+    title: "Recruiter Filter"
+    summary: "Canonical metrics single source of truth. --fix propagates to base resumes"
+    tags: [crm, metrics]
+    depends_on: ["FILE-021"]
+
+  # --- BLOCKS ---
+  - id: "FILE-050"
+    path: "blocks/_index.yaml"
+    type: config
+    title: "Block Index"
+    summary: "Master index of all narrative blocks with tags and metadata"
+    tags: [blocks, indexing, core]
+
+  - id: "FILE-051"
+    path: "blocks/identity/"
+    type: source
+    title: "Identity Blocks"
+    summary: "9 identity position blocks (60s/2min/5min/cathedral tiers)"
+    tags: [blocks, identity]
+
+  - id: "FILE-052"
+    path: "blocks/projects/"
+    type: source
+    title: "Project Blocks"
+    summary: "Project narrative blocks (organvm-system, etc.)"
+    tags: [blocks, projects]
+
+  - id: "FILE-053"
+    path: "blocks/methodology/"
+    type: source
+    title: "Methodology Blocks"
+    summary: "Systems and methodology narrative blocks"
+    tags: [blocks, methodology]
+
+  - id: "FILE-054"
+    path: "blocks/framings/"
+    type: source
+    title: "Framing Blocks"
+    summary: "Opening/closing framing blocks"
+    tags: [blocks, framing]
+
+  - id: "FILE-055"
+    path: "blocks/pitches/"
+    type: source
+    title: "Pitch Blocks"
+    summary: "Elevator pitch and value proposition blocks"
+    tags: [blocks, pitches]
+
+  - id: "FILE-056"
+    path: "blocks/evidence/"
+    type: source
+    title: "Evidence Blocks"
+    summary: "Metrics and evidence-backed claim blocks"
+    tags: [blocks, evidence]
+
+  - id: "FILE-057"
+    path: "blocks/cathedral.md"
+    type: source
+    title: "Cathedral Block"
+    summary: "Full-depth cathedral narrative"
+    tags: [blocks, cathedral]
+
+  # --- MATERIALS ---
+  - id: "FILE-060"
+    path: "strategy/scoring-rubric.yaml"
+    type: config
+    title: "Scoring Rubric"
+    summary: "Three-pillar scoring weights — score.py dispatches by track"
+    tags: [strategy, scoring, core]
+
+  - id: "FILE-061"
+    path: "strategy/system-grading-rubric.yaml"
+    type: config
+    title: "System Grading Rubric (11.2KB)"
+    summary: "9-dimension diagnostic rubric used by diagnose.py"
+    tags: [strategy, ira, core]
+
+  - id: "FILE-062"
+    path: "strategy/rater-personas.yaml"
+    type: config
+    title: "Rater Personas"
+    summary: "IRA rater persona definitions for generate_ratings.py"
+    tags: [strategy, ira]
+
+  - id: "FILE-063"
+    path: "strategy/agent-rules.yaml"
+    type: config
+    title: "Agent Rules"
+    summary: "Agent decision rules for agent.py"
+    tags: [strategy, agent]
+
+  - id: "FILE-064"
+    path: "strategy/market-intelligence-2026.json"
+    type: config
+    title: "Market Intelligence"
+    summary: "Market data, portal friction scores, benchmarks, stale thresholds"
+    notes: |
+      Stale thresholds: 14 days (was 7), stagnant: 30 days (was 14).
+      Loaded dynamically by many scripts.
+    tags: [strategy, market, core]
+
+  - id: "FILE-065"
+    path: "strategy/notifications.yaml"
+    type: config
+    title: "Notification Configuration"
+    summary: "Event routing: webhooks, email for notify.py"
+    tags: [strategy, notifications]
+
+  - id: "FILE-066"
+    path: "strategy/identity-positions.md"
+    type: doc
+    title: "Identity Positions"
+    summary: "9 canonical positions — every application must align with one"
+    tags: [strategy, identity]
+
+  - id: "FILE-067"
+    path: "materials/resumes/base/"
+    type: source
+    title: "Base Resume Templates"
+    summary: "Untailored resume templates — NEVER use for final submissions"
+    tags: [resume, template]
+
+  - id: "FILE-068"
+    path: "materials/resumes/batch-03/"
+    type: source
+    title: "Current Resume Batch (45 tailored)"
+    summary: "45 target-tailored HTML resumes — the current working batch"
+    tags: [resume, tailored, current]
+
+  - id: "FILE-069"
+    path: "materials/targets/profiles/"
+    type: source
+    title: "Target Profiles"
+    summary: "Target-specific pre-written content: artist statements, bios, work samples"
+    tags: [profiles, content]
+
+  - id: "FILE-070"
+    path: "materials/variants/"
+    type: source
+    title: "A/B Tracked Variants"
+    summary: "Cover letters, project descriptions, pitches, statements"
+    tags: [variants, content]
+
+  # --- SIGNALS ---
+  - id: "FILE-071"
+    path: "signals/contacts.yaml"
+    type: config
+    title: "CRM Contacts"
+    summary: "Contact database with interactions"
+    tags: [signals, crm]
+
+  - id: "FILE-072"
+    path: "signals/outreach-log.yaml"
+    type: config
+    title: "Outreach Log"
+    summary: "Chronological log of all outreach actions"
+    tags: [signals, outreach]
+
+  - id: "FILE-073"
+    path: "signals/network.yaml"
+    type: config
+    title: "Network Graph Data"
+    summary: "Nodes, edges, tie strengths"
+    tags: [signals, network]
+
+  - id: "FILE-074"
+    path: "signals/hypotheses.yaml"
+    type: config
+    title: "Hypotheses Log"
+    summary: "Pipeline hypotheses and validation status"
+    tags: [signals, hypotheses]
+
+  - id: "FILE-075"
+    path: "signals/signal-actions.yaml"
+    type: config
+    title: "Signal Actions"
+    summary: "Signal-to-action audit trail"
+    tags: [signals, audit]
+
+  - id: "FILE-076"
+    path: "signals/agent-actions.yaml"
+    type: config
+    title: "Agent Actions"
+    summary: "Agent run history"
+    tags: [signals, agent]
+
+  - id: "FILE-077"
+    path: "signals/conversion-log.yaml"
+    type: config
+    title: "Conversion Log"
+    summary: "Pipeline conversion events"
+    tags: [signals, conversion]
+
+  - id: "FILE-078"
+    path: "signals/process-telemetry.yaml"
+    type: config
+    title: "Process Telemetry"
+    summary: "SPEC-023 compliance telemetry"
+    tags: [signals, governance]
+
+  - id: "FILE-079"
+    path: "signals/ratings/"
+    type: source
+    title: "IRA Ratings (6 files)"
+    summary: "objective.json, qa-lead.json, senior-engineer.json, systems-architect.json, consensus-2026-03-14.json, session-2026-03-25.json"
+    tags: [signals, ira, ratings]
+
+  - id: "FILE-080"
+    path: "signals/daily-health/"
+    type: source
+    title: "Daily Health Reports (30 files)"
+    summary: "Automated daily health snapshots"
+    tags: [signals, health, automated]
+
+  - id: "FILE-081"
+    path: "signals/weekly-brief/"
+    type: source
+    title: "Weekly Briefs (6 files)"
+    summary: "Weekly summary reports"
+    tags: [signals, weekly, automated]
+
+  # --- APPLICATIONS ---
+  - id: "FILE-082"
+    path: "applications/"
+    type: generated
+    title: "Application Bundles (245 files)"
+    summary: "Dated submission bundles: YYYY-MM-DD/<org>--<role>/ — generated by apply.py"
+    tags: [output, submission, generated]
+
+  # --- DOCS ---
+  - id: "FILE-083"
+    path: "docs/thesis/"
+    type: doc
+    title: "Thesis Chapters (12 files)"
+    summary: "SGO-2026-D-001: Ch 00-10 + precision-pipeline-thesis.md"
+    notes: |
+      Ch 1-7: MCDA framework, proofs, competitive analysis
+      Ch 8: IRA facility as pipeline self-regulation
+      Ch 9: Conductor methodology
+      Ch 10: Generalization to other domains
+    tags: [thesis, sgo, academic]
+
+  - id: "FILE-084"
+    path: "docs/superpowers/specs/"
+    type: doc
+    title: "Superpower Design Specs (6 files)"
+    summary: "IRA diversification, fortification design, standards validation, SGO design, outreach protocol, materials protocol"
+    tags: [specs, design]
+
+  - id: "FILE-085"
+    path: "docs/superpowers/plans/"
+    type: doc
+    title: "Superpower Implementation Plans (4 files)"
+    summary: "Historical ingestion, IRA diversification, fortification, standards validation"
+    tags: [plans, design]
+
+  - id: "FILE-086"
+    path: "docs/reports/"
+    type: doc
+    title: "Evaluation Reports (6 files)"
+    summary: "EVALUATION_GROWTH_ANALYSIS.md, EVALUATION_REPORT.md, IMPLEMENTATION_CHECKLIST.md, PHASES_COMPLETE.md, wiring-tests-review.md, wiring-tests-implementation.md"
+    tags: [reports, evaluation]
+
+  - id: "FILE-087"
+    path: "docs/SOP-application-genesis.md"
+    type: doc
+    title: "SOP: Application Genesis"
+    summary: "Canonical submission sequence — SPEC-023 compliance"
+    tags: [sop, governance]
+
+  - id: "FILE-088"
+    path: "docs/sop--diagnostic-inter-rater-agreement.md"
+    type: doc
+    title: "SOP: Diagnostic IRA"
+    summary: "Inter-rater agreement diagnostic procedure"
+    tags: [sop, ira]
+
+  - id: "FILE-089"
+    path: "docs/ventures/maddie-sovereign-systems-roadmap.md"
+    type: doc
+    title: "Maddie Sovereign Systems Roadmap"
+    summary: "Venture roadmap"
+    tags: [ventures, roadmap]
+
+  # --- CI/CD ---
+  - id: "FILE-090"
+    path: ".github/workflows/quality.yml"
+    type: config
+    title: "CI Quality Gate"
+    summary: "Push/PR: verify_all.py + preflight. Weekly: + outcome_learner.py drift check"
+    tags: [ci, github-actions]
+
+  - id: "FILE-091"
+    path: "scripts/verify_all.py"
+    type: source
+    title: "Full Verification Matrix"
+    summary: "Bundles verification matrix, lint, validation, pytest"
+    tags: [ci, verification]
+
+  - id: "FILE-092"
+    path: "scripts/validate_signals.py"
+    type: source
+    title: "Signal Validation"
+    summary: "Validates all signal YAML files + referential integrity + contacts schema"
+    tags: [ci, validation]
+
+  - id: "FILE-093"
+    path: "scripts/verification_matrix.py"
+    type: source
+    title: "Verification Matrix"
+    summary: "Module-to-test coverage enforcement (117/117 modules)"
+    tags: [ci, verification]
+
+  - id: "FILE-094"
+    path: "strategy/module-verification-overrides.yaml"
+    type: config
+    title: "Verification Overrides"
+    summary: "Exceptions to module-to-test coverage requirements"
+    tags: [ci, config]
+
+  # --- TESTS ---
+  - id: "FILE-095"
+    path: "tests/"
+    type: source
+    title: "Test Suite (183 files, ~3,266 tests)"
+    summary: "pytest tests — live-data tests + isolated tests with tmp_path/monkeypatch"
+    notes: |
+      conftest.py sets PIPELINE_METRICS_SOURCE=fallback and redirects PIPELINE_SIGNAL_ACTIONS_PATH
+      ATS synthetic tests marked @pytest.mark.synthetic
+    tags: [tests, pytest]
+
+  # --- PLANS ---
+  - id: "FILE-096"
+    path: ".claude/plans/"
+    type: doc
+    title: "Claude Plans (47 files + archive)"
+    summary: "Dated plan files from 2026-02-27 through 2026-04-03, plus 4 named plans and archive/"
+    notes: |
+      Key plans: precision-pipeline-four-tier-implementation, doctoral-research-pipeline-optimization,
+      evaluation-to-growth-full-audit, corpus-driven-scoring, diagnostic-ira-grade-norming
+    tags: [plans, claude]
+
+  - id: "FILE-097"
+    path: ".codex/plans/"
+    type: doc
+    title: "Codex Plans (3 files)"
+    summary: "2026-03-03 through 2026-03-05 plans"
+    tags: [plans, codex]
+
+  # --- BACKUPS ---
+  - id: "FILE-098"
+    path: "backups/"
+    type: source
+    title: "Backup Directory"
+    summary: "Pipeline backup archives"
+    tags: [backups]
+
+  - id: "FILE-099"
+    path: "pipeline-backup-20260330-222512.tar.gz"
+    type: generated
+    title: "Pipeline Backup (March 30)"
+    summary: "1.9MB backup archive"
+    tags: [backups]
+
+  - id: "FILE-100"
+    path: "pipeline-backup-20260405-020004.tar.gz"
+    type: generated
+    title: "Pipeline Backup (April 5)"
+    summary: "2.3MB backup archive"
+    tags: [backups]
+
+  - id: "FILE-101"
+    path: "pipeline-backup-20260412-020005.tar.gz"
+    type: generated
+    title: "Pipeline Backup (April 12)"
+    summary: "2.4MB backup archive"
+    tags: [backups]
+
+  # --- LAUNCHD AUTOMATION ---
+  - id: "FILE-102"
+    path: ".config/launchd/"
+    type: config
+    title: "LaunchAgent Plist Files"
+    summary: "macOS scheduled tasks: daily-deferred, daily-monitor, weekly-backup, daily-intake-triage, agent-daily, weekly-briefing, calendar-refresh"
+    tags: [automation, launchd]
+
+  # --- INTAKE ---
+  - id: "FILE-103"
+    path: "intake/"
+    type: source
+    title: "Ingestion Staging"
+    summary: "Anthony_Padavano_applied_applications.csv, linkedin-export/ — not part of active pipeline"
+    tags: [intake, staging]
+
+  # --- SESSION EXPORTS ---
+  - id: "FILE-104"
+    path: "2026-04-18-073400-local-command-caveatcaveat-the-messages-below.txt"
+    type: doc
+    title: "Session Export (April 18, 07:34)"
+    summary: "68KB — raw session transcript"
+    tags: [session, transcript]
+
+  - id: "FILE-105"
+    path: "2026-04-18-073455-local-command-caveatcaveat-the-messages-below.txt"
+    type: doc
+    title: "Session Export (April 18, 07:35)"
+    summary: "117KB — raw session transcript"
+    tags: [session, transcript]
+
+# ============================================================================
+# SECTION 2: EXTERNAL REPOS (Cross-Referenced)
+# ============================================================================
+
+  # --- INSTITUTION HOME ---
+  - id: "FILE-200"
+    path: "~/Code/organvm/praxis-perpetua/"
+    type: source
+    title: "Institution Home (SGO)"
+    summary: "2,985 files — Studium Generale ORGANVM: dissertation (13 chapters), SOPs (64), SGO research (91), governance (9), commissions (3), studies (9), sessions (19), prompt corpus (318), content pipeline (47)"
+    notes: |
+      Remote: git@github.com:a-organvm/praxis-perpetua.git
+      Branch: main, Head: 2f0f35a, Parity: 0 unpushed
+      This is the REAL institution home. Pipeline CLAUDE.md cites meta-organvm/praxis-perpetua/ (stale).
+      Contains: 2026-03-15-institutional-immune-system.md, 2026-03-15-self-governing-institution-of-checks.md
+    tags: [external, institution, sgo, dissertation]
+    depends_on: ["FILE-083"]
+
+  # --- PUBLIC PROCESS ---
+  - id: "FILE-201"
+    path: "~/Code/organvm/public-process/"
+    type: source
+    title: "Public Process (Doc A)"
+    summary: "3,382 files — Contains 2026-03-15-ai-as-psychometrician.md (journal paper)"
+    notes: |
+      Remote: git@github.com:a-organvm/public-process.git
+      Branch: main, Head: c8bb2c2, Parity: 0 unpushed
+    tags: [external, public-process, academic]
+
+  # --- CANONICAL CORPUS ---
+  - id: "FILE-202"
+    path: "~/Code/organvm/organvm-corpvs-testamentvm/"
+    type: source
+    title: "Canonical Corpus (Covenant Ark)"
+    summary: "13,033 files — Canonical identity statements, metrics, evidence. Source of truth for blocks."
+    notes: |
+      Remote: git@github.com:a-organvm/organvm-corpvs-testamentvm.git
+      Branch: main, Head: 6818457, Parity: 0 unpushed
+      Pipeline consumes these as source of truth. check_metrics.py verifies consistency.
+    tags: [external, corpus, metrics, source-of-truth]
+    depends_on: ["FILE-033", "FILE-056"]
+
+  # --- NARRATOLOGICAL LENSES ---
+  - id: "FILE-203"
+    path: "~/Code/organvm/narratological-algorithmic-lenses/"
+    type: source
+    title: "Narratological Algorithmic Lenses"
+    summary: "374 files — Research on narrative algorithms"
+    notes: |
+      Remote: git@github.com:a-organvm/narratological-algorithmic-lenses.git
+      Branch: main, Head: 7212a58, Parity: 0 unpushed
+    tags: [external, research]
+
+  # --- READING GROUP ---
+  - id: "FILE-204"
+    path: "~/Code/organvm/reading-group-curriculum/"
+    type: source
+    title: "Reading Group Curriculum"
+    summary: "47 files — Curriculum materials"
+    notes: |
+      Remote: git@github.com:a-organvm/reading-group-curriculum.git
+      Branch: main, Head: 25c79ac, Parity: 0 unpushed
+    tags: [external, curriculum]
+
+  # --- SOVEREIGN GROUND (Organ I) ---
+  - id: "FILE-205"
+    path: "~/Code/organvm/sovereign--ground/"
+    type: source
+    title: "Sovereign Ground (Organ I — Theoria)"
+    summary: "36 files — Organ I: Theoria"
+    notes: |
+      Remote: git@github.com:organvm-i-theoria/sovereign--ground.git
+      Branch: main, Head: 441438e, Parity: 0 unpushed
+    tags: [external, organ-i]
+
+  # --- DIGITAL INCOME ORGANISM ---
+  - id: "FILE-206"
+    path: "~/Code/organvm/digital-income-organism-inquiry/"
+    type: source
+    title: "Digital Income Organism Inquiry"
+    summary: "11 files — Income system research"
+    notes: |
+      Remote: git@github.com:meta-organvm/digital-income-organism-inquiry.git
+      Branch: main, Head: 9c9cc96, Parity: 0 unpushed
+    tags: [external, research]
+
+  # --- STUDIUM GENERALE (Scaffold) ---
+  - id: "FILE-207"
+    path: "~/Code/organvm/studium-generale/"
+    type: source
+    title: "Studium Generale (Scaffold Only)"
+    summary: "22 files — All .gitkeep placeholders. Gitlink submodule (../.git/modules/studium-generale)"
+    notes: |
+      Structure: commissions/, defenses/, governance/, publications/, scripts/, strategy/, works/
+      Slots exist but no content populated yet.
+    tags: [external, sgo, scaffold]
+
+  # --- RESEARCH ATLAS (Not Git-Tracked) ---
+  - id: "FILE-208"
+    path: "~/Code/organvm/research-atlas/"
+    type: source
+    title: "Research Atlas (Untracked)"
+    summary: "27 files — NOT a git repo. Scaffold + theoretical specs (HERALD, LIVING INEVITABLE, KHAOS, PTOLEMY)"
+    notes: |
+      Contains: SPEC.md, config/, deployments/, docs/, experiments/, repositories/, src/
+      THEORETICAL DOCS: HERALD_CONTINUOUS_COMMUNICATOR_SPEC.md, THE_LIVING_INEVITABLE_SPEC_V1-3,
+      LIMEN_BOUNDARY_DECLARATION_GENERATOR_SPEC.md, KHAOS_RECURSIVE_AUDIT_ENGINE_SPEC.md,
+      PTOLEMY_LEVERAGE_OPTIMIZER_SPEC.md
+    tags: [external, research, untracked]
+
+  # --- COMPOSITION-1-2 (Teaching) ---
+  - id: "FILE-209"
+    path: "~/Workspace/composition-1-2/"
+    type: source
+    title: "Composition 1-2 (Teaching)"
+    summary: "ENC1101/ENC1102 coursework — complete course packages, grading rubrics (8 files), internal skills"
+    notes: |
+      Remote: git@github.com:4444J99/composition-1-2.git
+      Branch: main, Head: 5bd1774, Parity: 0 unpushed, Manifest: v1.5.0
+      ENC1101 (Spring 2026): 9 files — announcements, schedule, discussion posts, 5 feedback .docx
+      ENC1102 (Summer 2026): 3 files — course shell HTML, announcements, schedule
+      skills--internal/: enc1101-curriculum-designer, feedback-pedagogy
+    tags: [external, teaching, academic]
+
+  # --- ARTIFACT RESURFACING SKILL ---
+  - id: "FILE-210"
+    path: "~/Code/organvm/a-i--skills/skills/tools/artifact-resurfacing/"
+    type: source
+    title: "Artifact Resurfacing Skill"
+    summary: "Four-phase drift-clearing skill — SKILL.md (14KB), references/, scripts/, examples/"
+    notes: |
+      Registered in skills-registry.json under tools array.
+      Runtime symlink ~/.claude/skills/artifact-resurfacing is MISSING.
+    tags: [external, skill, tooling]
+
+  # --- META-ORGANVM STUB ---
+  - id: "FILE-211"
+    path: "~/Workspace/meta-organvm/praxis-perpetua/"
+    type: source
+    title: "Praxis Perpetua Stub (Stale)"
+    summary: "5 files — NOT a git repo. CLAUDE.md, AGENTS.md, GEMINI.md, seed.yaml, 2 Styx session exports"
+    notes: |
+      CONFIRMED DEAD STUB. Pipeline CLAUDE.md still cites this incorrectly.
+      Real content is at ~/Code/organvm/praxis-perpetua/
+    tags: [external, stale, stub]
+
+  # --- META-ORGANVM CORPVS STUB ---
+  - id: "FILE-212"
+    path: "~/Workspace/meta-organvm/organvm-corpvs-testamentvm/"
+    type: source
+    title: "Corpvs Testamenvm Stub"
+    summary: "~10 files — CLAUDE.md, GEMINI.md, data/prompt-registry/"
+    notes: |
+      Git-tracked as part of parent meta-organvm repo.
+    tags: [external, stub]
+
+# ============================================================================
+# SECTION 3: PLANS (All Tools)
+# ============================================================================
+
+  # Claude plans are FILE-096 above. Individual notable plans:
+  - id: "FILE-300"
+    path: ".claude/plans/2026-03-04-precision-pipeline-four-tier-implementation.md"
+    type: doc
+    title: "Precision Pipeline Four-Tier Implementation"
+    summary: "Core plan for precision-over-volume pivot"
+    tags: [plan, claude, precision]
+
+  - id: "FILE-301"
+    path: ".claude/plans/2026-03-05-diagnostic-ira-grade-norming.md"
+    type: doc
+    title: "Diagnostic IRA Grade Norming"
+    summary: "IRA grading system design"
+    tags: [plan, claude, ira]
+
+  - id: "FILE-302"
+    path: ".claude/plans/2026-03-15-corpus-driven-scoring-v2.md"
+    type: doc
+    title: "Corpus-Driven Scoring v2"
+    summary: "Scoring calibrated against canonical corpus"
+    tags: [plan, claude, scoring]
+
+  - id: "FILE-303"
+    path: ".claude/plans/2026-03-13-evaluation-to-growth-full-audit.md"
+    type: doc
+    title: "Evaluation-to-Growth Full Audit"
+    summary: "Comprehensive evaluation audit"
+    tags: [plan, claude, evaluation]
+
+  - id: "FILE-304"
+    path: ".claude/plans/2026-03-04-doctoral-research-pipeline-optimization-v2.md"
+    type: doc
+    title: "Doctoral Research Pipeline Optimization v2"
+    summary: "Pipeline optimization for doctoral research"
+    tags: [plan, claude, research]
+
+  - id: "FILE-305"
+    path: ".claude/plans/2026-03-21-hive-organvm-fusion-public-process.md"
+    type: doc
+    title: "Hive ORGANVM Fusion / Public Process"
+    summary: "ORGANVM fusion strategy"
+    tags: [plan, claude, organvm]
+
+  - id: "FILE-306"
+    path: ".claude/plans/2026-03-30-product-strategy-two-sided-marketplace.md"
+    type: doc
+    title: "Product Strategy: Two-Sided Marketplace"
+    summary: "Marketplace strategy design"
+    tags: [plan, claude, product]
+
+  - id: "FILE-307"
+    path: ".claude/plans/2026-04-01-avalanche-protocol-generic.md"
+    type: doc
+    title: "Avalanche Protocol (Generic)"
+    summary: "Generic avalanche protocol design"
+    tags: [plan, claude, avalanche]
+
+  - id: "FILE-308"
+    path: ".claude/plans/2026-04-03-full-triage-week-recovery.md"
+    type: doc
+    title: "Full Triage Week Recovery"
+    summary: "Recovery plan for triage week"
+    tags: [plan, claude, triage]
+
+# ============================================================================
+# SECTION 4: THREADS (Sessions)
+# ============================================================================
+
+threads:
+  - id: "THR-001"
+    started: "2026-03-01T00:00:00Z"
+    title: "Initial Pipeline Setup"
+    summary: "Created core infrastructure: pipeline schema, entry state machine, scoring engine"
+    accomplishments:
+      - "Created pipeline/ directory structure with _schema.yaml"
+      - "Implemented pipeline_lib.py with load_entries(), load_profile(), etc."
+      - "Created scoring engine with three-pillar dispatch"
+      - "Set up CI/CD with quality.yml"
+    files_created: ["FILE-012", "FILE-021", "FILE-024", "FILE-060", "FILE-090"]
+    tags: [setup, infrastructure]
+
+  - id: "THR-002"
+    started: "2026-03-04T00:00:00Z"
+    title: "Precision Over Volume Pivot"
+    summary: "Recalibrated pipeline from throughput to precision targeting"
+    accomplishments:
+      - "Set minimum score to 7.0 (was 9.0)"
+      - "Implemented max 10 actionable entries rule"
+      - "Added stale thresholds: 14 days (was 7), stagnant: 30 days (was 14)"
+      - "Created precision pipeline four-tier implementation plan"
+    decisions:
+      - "60 cold applications in 4 days → 0 interviews. Precision targeting + warm paths is the only viable strategy."
+    files_created: ["FILE-300"]
+    tags: [pivot, strategy]
+
+  - id: "THR-003"
+    started: "2026-03-05T00:00:00Z"
+    title: "IRA System Implementation"
+    summary: "Built inter-rater agreement diagnostic machinery"
+    accomplishments:
+      - "Created diagnose.py (847 lines)"
+      - "Created diagnose_ira.py (643 lines) — ICC, Cohen's kappa, Fleiss kappa"
+      - "Created standards.py (806 lines) — 5-level oversight, triad regulators"
+      - "Created audit_system.py (707 lines)"
+      - "Created generate_ratings.py"
+      - "Added 6 rating JSONs to signals/ratings/"
+      - "Created system-grading-rubric.yaml (11.2KB)"
+      - "Created rater-personas.yaml"
+    files_created: ["FILE-041", "FILE-042", "FILE-043", "FILE-044", "FILE-045", "FILE-061", "FILE-062", "FILE-079"]
+    tags: [ira, diagnostic]
+
+  - id: "THR-004"
+    started: "2026-03-13T00:00:00Z"
+    title: "Evaluation-to-Growth Full Audit"
+    summary: "Comprehensive audit of evaluation system"
+    accomplishments:
+      - "Ran full evaluation audit"
+      - "Created system integrity audit for IRA"
+    files_created: ["FILE-302", "FILE-303"]
+    tags: [audit, evaluation]
+
+  - id: "THR-005"
+    started: "2026-03-15T00:00:00Z"
+    title: "Corpus-Driven Scoring Calibration"
+    summary: "Calibrated scoring against canonical corpus metrics"
+    accomplishments:
+      - "Created corpus-driven-scoring plans (v1 and v2)"
+      - "Linked scoring to covenant-ark metrics"
+    files_created: ["FILE-302"]
+    tags: [scoring, corpus]
+
+  - id: "THR-006"
+    started: "2026-03-17T00:00:00Z"
+    title: "Materials Reorganization"
+    summary: "Reorganized materials/ directory structure"
+    accomplishments:
+      - "Created resume batch system (base/, batch-01/, batch-03/)"
+      - "Organized targets/ (grants, jobs, residencies, profiles)"
+      - "Organized variants/ (cover-letters, project-descriptions, pitches, statements)"
+    files_created: ["FILE-067", "FILE-068", "FILE-069", "FILE-070"]
+    tags: [materials, organization]
+
+  - id: "THR-007"
+    started: "2026-03-21T00:00:00Z"
+    title: "Hive ORGANVM Fusion"
+    summary: "ORGANVM fusion strategy with public process"
+    accomplishments:
+      - "Created fusion plan"
+      - "Linked public-process research"
+    files_created: ["FILE-305"]
+    tags: [organvm, fusion]
+
+  - id: "THR-008"
+    started: "2026-03-30T00:00:00Z"
+    title: "Full Quadrant Distribution + Product Strategy"
+    summary: "Distribution strategy and two-sided marketplace design"
+    accomplishments:
+      - "Created full quadrant distribution strategy"
+      - "Designed two-sided marketplace"
+      - "Created product extraction triptych"
+      - "LinkedIn content engine cleanup"
+      - "Week 14 weekly plan"
+    files_created: ["FILE-306"]
+    tags: [product, distribution]
+
+  - id: "THR-009"
+    started: "2026-04-01T00:00:00Z"
+    title: "Avalanche Protocol"
+    summary: "Generic avalanche protocol design + Grafana interview prep"
+    accomplishments:
+      - "Created generic avalanche protocol"
+      - "Grafana interview avalanche prep"
+      - "Session handoff S49"
+    files_created: ["FILE-307"]
+    tags: [avalanche, protocol]
+
+  - id: "THR-010"
+    started: "2026-04-03T00:00:00Z"
+    title: "Full Triage Week Recovery"
+    summary: "Recovery plan for triage week + session handoff S54"
+    accomplishments:
+      - "Created full triage week recovery plan"
+      - "Session handoff S53 and S54"
+    files_created: ["FILE-308"]
+    tags: [triage, recovery]
+
+  - id: "THR-011"
+    started: "2026-04-18T00:00:00Z"
+    title: "Local Command Session"
+    summary: "Raw session transcripts exported (68KB + 117KB)"
+    accomplishments:
+      - "Session exports saved to root"
+    files_created: ["FILE-104", "FILE-105"]
+    tags: [session, export]
+
+  - id: "THR-012"
+    started: "2026-04-23T00:00:00Z"
+    title: "Prompt Atomization Pipeline"
+    summary: "Built prompt atomization pipeline outputs"
+    accomplishments:
+      - "Created prompt atomization pipeline"
+      - "Advanced 22 entries to drafting"
+      - "Generated 338 profiles"
+    tags: [atomization, profiles]
+
+  - id: "THR-013"
+    started: "2026-05-12T00:00:00Z"
+    title: "Pipeline Unblocking"
+    summary: "Unblocked 14 deferred entries, promoted 5 from research pool"
+    accomplishments:
+      - "Unblocked 14 deferred entries"
+      - "Promoted 5 from research pool"
+      - "Archived expired entries"
+      - "Drafted 4 follow-up DMs"
+    tags: [pipeline, unblock]
+
+  - id: "THR-014"
+    started: "2026-05-17T00:00:00Z"
+    title: "Grading/Auditing/Norming Institution Session"
+    summary: "Archaeological inventory of all academic/research/knowledge-building artifacts"
+    accomplishments:
+      - "Verified institution home (praxis-perpetua): 2,985 files, clean"
+      - "Verified workspace stub (meta-organvm/praxis-perpetua): NOT a git repo, 5 files"
+      - "Verified application-pipeline: clean, 0 unpushed"
+      - "Verified composition-1-2: clean, 0 unpushed"
+      - "Found all 3 missing 2026-03-15 papers"
+      - "Checked Organ repos I-VII: NOT FOUND at ~/Workspace/organvm-*"
+      - "Audited 7 key academic repos: all exist, clean"
+      - "Identified 606 orphan plans (active), 189 (archived)"
+      - "Identified 941 cross-scope memory files, 61 domain-relevant"
+    tags: [archaeology, audit, institution]
+
+  - id: "THR-015"
+    started: "2026-05-19T00:00:00Z"
+    title: "Codex Project Manifest Creation"
+    summary: "Built comprehensive ecosystem manifest covering all repos, plans, sessions, and relations"
+    accomplishments:
+      - "Cataloged 212+ files across pipeline repo"
+      - "Cataloged 12 external repos/locations"
+      - "Cataloged 47 Claude plans + 3 Codex plans"
+      - "Cataloged 15 threads (sessions)"
+      - "Built full relation graph"
+    tags: [manifest, documentation]
+
+# ============================================================================
+# SECTION 5: RELATIONS
+# ============================================================================
+
+relations:
+  # Pipeline core dependencies
+  - id: "REL-001"
+    type: depends_on
+    source: "FILE-022"
+    target: "FILE-021"
+    annotation: "apply.py imports pipeline_lib.py"
+
+  - id: "REL-002"
+    type: depends_on
+    source: "FILE-024"
+    target: "FILE-060"
+    annotation: "score.py loads scoring-rubric.yaml"
+
+  - id: "REL-003"
+    type: depends_on
+    source: "FILE-041"
+    target: "FILE-061"
+    annotation: "diagnose.py loads system-grading-rubric.yaml"
+
+  - id: "REL-004"
+    type: depends_on
+    source: "FILE-043"
+    target: "FILE-041"
+    annotation: "standards.py imports diagnose.py"
+
+  - id: "REL-005"
+    type: depends_on
+    source: "FILE-043"
+    target: "FILE-042"
+    annotation: "standards.py imports diagnose_ira.py"
+
+  - id: "REL-006"
+    type: depends_on
+    source: "FILE-028"
+    target: "FILE-050"
+    annotation: "compose.py loads blocks from _index.yaml"
+
+  - id: "REL-007"
+    type: depends_on
+    source: "FILE-030"
+    target: "FILE-068"
+    annotation: "tailor_resume.py generates HTML in batch-03/"
+
+  - id: "REL-008"
+    type: implements
+    source: "FILE-091"
+    target: "FILE-090"
+    annotation: "verify_all.py is the CI quality gate"
+
+  - id: "REL-009"
+    type: depends_on
+    source: "FILE-033"
+    target: "FILE-202"
+    annotation: "check_metrics.py verifies against covenant-ark (canonical corpus)"
+
+  # Cross-repo relations
+  - id: "REL-010"
+    type: depends_on
+    source: "FILE-001"
+    target: "FILE-200"
+    annotation: "CLAUDE.md cites praxis-perpetua (stale path: meta-organvm/)"
+
+  - id: "REL-011"
+    type: depends_on
+    source: "FILE-083"
+    target: "FILE-200"
+    annotation: "Thesis chapters are SGO-2026-D-001, housed in praxis-perpetua"
+
+  - id: "REL-012"
+    type: references
+    source: "FILE-001"
+    target: "FILE-201"
+    annotation: "CLAUDE.md cites ai-as-psychometrician.md in public-process"
+
+  - id: "REL-013"
+    type: references
+    source: "FILE-001"
+    target: "FILE-211"
+    annotation: "CLAUDE.md cites meta-organvm/praxis-perpetua/ (STALE — should be ~/Code/organvm/praxis-perpetua/)"
+
+  - id: "REL-014"
+    type: depends_on
+    source: "FILE-046"
+    target: "FILE-071"
+    annotation: "network_graph.py ingests contacts.yaml"
+
+  - id: "REL-015"
+    type: depends_on
+    source: "FILE-046"
+    target: "FILE-072"
+    annotation: "network_graph.py ingests outreach-log.yaml"
+
+  - id: "REL-016"
+    type: depends_on
+    source: "FILE-046"
+    target: "FILE-073"
+    annotation: "network_graph.py stores to network.yaml"
+
+  - id: "REL-017"
+    type: depends_on
+    source: "FILE-044"
+    target: "FILE-062"
+    annotation: "generate_ratings.py loads rater-personas.yaml"
+
+  - id: "REL-018"
+    type: depends_on
+    source: "FILE-044"
+    target: "FILE-079"
+    annotation: "generate_ratings.py reads/writes ratings JSONs"
+
+  - id: "REL-019"
+    type: references
+    source: "FILE-083"
+    target: "FILE-207"
+    annotation: "Thesis is SGO-2026-D-001; studium-generale is the SGO scaffold (empty)"
+
+  - id: "REL-020"
+    type: depends_on
+    source: "FILE-021"
+    target: "FILE-064"
+    annotation: "pipeline_lib.py loads market-intelligence-2026.json"
+
+  - id: "REL-021"
+    type: depends_on
+    source: "FILE-026"
+    target: "FILE-027"
+    annotation: "campaign.py imports enrich.py"
+
+  - id: "REL-022"
+    type: depends_on
+    source: "FILE-032"
+    target: "FILE-033"
+    annotation: "submit.py imports check_metrics.py"
+
+  - id: "REL-023"
+    type: depends_on
+    source: "FILE-041"
+    target: "FILE-042"
+    annotation: "diagnose.py imports diagnose_ira.py"
+
+  - id: "REL-024"
+    type: depends_on
+    source: "FILE-043"
+    target: "FILE-041"
+    annotation: "standards.py imports diagnose.py"
+
+  - id: "REL-025"
+    type: depends_on
+    source: "FILE-043"
+    target: "FILE-042"
+    annotation: "standards.py imports diagnose_ira.py"
+
+  - id: "REL-026"
+    type: references
+    source: "FILE-210"
+    target: "FILE-200"
+    annotation: "artifact-resurfacing skill is designed to clear drift in praxis-perpetua and other repos"
+
+  - id: "REL-027"
+    type: references
+    source: "FILE-209"
+    target: "FILE-083"
+    annotation: "composition-1-2 contains ENC1101/ENC1102 rubrics; thesis is about composition pedagogy"
+
+  - id: "REL-028"
+    type: depends_on
+    source: "FILE-038"
+    target: "FILE-035"
+    annotation: "alchemize.py imports greenhouse_submit.py"
+
+  - id: "REL-029"
+    type: depends_on
+    source: "FILE-092"
+    target: "FILE-074"
+    annotation: "validate_signals.py validates hypotheses.yaml"
+
+  - id: "REL-030"
+    type: depends_on
+    source: "FILE-092"
+    target: "FILE-075"
+    annotation: "validate_signals.py validates signal-actions.yaml"
