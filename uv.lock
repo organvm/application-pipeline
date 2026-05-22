@@ -66,6 +66,7 @@ dependencies = [
     { name = "google-genai" },
     { name = "markdownify" },
     { name = "mcp" },
+    { name = "python-jobspy" },
     { name = "python-multipart" },
     { name = "pyyaml" },
     { name = "ruamel-yaml" },
@@ -78,9 +79,6 @@ dev = [
     { name = "pytest-mock" },
     { name = "ruff" },
 ]
-jobspy = [
-    { name = "python-jobspy" },
-]
 
 [package.metadata]
 requires-dist = [
@@ -91,14 +89,14 @@ requires-dist = [
     { name = "mcp" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=9.0.3" },
     { name = "pytest-mock", marker = "extra == 'dev'" },
-    { name = "python-jobspy", marker = "extra == 'jobspy'", specifier = ">=1.1" },
+    { name = "python-jobspy", specifier = ">=1.1" },
     { name = "python-multipart", specifier = ">=0.0.26" },
     { name = "pyyaml" },
     { name = "ruamel-yaml" },
     { name = "ruff", marker = "extra == 'dev'" },
     { name = "typer" },
 ]
-provides-extras = ["dev", "jobspy"]
+provides-extras = ["dev"]
 
 [[package]]
 name = "attrs"
