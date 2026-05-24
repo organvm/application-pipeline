@@ -1,10 +1,9 @@
 """Tests for LaunchAgent integration and automation layer."""
 
-import pytest
-from pathlib import Path
-from unittest.mock import patch, MagicMock
 import subprocess
+from pathlib import Path
 
+import pytest
 
 REPO_ROOT = Path(__file__).parent.parent
 LAUNCHD_DIR = REPO_ROOT / ".config" / "launchd"

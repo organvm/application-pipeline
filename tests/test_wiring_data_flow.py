@@ -14,8 +14,6 @@ Test categories:
 import sys
 from pathlib import Path
 
-import pytest
-
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 from pipeline_lib import (
@@ -35,7 +33,6 @@ from pipeline_lib import (
     load_profile,
     load_variant,
 )
-
 
 # ==============================================================================
 # Test: load_entries - Pipeline YAML loading
@@ -153,7 +150,6 @@ class TestLoadProfile:
     def test_profile_id_map_values_valid(self):
         """PROFILE_ID_MAP values should point to existing files."""
         for entry_id, profile_name in PROFILE_ID_MAP.items():
-            expected_path = PROFILES_DIR / f"{profile_name}.json"
             # Just verify the mapped name is reasonable
             assert profile_name, f"Empty profile name for entry_id: {entry_id}"
 
@@ -253,7 +249,7 @@ class TestLoadLegacyScript:
         """Should fall back to LEGACY_ID_MAP for mapped IDs."""
         if LEGACY_ID_MAP:
             first_mapped_id = next(iter(LEGACY_ID_MAP.values()))
-            script = load_legacy_script(first_mapped_id)
+            load_legacy_script(first_mapped_id)
             # Script may exist or not, just shouldn't error
 
     def test_load_legacy_script_not_found(self):
@@ -307,7 +303,7 @@ class TestDataFlowWiring:
             entry = entries_with_variant[0]
             variant_name = entry["submission"]["variant"]
             if variant_name:
-                content = load_variant(variant_name)
+                load_variant(variant_name)
                 # Variant may not exist, but shouldn't error
 
 

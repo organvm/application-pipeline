@@ -21,12 +21,11 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
+from pipeline_entry_state import parse_date
 from pipeline_lib import (
     REPO_ROOT,
     load_entries,
 )
-from pipeline_entry_state import parse_date
-
 
 # ==============================================================================
 # Test: Signal file existence and structure
@@ -154,7 +153,6 @@ class TestContactsNetworkWiring:
 
     def test_network_nodes_in_contacts(self, contacts_data, network_data):
         """Network nodes should have corresponding contacts (or self)."""
-        contact_names = {c["name"] for c in contacts_data["contacts"]}
         # Self (Anthony Padavano) may not be in contacts, but others should
         for node in network_data["nodes"]:
             name = node["name"]
@@ -216,7 +214,6 @@ class TestOutreachLogWiring:
 
     def test_outreach_contacts_match_known_contacts(self, outreach_data, contacts_data):
         """Outreach contacts should match known contacts or be new."""
-        contact_names = {c["name"] for c in contacts_data["contacts"]}
 
         for entry in outreach_data:
             contact = entry.get("contact", "")

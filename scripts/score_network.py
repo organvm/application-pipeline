@@ -14,7 +14,7 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 
-from pipeline_lib import parse_date, load_identity
+from pipeline_lib import load_identity, parse_date
 
 _NETWORK_DECAY = {
     "response_fresh": 30,

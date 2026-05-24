@@ -5,23 +5,20 @@ Aggregates system state into a persistent "soul" for the next session ignition.
 """
 
 import subprocess
-import sys
+
 import yaml
-from datetime import datetime
+
 
 def run(cmd):
     try:
         return subprocess.check_output(cmd, shell=True, text=True).strip()
-    except:
+    except Exception:
         return "N/A"
 
 def main():
     sha = run("git rev-parse HEAD")
     session_id = "S48" # Contextually known, should ideally be tracked in a file
-    
-    # Get high priority items from IRF
-    irf_p0 = run("organvm irf list --priority P0")
-    
+
     # Determine momentum (next logical step)
     # If there are overdue followups, the next step is to log them or generate them.
     followups = run("uv run scripts/followup.py")

@@ -21,19 +21,14 @@ Test categories:
 import sys
 from pathlib import Path
 
-import pytest
-import yaml
-
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 from pipeline_lib import (
     REPO_ROOT,
+    load_block,
     load_entry_by_id,
     load_profile,
-    load_block,
-    load_variant,
 )
-
 
 # ==============================================================================
 # Test: apply.py import structure
@@ -145,7 +140,7 @@ class TestGreenhouseIntegration:
 
         # Test pattern: ?gh_jid=XXXX - may or may not work depending on URL
         entry2 = {"target": {"application_url": "https://jobs.lever.co/foo?gh_jid=67890"}}
-        result2 = apply_module._extract_board_and_job(entry2)
+        apply_module._extract_board_and_job(entry2)
         # Just verify it doesn't crash - result may vary
 
     def test_extract_board_and_job_with_org_fallback(self):
@@ -237,7 +232,7 @@ class TestCoverLetterResolution:
 
     def test_resolve_cover_letter_with_variant(self):
         """resolve_cover_letter should work with variant."""
-        from pipeline_lib import resolve_cover_letter, load_entries
+        from pipeline_lib import load_entries, resolve_cover_letter
 
         # Try with an entry that has a variant
         entries = load_entries()
