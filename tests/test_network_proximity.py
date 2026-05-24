@@ -86,13 +86,13 @@ class TestFollowUpResponses:
 
     def test_replied_follow_up_min_7(self):
         entry = _make_entry(follow_up=[
-            {"date": "2026-03-01", "channel": "linkedin", "response": "replied"}
+            {"date": date.today().isoformat(), "channel": "linkedin", "response": "replied"}
         ])
         assert score_network_proximity(entry) >= 7
 
     def test_referred_follow_up_min_7(self):
         entry = _make_entry(follow_up=[
-            {"date": "2026-03-01", "channel": "email", "response": "referred"}
+            {"date": date.today().isoformat(), "channel": "email", "response": "referred"}
         ])
         assert score_network_proximity(entry) >= 7
 
