@@ -17,6 +17,7 @@ import score_constants as _score_constants
 import score_explain as _score_explain
 import score_human_dimensions as _human_dimensions
 import score_network as _score_network
+import score_pillar_dimensions as _pillar_dimensions
 import score_reachability as _score_reachability
 import score_telemetry as _score_telemetry
 import yaml
@@ -245,6 +246,49 @@ def score_strategic_value(entry: dict, explain: bool = False) -> int | tuple[int
     return _auto_dimensions.score_strategic_value(entry, explain=explain)
 
 
+# --- Pillar-specific dimensions (three-pillar rubric) ---
+
+
+def score_studio_alignment(entry: dict, explain: bool = False) -> int | tuple[int, str]:
+    return _pillar_dimensions.score_studio_alignment(entry, explain=explain)
+
+
+def score_remote_flexibility(entry: dict, explain: bool = False) -> int | tuple[int, str]:
+    return _pillar_dimensions.score_remote_flexibility(entry, explain=explain)
+
+
+def score_narrative_fit(entry: dict, explain: bool = False) -> int | tuple[int, str]:
+    return _pillar_dimensions.score_narrative_fit(entry, explain=explain)
+
+
+def score_prestige_multiplier(entry: dict, explain: bool = False) -> int | tuple[int, str]:
+    return _pillar_dimensions.score_prestige_multiplier(entry, explain=explain)
+
+
+def score_cycle_urgency(entry: dict, explain: bool = False) -> int | tuple[int, str]:
+    return _pillar_dimensions.score_cycle_urgency(entry, explain=explain)
+
+
+def score_recurring_potential(entry: dict, explain: bool = False) -> int | tuple[int, str]:
+    return _pillar_dimensions.score_recurring_potential(entry, explain=explain)
+
+
+def score_client_fit(entry: dict, explain: bool = False) -> int | tuple[int, str]:
+    return _pillar_dimensions.score_client_fit(entry, explain=explain)
+
+
+# Maps each pillar dimension to its scorer (used by compute_dimensions).
+_PILLAR_SCORERS = {
+    "studio_alignment": score_studio_alignment,
+    "remote_flexibility": score_remote_flexibility,
+    "narrative_fit": score_narrative_fit,
+    "prestige_multiplier": score_prestige_multiplier,
+    "cycle_urgency": score_cycle_urgency,
+    "recurring_potential": score_recurring_potential,
+    "client_fit": score_client_fit,
+}
+
+
 def compute_human_dimensions(
     entry: dict,
     all_entries: list[dict] | None = None,
@@ -277,10 +321,12 @@ def _log_network_change(entry_id: str, old_network: int, new_network: int, filep
 
 
 def compute_dimensions(entry: dict, all_entries: list[dict] | None = None) -> dict[str, int]:
-    """Compute all 9 dimension scores for an entry.
+    """Compute all dimension scores for an entry (9 core + 7 pillar).
 
     All dimensions are always recomputed from data. No human overrides.
-    Signal-based dimensions replace the old gut-feel estimation.
+    Signal-based dimensions replace the old gut-feel estimation. Pillar-specific
+    dimensions are computed for every entry; compute_composite uses only those
+    weighted for the entry's track.
     """
     dims = {}
 
@@ -295,6 +341,12 @@ def compute_dimensions(entry: dict, all_entries: list[dict] | None = None) -> di
     # Signal-based (replaces estimate + override)
     human = compute_human_dimensions(entry, all_entries)
     dims.update(human)
+
+    # Pillar-specific dimensions (three-pillar rubric). compute_composite only
+    # consumes the ones weighted for the entry's track, but we compute all so
+    # explain/diagnostics can surface them.
+    for dim_name, scorer in _PILLAR_SCORERS.items():
+        dims[dim_name] = scorer(entry)
 
     return dims
 

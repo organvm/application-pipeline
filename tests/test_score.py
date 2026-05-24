@@ -660,10 +660,12 @@ def test_signal_dims_clamped_to_range():
 
 
 def test_compute_dimensions_returns_all_nine():
-    """compute_dimensions should return the 9 core dimension keys."""
+    """compute_dimensions returns the 9 core + 7 pillar dimensions."""
+    from pipeline_lib import VALID_DIMENSIONS
     entry = _make_entry()
     dims = compute_dimensions(entry)
-    assert set(dims.keys()) == set(DIMENSION_ORDER)
+    assert set(dims.keys()) == set(VALID_DIMENSIONS)
+    assert set(DIMENSION_ORDER) <= set(dims.keys())
 
 
 def test_no_human_override_dimensions_always_recompute():
