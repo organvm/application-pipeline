@@ -108,17 +108,19 @@ def explain_entry(
     lines.append("AUTO DIMENSIONS:")
     for dim_name, func in auto_funcs:
         val, reason = func(entry, explain=True)
-        weight = weights[dim_name]
+        weight = weights.get(dim_name, 0)  # pillar weight sets omit some dims (e.g. grant has no portal_friction)
         lines.append(f"  {dim_name:<25s} {val:>2d}  x{weight:.0%}  <- {reason}")
 
     lines.append("")
 
-    terms = []
-    for dim in dimension_order:
-        val = dimensions[dim]
-        weight = weights[dim]
-        terms.append(f"{val}x{weight:.2f}")
-    lines.append(f"COMPOSITE: {' + '.join(terms)} = {composite}")
+    # Composite breakdown over the track's weighted dimensions. Pillar-specific
+    # dims not produced by compute_dimensions fall back to the same neutral
+    # default (5) that compute_composite applies, so the terms sum to the score.
+    lines.append("COMPOSITE:")
+    for dim, weight in weights.items():
+        val = dimensions.get(dim, 5)
+        lines.append(f"  {dim:<25s} {int(val):>2d} x {weight:.2f} = {val * weight:.2f}")
+    lines.append(f"  {'TOTAL':<25s}        = {composite}")
 
     return "\n".join(lines)
 
