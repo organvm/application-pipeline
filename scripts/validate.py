@@ -716,13 +716,23 @@ def validate_profiles() -> list[str]:
     return errors
 
 
+_TERMINAL_STATUSES = {"outcome", "withdrawn"}
+
+
 def validate_no_duplicate_urls(entries: list[dict], errors: list[str]) -> int:
-    """Detect entries sharing the same target.application_url.
+    """Detect non-terminal entries sharing the same target.application_url.
+
+    Only active-pursuit entries are checked: the rule exists to prevent
+    re-applying to the same posting in the live pipeline. Closed/terminal
+    historical records may legitimately share a URL (e.g. the same job
+    tracked under two ids, or distinct prize categories on one portal).
 
     Returns count of duplicates found.
     """
     url_map: dict[str, list[str]] = {}
     for entry in entries:
+        if entry.get("status") in _TERMINAL_STATUSES:
+            continue
         target = entry.get("target", {})
         if not isinstance(target, dict):
             continue
