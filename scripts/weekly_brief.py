@@ -394,7 +394,7 @@ def main() -> None:
                 from notify import dispatch_event
                 results = dispatch_event("weekly_brief", {
                     "summary": f"Weekly brief saved to {dated_path.name}",
-                    "snapshot": payload.get("pipeline_snapshot", {}),
+                    "snapshot": payload.get("snapshot", {}),
                 })
                 for r in results:
                     status = "OK" if r["success"] else "FAILED"

@@ -30,9 +30,6 @@ JOB_STALE_HOURS = 72
 PIPELINE_DIR_ACTIVE = REPO_ROOT / "pipeline" / "active"
 PIPELINE_DIR_RESEARCH_POOL = REPO_ROOT / "pipeline" / "research_pool"
 
-# Tracks exempt from the 72h freshness gate (they have fixed deadlines, not posting freshness)
-_DEADLINE_TRACKS = frozenset({"grant", "residency", "fellowship", "creative", "writing"})
-
 DateLike: TypeAlias = str | date | datetime | None
 EntryData: TypeAlias = dict[str, object]
 
@@ -59,8 +56,8 @@ def flush_stale_active_jobs(*, quiet: bool = False) -> int:
             continue
 
         track = data.get("track", "")
-        if track in _DEADLINE_TRACKS:
-            continue
+        if track != "job":
+            continue  # freshness is a job-track concept (matches get_freshness_tier/compute_freshness_score)
 
         if data.get("status") == "deferred":
             continue

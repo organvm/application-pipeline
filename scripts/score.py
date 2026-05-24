@@ -1021,7 +1021,9 @@ def main():
             print(f"  {'-' * 25} {'-' * 5}  {'-' * 6}  {'-' * 7}")
             for dim in DIMENSION_ORDER:
                 val = dimensions[dim]
-                weight = weights[dim]
+                weight = weights.get(dim)
+                if weight is None:
+                    continue  # dimension not weighted for this track (e.g. consulting omits portal_friction)
                 contrib = val * weight
                 print(f"  {dim:<25s} {int(val):>5d}  {weight:>5.0%}  {contrib:>7.2f}")
             print(f"  {'COMPOSITE':<25s}        {'':>6s}  {new_score:>7.1f}")
