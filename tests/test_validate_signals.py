@@ -187,7 +187,13 @@ def test_referential_integrity_valid(signals_dir, tmp_path, monkeypatch):
 
 
 def test_referential_integrity_dangling(signals_dir, tmp_path, monkeypatch):
-    """Dangling references produce errors."""
+    """Dangling conversion-log/hypotheses references are counted as warnings.
+
+    They are deliberately NOT errors: historical signal records legitimately
+    reference archived/purged entries (the real repo has ~18 such refs), so
+    surfacing them as errors would break the signal-validation gate. The
+    function returns the dangling count without appending to `errors`.
+    """
     import validate_signals
 
     pipeline_dir = tmp_path / "pipeline" / "active"
@@ -202,9 +208,8 @@ def test_referential_integrity_dangling(signals_dir, tmp_path, monkeypatch):
     })
     errors = []
     dangling = validate_referential_integrity(errors)
-    assert dangling == 2
-    assert any("nonexistent" in e for e in errors)
-    assert any("also-missing" in e for e in errors)
+    assert dangling == 2  # both counted
+    assert errors == []  # ...but reported as warnings, not errors
 
 
 # --- Contacts validation tests ---
