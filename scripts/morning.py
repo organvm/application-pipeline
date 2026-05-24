@@ -228,9 +228,14 @@ def run_morning(brief: bool = False, save: bool = False):
     flush_stale_active_jobs()
 
     # Auto-expire job submissions with no response after 21 days
+    # (PIPELINE_NO_MUTATE forces a dry run so tests don't mutate the real tree)
+    import os
+
     from hygiene import run_expire_stale_submissions
     all_for_expire = load_entries()
-    run_expire_stale_submissions(all_for_expire, max_days=21, dry_run=False)
+    run_expire_stale_submissions(
+        all_for_expire, max_days=21, dry_run=bool(os.environ.get("PIPELINE_NO_MUTATE"))
+    )
 
     entries = load_entries()  # reload after potential expirations
     if not entries:

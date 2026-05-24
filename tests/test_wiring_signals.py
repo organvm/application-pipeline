@@ -191,16 +191,16 @@ class TestOutreachLogWiring:
         with open(REPO_ROOT / "signals" / "contacts.yaml") as f:
             return yaml.safe_load(f)
 
-    def test_outreach_entries_have_contact(self, outreach_data):
-        """Each outreach entry should have a contact."""
+    def test_outreach_entries_reference_an_entry(self, outreach_data):
+        """Each outreach-log entry should reference a pipeline entry_id."""
         for entry in outreach_data:
-            assert "contact" in entry, "Outreach entry missing contact"
-            assert entry["contact"], "Outreach contact is empty"
+            assert "entry_id" in entry, "Outreach entry missing entry_id"
+            assert entry["entry_id"], "Outreach entry_id is empty"
 
-    def test_outreach_entries_have_type(self, outreach_data):
-        """Each outreach entry should have a type."""
+    def test_outreach_entries_have_action(self, outreach_data):
+        """Each outreach-log entry should record an action."""
         for entry in outreach_data:
-            assert "type" in entry, "Outreach entry missing type"
+            assert "action" in entry, "Outreach entry missing action"
 
     def test_outreach_entries_have_date(self, outreach_data):
         """Each outreach entry should have a date."""
@@ -212,13 +212,12 @@ class TestOutreachLogWiring:
         for entry in outreach_data:
             assert "channel" in entry, "Outreach entry missing channel"
 
-    def test_outreach_contacts_match_known_contacts(self, outreach_data, contacts_data):
-        """Outreach contacts should match known contacts or be new."""
-
+    def test_outreach_entries_reference_pipeline_entries(self, outreach_data):
+        """Outreach-log entry_ids should be non-empty references to tracked entries."""
         for entry in outreach_data:
-            contact = entry.get("contact", "")
-            # Contact should be non-empty; may be new (not in contacts yet)
-            assert contact, "Empty contact in outreach log"
+            entry_id = entry.get("entry_id", "")
+            # entry_id should be non-empty; the referenced entry may be in any dir.
+            assert entry_id, "Empty entry_id in outreach log"
 
 
 # ==============================================================================

@@ -40,9 +40,18 @@ def flush_stale_active_jobs(*, quiet: bool = False) -> int:
     Called automatically by morning.py and standup.py before rendering output
     so the user only ever sees hot leads.
 
+    Set PIPELINE_NO_MUTATE=1 to disable the on-disk move (used by tests that
+    invoke standup/morning as subprocesses, so the suite never mutates the real
+    pipeline tree).
+
     Returns the number of entries flushed.
     """
+    import os
+
     import yaml
+
+    if os.environ.get("PIPELINE_NO_MUTATE"):
+        return 0
 
     _, _, stale_hours = _load_freshness_thresholds()
     flushed = 0
