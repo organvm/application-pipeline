@@ -6,6 +6,8 @@ import sys
 from datetime import date, timedelta
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 import pipeline_freshness
@@ -16,6 +18,13 @@ from pipeline_freshness import (
     get_freshness_tier,
     get_posting_age_hours,
 )
+
+
+@pytest.fixture(autouse=True)
+def _allow_mutation(monkeypatch):
+    """This module exercises real flush behavior on tmp dirs, so disable the
+    global PIPELINE_NO_MUTATE guard set in conftest (which would no-op flush)."""
+    monkeypatch.delenv("PIPELINE_NO_MUTATE", raising=False)
 
 
 def test_get_entry_era_volume_and_precision():
