@@ -133,12 +133,15 @@ def test_valid_transitions_complete():
 
 
 def test_dimension_order_matches_valid_dimensions():
-    """DIMENSION_ORDER and VALID_DIMENSIONS must contain the same set."""
+    """DIMENSION_ORDER (9 core) is a subset of VALID_DIMENSIONS.
+
+    Three-pillar model: VALID_DIMENSIONS = the 9 core (DIMENSION_ORDER) plus the
+    7 pillar-specific dimensions, so DIMENSION_ORDER is a strict subset.
+    """
     import pipeline_lib
 
     dim_set = set(pipeline_lib.DIMENSION_ORDER)
     valid_set = set(pipeline_lib.VALID_DIMENSIONS)
-    assert dim_set == valid_set, (
-        f"Mismatch: DIMENSION_ORDER has {dim_set - valid_set}, "
-        f"VALID_DIMENSIONS has {valid_set - dim_set}"
-    )
+    assert dim_set <= valid_set, f"DIMENSION_ORDER has dims not in VALID_DIMENSIONS: {dim_set - valid_set}"
+    assert set(pipeline_lib.PILLAR_DIMENSIONS) <= valid_set
+    assert valid_set == dim_set | set(pipeline_lib.PILLAR_DIMENSIONS)
