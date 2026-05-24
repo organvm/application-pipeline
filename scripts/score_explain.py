@@ -53,6 +53,7 @@ def explain_entry(
     score_deadline_feasibility,
     score_portal_friction,
     dimension_order: list[str],
+    pillar_scorers: dict | None = None,
 ) -> str:
     """Generate a detailed score derivation for a single entry."""
     entry_id = entry.get("id", "unknown")
@@ -112,6 +113,16 @@ def explain_entry(
         lines.append(f"  {dim_name:<25s} {val:>2d}  x{weight:.0%}  <- {reason}")
 
     lines.append("")
+
+    # Pillar-specific dimensions weighted for this track (three-pillar rubric).
+    if pillar_scorers:
+        track_pillars = [d for d in weights if d in pillar_scorers]
+        if track_pillars:
+            lines.append("PILLAR DIMENSIONS:")
+            for dim in track_pillars:
+                val, reason = pillar_scorers[dim](entry, explain=True)
+                lines.append(f"  {dim:<25s} {int(val):>2d}  x{weights[dim]:.0%}  <- {reason}")
+            lines.append("")
 
     # Composite breakdown over the track's weighted dimensions. Pillar-specific
     # dims not produced by compute_dimensions fall back to the same neutral

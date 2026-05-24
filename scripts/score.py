@@ -879,6 +879,7 @@ def explain_entry(entry: dict, all_entries: list[dict] | None = None) -> str:
         score_deadline_feasibility=score_deadline_feasibility,
         score_portal_friction=score_portal_friction,
         dimension_order=DIMENSION_ORDER,
+        pillar_scorers=_PILLAR_SCORERS,
     )
 
 
