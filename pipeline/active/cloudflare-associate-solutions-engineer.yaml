@@ -115,7 +115,7 @@ tags:
 - auto-sourced
 source: source_jobs.py
 last_touched: '2026-04-23'
-outreach:
+outreach_research:
   linkedin_searches:
   - role: Solutions Engineering Manager
     search_url: https://www.linkedin.com/search/results/people/?keywords=Solutions%20Engineering%20Manager%20Cloudflare&origin=GLOBAL_SEARCH_HEADER
