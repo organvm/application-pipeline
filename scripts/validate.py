@@ -625,10 +625,9 @@ def validate_scoring_rubric(path: Path = SCORING_RUBRIC_PATH) -> list[str]:
             continue
 
         keys = set(weights.keys())
-        missing = sorted(VALID_DIMENSIONS - keys)
+        # Three-pillar rubric: each weight set uses a pillar-specific SUBSET of
+        # VALID_DIMENSIONS, so we only reject unknown dimensions (not absent ones).
         extra = sorted(keys - VALID_DIMENSIONS)
-        if missing:
-            errors.append(f"{section} missing dimensions: {missing}")
         if extra:
             errors.append(f"{section} has unknown dimensions: {extra}")
 
