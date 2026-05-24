@@ -1099,6 +1099,21 @@ def test_explain_shows_signal_breakdown():
     assert "credential-track:" in output
 
 
+def test_explain_consulting_entry_no_crash():
+    """--explain must not crash on consulting entries.
+
+    Consulting weights omit some core dims (e.g. track_record_fit), so every
+    weight lookup in explain_entry must tolerate absent dimensions. Regression
+    for a KeyError found by driving `score --explain` on a consulting entry.
+    """
+    entry = _make_entry(track="consulting", deadline_type="rolling")
+    entry["id"] = "test-consulting"
+    output = explain_entry(entry, all_entries=[])
+    assert "COMPOSITE:" in output
+    assert "recurring_potential" in output
+    assert "client_fit" in output
+
+
 # --- Signal-based scoring ignores original_score ---
 
 

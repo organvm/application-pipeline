@@ -84,7 +84,7 @@ def explain_entry(
     lines.append("SIGNAL-BASED DIMENSIONS:")
     for key in human_keys:
         dim_val = dimensions[key]
-        weight = weights[key]
+        weight = weights.get(key, 0)  # e.g. consulting weights omit track_record_fit
         lines.append(f"  {key:<25s} {int(dim_val):>2d}  x{weight:.0%}")
         detail = signal_explanations.get(key, "")
         if detail:
