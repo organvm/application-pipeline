@@ -26,7 +26,9 @@ dev = [
 ]
 
 [build-system]
-requires = ["setuptools>=64"]
+# setuptools>=68 + wheel: Python 3.12 removed stdlib distutils, so the build
+# backend must use a setuptools recent enough to vendor it (SETUPTOOLS_USE_DISTUTILS=local).
+requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
