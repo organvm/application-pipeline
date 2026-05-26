@@ -32,7 +32,7 @@ from yaml_mutation import YAMLEditor
 
 # --- Constants ---
 
-DEFAULT_RESUME = "resumes/base/documentation-engineer-resume.pdf"
+DEFAULT_RESUME = "resumes/base/documentation-engineer-resume.html"
 
 # Fallback resumes by identity — only used when no tailored resume exists
 # in the current batch directory (materials/resumes/batch-03/<entry-id>/).
