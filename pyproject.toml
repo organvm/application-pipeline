@@ -15,7 +15,6 @@ dependencies = [
     "python-multipart>=0.0.26",
     "cryptography>=46.0.7",
     "markdownify>=0.14.1",
-    "python-jobspy>=1.1",
 ]
 
 [project.optional-dependencies]
@@ -23,6 +22,9 @@ dev = [
     "pytest>=9.0.3",
     "pytest-mock",
     "ruff",
+]
+jobspy = [
+    "python-jobspy>=1.1",
 ]
 
 [build-system]
