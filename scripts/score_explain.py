@@ -120,7 +120,8 @@ def explain_entry(
         if track_pillars:
             lines.append("PILLAR DIMENSIONS:")
             for dim in track_pillars:
-                val, reason = pillar_scorers[dim](entry, explain=True)
+                val = dimensions.get(dim, 5)  # reuse compute_dimensions value to avoid drift
+                _, reason = pillar_scorers[dim](entry, explain=True)
                 lines.append(f"  {dim:<25s} {int(val):>2d}  x{weights[dim]:.0%}  <- {reason}")
             lines.append("")
 

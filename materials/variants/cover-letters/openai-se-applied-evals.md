@@ -1,6 +1,6 @@
 Dear OpenAI Hiring Team,
 
-I built and operate an inter-rater-agreement facility that evaluates a production system across 9 dimensions using multiple AI raters with distinct personas — ICC, Cohen's kappa, and Fleiss kappa, with objective and subjective dimensions partitioned. Evaluation is not a side project for me; it is the System 3* audit layer of the studio I run. That is what I would bring to the Solutions Engineer, Applied Evals role.
+I built and operate an inter-rater agreement facility that evaluates a production system across 9 dimensions using multiple AI raters with distinct personas — ICC, Cohen's kappa, and Fleiss' kappa, with objective and subjective dimensions partitioned. Evaluation is not a side project for me; it is the System 3* audit layer of the studio I run. That is what I would bring to the Solutions Engineer, Applied Evals role.
 
 Applied evals is where measurement meets deployment, and I work at that seam daily. My pipeline tooling treats correctness as load-bearing: every entry validates against a YAML schema before it advances, a promotion state machine enforces forward-only transitions, and 104 CI/CD pipelines gate quality across 116 repositories. I have built the testing discipline (3,610 test files), the validation matrix (full module-to-test coverage), and the drift-checking that real eval systems require to stay honest.
 

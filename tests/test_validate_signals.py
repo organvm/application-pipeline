@@ -186,6 +186,24 @@ def test_referential_integrity_valid(signals_dir, tmp_path, monkeypatch):
     assert errors == []
 
 
+def test_validate_agent_actions_missing_file(tmp_path, monkeypatch):
+    """Missing agent-actions.yaml is treated as normal (generated, gitignored).
+
+    validate_agent_actions() returns 0 with no errors when the file is absent.
+    """
+    import validate_signals
+
+    signals_dir = tmp_path / "signals"
+    signals_dir.mkdir(parents=True)
+    monkeypatch.setattr(validate_signals, "SIGNALS_DIR", signals_dir)
+
+    errors = []
+    result = validate_agent_actions(errors)
+
+    assert result == 0
+    assert errors == []
+
+
 def test_referential_integrity_dangling(signals_dir, tmp_path, monkeypatch):
     """Dangling conversion-log/hypotheses references are counted as warnings.
 
