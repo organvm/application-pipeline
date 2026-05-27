@@ -469,8 +469,8 @@ def apply_to_entry(entry_id: str, dry_run: bool = False) -> bool:
 
     # 1c. APPLICATION URL LIVENESS CHECK
     if url:
-        import urllib.request
         import urllib.error
+        import urllib.request
         try:
             req = urllib.request.Request(url, method="HEAD")
             req.add_header("User-Agent", "Mozilla/5.0")
@@ -479,11 +479,11 @@ def apply_to_entry(entry_id: str, dry_run: bool = False) -> bool:
                 print(f"  URL CHECK: WARNING — returned HTTP {resp.status}")
         except urllib.error.HTTPError as e:
             if e.code == 404:
-                print(f"  URL CHECK: DEAD LINK — HTTP 404. Job posting may have been removed.")
+                print("  URL CHECK: DEAD LINK — HTTP 404. Job posting may have been removed.")
             else:
                 print(f"  URL CHECK: WARNING — HTTP {e.code}")
         except Exception:
-            print(f"  URL CHECK: Could not verify (timeout or network error)")
+            print("  URL CHECK: Could not verify (timeout or network error)")
 
     # 2. Standards audit — Level 1 (Course Regulator)
     print("\n  Running standards audit (Level 1)...")

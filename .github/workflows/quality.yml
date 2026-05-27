@@ -9,9 +9,17 @@ on:
     - cron: "0 6 * * 1"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify-all:
     runs-on: ubuntu-latest
+    # Serial pytest suite (~22 min on fast multicore) runs notably slower on a
+    # 2-core hosted runner; 60 min gives headroom while still bounding hangs.
+    # pytest-timeout (pyproject) catches any single test that truly hangs.
+    timeout-minutes: 60
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     strategy:
       fail-fast: true
@@ -52,6 +60,7 @@ jobs:
 
   full-regression:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     if: github.event_name == 'schedule'
     steps:
       - uses: actions/checkout@v4

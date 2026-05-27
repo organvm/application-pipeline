@@ -453,18 +453,21 @@ def _generate_outreach_urls(filepath: Path, entry: dict) -> None:
         url = f"https://www.linkedin.com/search/results/people/?keywords={query}&origin=GLOBAL_SEARCH_HEADER"
         linkedin_searches.append({"role": term, "search_url": url})
 
-    # Write to YAML
+    # Write to YAML under outreach_research (NOT outreach): these are planned
+    # search aids, not logged outreach actions. Keeping them out of `outreach`
+    # preserves the schema (outreach is a list of actions) and the submitted
+    # outreach-evidence gate (which must require a real recorded action).
     try:
         import yaml as _yaml
         data = _yaml.safe_load(filepath.read_text())
-        data["outreach"] = {
+        data["outreach_research"] = {
             "linkedin_searches": linkedin_searches,
             "contact_name": None,
             "contact_url": None,
             "status": "pending",
         }
         filepath.write_text(_yaml.dump(data, default_flow_style=False, sort_keys=False))
-        print(f"  → Outreach URLs generated for {org}")
+        print(f"  → Outreach research URLs generated for {org}")
     except Exception:
         pass
 

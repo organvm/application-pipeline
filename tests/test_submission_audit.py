@@ -4,6 +4,7 @@ import sys
 import tempfile
 from pathlib import Path
 
+import pytest
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
@@ -108,17 +109,22 @@ def test_check_entry_pass_count_matches():
 
 
 def test_check_entry_ready_entry():
-    """Load a real greenhouse entry and verify it returns a well-formed result."""
+    """Load a real greenhouse entry from submitted/ and verify a well-formed result.
+
+    Picks any greenhouse entry dynamically rather than a hardcoded id (which
+    drifts as entries are archived/moved).
+    """
     from pipeline_lib import PIPELINE_DIR_SUBMITTED
     entries = load_entries(dirs=[PIPELINE_DIR_SUBMITTED])
-    target_id = "anduril-lead-technical-writer-intelligence-systems"
-    match = [e for e in entries if e.get("id") == target_id]
-    assert len(match) == 1, f"Expected to find entry '{target_id}' in submitted pipeline"
+    greenhouse = [e for e in entries if (e.get("target") or {}).get("portal") == "greenhouse"]
+    if not greenhouse:
+        pytest.skip("no greenhouse entry in submitted/ to exercise")
+    entry = greenhouse[0]
 
-    result = check_entry(match[0])
-    assert result["id"] == target_id
+    result = check_entry(entry)
+    assert result["id"] == entry.get("id")
     assert result["portal"] == "greenhouse"
-    assert result["status"] == match[0].get("status")
+    assert result["status"] == entry.get("status")
     assert result["results"]["portal_parsed"] is True
     assert "review_approved" in result["results"]
     assert result["results"]["has_target_url"] is True

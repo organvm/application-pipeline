@@ -56,48 +56,24 @@ class TestProofWeightSums:
 
     def test_scoring_rubric_weights_sum_to_one(self):
         """
-        Proof: scoring-rubric.yaml general weights.
+        Proof: every weight set in scoring-rubric.yaml is a probability
+        distribution over its dimensions, i.e. sums to 1.0.
 
-        0.25 + 0.20 + 0.15 + 0.12 + 0.10 + 0.08 + 0.05 + 0.03 + 0.02
-        = (0.25 + 0.75)    [group: 0.20+0.15+0.12+0.10+0.08+0.05+0.03+0.02 = 0.75]
-        = 1.00  ∎
+        Three-pillar rubric: `weights` (legacy/grant default), `weights_job`,
+        `weights_grant`, and `weights_consulting` each use a pillar-specific
+        subset of dimensions; the invariant that matters is normalization to
+        1.0 (within IEEE-754 tolerance), not any fixed per-dimension value.  ∎
         """
         import yaml
         rubric_path = Path(__file__).resolve().parent.parent / "strategy" / "scoring-rubric.yaml"
         with open(rubric_path) as f:
             rubric = yaml.safe_load(f)
 
-        weights = rubric["weights"]
-        total = sum(weights.values())
-
-        # Step-by-step verification
-        expected_weights = {
-            "mission_alignment": 0.25,
-            "evidence_match": 0.20,
-            "track_record_fit": 0.15,
-            "network_proximity": 0.12,
-            "strategic_value": 0.10,
-            "financial_alignment": 0.08,
-            "effort_to_value": 0.05,
-            "deadline_feasibility": 0.03,
-            "portal_friction": 0.02,
-        }
-        assert weights == expected_weights, f"Weights differ: {weights}"
-
-        # Algebraic proof: group into pairs summing to known values
-        # 0.25 + 0.20 = 0.45
-        # 0.15 + 0.10 = 0.25
-        # 0.12 + 0.08 = 0.20
-        # 0.05 + 0.03 + 0.02 = 0.10
-        # 0.45 + 0.25 + 0.20 + 0.10 = 1.00
-        # Note: IEEE 754 float addition is not exact; 0.1 has no finite
-        # binary representation, so intermediate sums may differ from
-        # algebraic expectation by ~1 ULP.  We verify within 1e-15.
-        assert math.isclose(0.25 + 0.20, 0.45, abs_tol=1e-15)
-        assert math.isclose(0.15 + 0.10, 0.25, abs_tol=1e-15)
-        assert math.isclose(0.12 + 0.08, 0.20, abs_tol=1e-15)
-        assert math.isclose(0.05 + 0.03 + 0.02, 0.10, abs_tol=1e-15)
-        assert math.isclose(0.45 + 0.25 + 0.20 + 0.10, 1.00, abs_tol=1e-15)
+        weight_sets = [k for k in ("weights", "weights_job", "weights_grant", "weights_consulting") if k in rubric]
+        assert weight_sets, "rubric defines no weight sets"
+        for key in weight_sets:
+            total = sum(rubric[key].values())
+            assert math.isclose(total, 1.0, abs_tol=1e-9), f"{key} sums to {total}, not 1.0"
 
         assert abs(total - 1.0) < 1e-15, f"Sum = {total}, expected 1.0"
 

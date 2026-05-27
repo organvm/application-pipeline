@@ -1,7 +1,7 @@
 id: snorkel-ai-staff-applied-ai-engineer-pre-sales
 name: Snorkel AI Staff Applied AI Engineer - Pre-Sales
 track: job
-status: rejected
+status: outcome
 outcome: rejected
 target:
   organization: Snorkel AI

@@ -219,10 +219,11 @@ def audit_wiring() -> dict:
     rubric_weights = rubric.get("weights", {})
     rubric_weights_job = rubric.get("weights_job", {})
 
-    # Load code defaults from score.py
+    # Load code defaults from score.py (three-pillar: WEIGHTS falls back to the
+    # grant pillar set, so the legacy "weights" key maps to _DEFAULT_WEIGHTS_GRANT)
     try:
         import score as _score_mod
-        code_weights = _score_mod._DEFAULT_WEIGHTS
+        code_weights = _score_mod._DEFAULT_WEIGHTS_GRANT
         code_weights_job = _score_mod._DEFAULT_WEIGHTS_JOB
         checks.append(_check(
             "rubric_weights_match_code",
@@ -239,22 +240,26 @@ def audit_wiring() -> dict:
     except Exception as e:
         checks.append(_check("rubric_weights_match_code", "Scoring rubric weights match score.py defaults", False, f"Import error: {e}"))
 
-    # 2. Scoring dimensions consistent across modules
+    # 2. Scoring dimensions consistent across modules. Three-pillar model: each
+    #    weight set uses a pillar-specific SUBSET of VALID_DIMENSIONS, so we check
+    #    subset relationships rather than equality.
     rubric_dims = set(rubric_weights.keys())
+    for _k in ("weights_job", "weights_grant", "weights_consulting"):
+        rubric_dims |= set(rubric.get(_k, {}).keys())
     pipeline_dims = set(DIMENSION_ORDER)
-    validate_dims = VALID_DIMENSIONS
+    validate_dims = set(VALID_DIMENSIONS)
 
     checks.append(_check(
         "dimensions_rubric_eq_pipeline",
-        "Rubric weight keys == pipeline_lib.DIMENSION_ORDER",
-        rubric_dims == pipeline_dims,
-        f"Rubric: {sorted(rubric_dims)}, Pipeline: {sorted(pipeline_dims)}" if rubric_dims != pipeline_dims else "Match",
+        "pipeline_lib.DIMENSION_ORDER (9 core) is a subset of VALID_DIMENSIONS",
+        pipeline_dims <= validate_dims,
+        f"Core dims not valid: {sorted(pipeline_dims - validate_dims)}" if not pipeline_dims <= validate_dims else "Subset",
     ))
     checks.append(_check(
         "dimensions_rubric_eq_validate",
-        "Rubric weight keys == validate.py VALID_DIMENSIONS",
-        rubric_dims == validate_dims,
-        f"Rubric: {sorted(rubric_dims)}, Validate: {sorted(validate_dims)}" if rubric_dims != validate_dims else "Match",
+        "All rubric weight-set dimensions are valid (subset of VALID_DIMENSIONS)",
+        rubric_dims <= validate_dims,
+        f"Unknown rubric dims: {sorted(rubric_dims - validate_dims)}" if not rubric_dims <= validate_dims else "Subset",
     ))
 
     # 3. System grading rubric matches diagnose.py

@@ -148,7 +148,9 @@ def pre_score(job: dict) -> float:
 
     tier, _ = freshness_tier(job.get("posting_date"))
     freshness_mod = FRESHNESS_MODIFIERS[tier]
-    score = sum(dims[dim] * weight for dim, weight in WEIGHTS_JOB.items())
+    # Pillar dims (studio_alignment, remote_flexibility) aren't estimated here;
+    # default them to the neutral 5 that compute_composite also applies.
+    score = sum(dims.get(dim, 5) * weight for dim, weight in WEIGHTS_JOB.items())
     return round(max(0.0, min(10.0, score + freshness_mod)), 2)
 
 

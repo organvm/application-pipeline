@@ -15,18 +15,23 @@ dependencies = [
     "python-multipart>=0.0.26",
     "cryptography>=46.0.7",
     "markdownify>=0.14.1",
-    "python-jobspy>=1.1",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=9.0.3",
     "pytest-mock",
+    "pytest-timeout",
     "ruff",
+]
+jobspy = [
+    "python-jobspy>=1.1",
 ]
 
 [build-system]
-requires = ["setuptools>=64"]
+# setuptools>=68 + wheel: Python 3.12 removed stdlib distutils, so the build
+# backend must use a setuptools recent enough to vendor it (SETUPTOOLS_USE_DISTUTILS=local).
+requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
@@ -37,6 +42,9 @@ pipeline = "scripts.cli:app"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# Per-test timeout so a single hanging test fails (with a traceback naming the
+# culprit) instead of stalling the whole CI job until GitHub's 6h cap.
+timeout = 300
 markers = [
     "synthetic: tests that perform live API calls to ATS platforms"
 ]

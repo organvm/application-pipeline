@@ -151,38 +151,27 @@ def test_agent_rules_match_rubric():
 
 
 def test_weight_dimensions_match():
-    """Both WEIGHTS and WEIGHTS_JOB must contain all 9 scoring dimensions."""
+    """Code weight sets mirror the rubric and use only valid (pillar) dimensions.
+
+    Three-pillar model: weights_job / weights_grant / weights (legacy) each use a
+    pillar-specific SUBSET of VALID_DIMENSIONS, so we no longer require all 9 core
+    dimensions in every set — only that code mirrors the rubric, uses known
+    dimensions, and sums to 1.0.
+    """
+    from pipeline_lib import VALID_DIMENSIONS
     from score import WEIGHTS, WEIGHTS_JOB
 
     rubric = _load_rubric()
 
-    # Check against the canonical list
-    for dim in EXPECTED_DIMENSIONS:
-        assert dim in WEIGHTS, f"Dimension '{dim}' missing from WEIGHTS"
-        assert dim in WEIGHTS_JOB, f"Dimension '{dim}' missing from WEIGHTS_JOB"
+    # Code weight dicts must mirror the rubric YAML.
+    assert set(WEIGHTS.keys()) == set(rubric["weights"].keys())
+    assert set(WEIGHTS_JOB.keys()) == set(rubric["weights_job"].keys())
 
-    # Check that rubric weights have exactly the 9 dimensions
-    rubric_dims = set(rubric["weights"].keys())
-    rubric_job_dims = set(rubric["weights_job"].keys())
-    expected = set(EXPECTED_DIMENSIONS)
+    # Only known dimensions, each set normalized to 1.0.
+    for name, w in (("WEIGHTS", WEIGHTS), ("WEIGHTS_JOB", WEIGHTS_JOB)):
+        unknown = set(w.keys()) - VALID_DIMENSIONS
+        assert not unknown, f"{name} has unknown dimensions: {unknown}"
+        assert abs(sum(w.values()) - 1.0) < 1e-9, f"{name} sums to {sum(w.values())}, not 1.0"
 
-    assert rubric_dims == expected, (
-        f"Rubric generic weights dimensions mismatch: "
-        f"extra={rubric_dims - expected}, missing={expected - rubric_dims}"
-    )
-    assert rubric_job_dims == expected, (
-        f"Rubric job weights dimensions mismatch: "
-        f"extra={rubric_job_dims - expected}, missing={expected - rubric_job_dims}"
-    )
-
-    # Code weight dicts should have no extra dimensions
-    code_dims = set(WEIGHTS.keys())
-    code_job_dims = set(WEIGHTS_JOB.keys())
-    assert code_dims == expected, (
-        f"Code WEIGHTS dimensions mismatch: "
-        f"extra={code_dims - expected}, missing={expected - code_dims}"
-    )
-    assert code_job_dims == expected, (
-        f"Code WEIGHTS_JOB dimensions mismatch: "
-        f"extra={code_job_dims - expected}, missing={expected - code_job_dims}"
-    )
+    # The 9 core dimensions remain valid dimensions in the three-pillar model.
+    assert set(EXPECTED_DIMENSIONS) <= VALID_DIMENSIONS

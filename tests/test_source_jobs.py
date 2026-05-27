@@ -2,6 +2,7 @@
 
 import json
 import sys
+from datetime import date
 from pathlib import Path
 from urllib.error import HTTPError
 
@@ -486,7 +487,7 @@ def test_filter_freshness_rejects_null_date():
     """Jobs without posting_date must be rejected, not given benefit of the doubt."""
     jobs = [
         {"title": "No Date Job", "posting_date": None},
-        {"title": "Fresh Job", "posting_date": "2026-03-31"},
+        {"title": "Fresh Job", "posting_date": date.today().isoformat()},
     ]
     fresh, skipped = filter_by_freshness(jobs, max_hours=72)
     assert len(skipped) == 1

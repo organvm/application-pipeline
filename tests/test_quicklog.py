@@ -1,14 +1,15 @@
-import pytest
 import sys
 from pathlib import Path
-from datetime import date
+
+import pytest
 import yaml
 
 # Add scripts dir to path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
-import quicklog
 import pipeline_lib
+import quicklog
+
 
 def test_slugify():
     assert quicklog._slugify("Grafana Labs") == "grafana-labs"

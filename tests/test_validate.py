@@ -10,8 +10,8 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 from validate import (
-    VALID_DIMENSIONS,
     VALID_DEFERRAL_REASONS,
+    VALID_DIMENSIONS,
     VALID_TRANSITIONS,
     _reachable_statuses,
     validate_entry,

@@ -53,6 +53,7 @@ def explain_entry(
     score_deadline_feasibility,
     score_portal_friction,
     dimension_order: list[str],
+    pillar_scorers: dict | None = None,
 ) -> str:
     """Generate a detailed score derivation for a single entry."""
     entry_id = entry.get("id", "unknown")
@@ -83,7 +84,7 @@ def explain_entry(
     lines.append("SIGNAL-BASED DIMENSIONS:")
     for key in human_keys:
         dim_val = dimensions[key]
-        weight = weights[key]
+        weight = weights.get(key, 0)  # e.g. consulting weights omit track_record_fit
         lines.append(f"  {key:<25s} {int(dim_val):>2d}  x{weight:.0%}")
         detail = signal_explanations.get(key, "")
         if detail:
@@ -108,17 +109,30 @@ def explain_entry(
     lines.append("AUTO DIMENSIONS:")
     for dim_name, func in auto_funcs:
         val, reason = func(entry, explain=True)
-        weight = weights[dim_name]
+        weight = weights.get(dim_name, 0)  # pillar weight sets omit some dims (e.g. grant has no portal_friction)
         lines.append(f"  {dim_name:<25s} {val:>2d}  x{weight:.0%}  <- {reason}")
 
     lines.append("")
 
-    terms = []
-    for dim in dimension_order:
-        val = dimensions[dim]
-        weight = weights[dim]
-        terms.append(f"{val}x{weight:.2f}")
-    lines.append(f"COMPOSITE: {' + '.join(terms)} = {composite}")
+    # Pillar-specific dimensions weighted for this track (three-pillar rubric).
+    if pillar_scorers:
+        track_pillars = [d for d in weights if d in pillar_scorers]
+        if track_pillars:
+            lines.append("PILLAR DIMENSIONS:")
+            for dim in track_pillars:
+                val = dimensions.get(dim, 5)  # reuse compute_dimensions value to avoid drift
+                _, reason = pillar_scorers[dim](entry, explain=True)
+                lines.append(f"  {dim:<25s} {int(val):>2d}  x{weights[dim]:.0%}  <- {reason}")
+            lines.append("")
+
+    # Composite breakdown over the track's weighted dimensions. Pillar-specific
+    # dims not produced by compute_dimensions fall back to the same neutral
+    # default (5) that compute_composite applies, so the terms sum to the score.
+    lines.append("COMPOSITE:")
+    for dim, weight in weights.items():
+        val = dimensions.get(dim, 5)
+        lines.append(f"  {dim:<25s} {int(val):>2d} x {weight:.2f} = {val * weight:.2f}")
+    lines.append(f"  {'TOTAL':<25s}        = {composite}")
 
     return "\n".join(lines)
 

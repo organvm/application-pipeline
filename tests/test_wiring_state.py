@@ -15,22 +15,19 @@ Test categories:
 import sys
 from pathlib import Path
 
-import pytest
-
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
+from pipeline_entry_state import (
+    can_advance,
+    is_actionable,
+    is_deferred,
+)
 from pipeline_lib import (
     ACTIONABLE_STATUSES,
     VALID_STATUSES,
     VALID_TRANSITIONS,
     load_entries,
 )
-from pipeline_entry_state import (
-    can_advance,
-    is_actionable,
-    is_deferred,
-)
-
 
 # ==============================================================================
 # Test: VALID_TRANSITIONS completeness
@@ -225,10 +222,8 @@ class TestEntryStatusConsistency:
         """Real entries should not have invalid status transitions."""
         entries = load_entries()
         for entry in entries:
-            status = entry.get("status", "")
-            # Check if entry's current status allows further transitions
-            allowed = VALID_TRANSITIONS.get(status, set())
-            # Just verify the status itself is valid (transitions tested separately)
+            # Status validity and transitions are asserted in dedicated tests below.
+            assert isinstance(entry, dict)
 
 
 # ==============================================================================
