@@ -1072,11 +1072,8 @@ def main():
             print(f"{entry_id}: {new_score}{delta}  [{rubric} rubric]")
             print(f"  {'Dimension':<25s} {'Score':>5s}  {'Weight':>6s}  {'Contrib':>7s}")
             print(f"  {'-' * 25} {'-' * 5}  {'-' * 6}  {'-' * 7}")
-            for dim in DIMENSION_ORDER:
-                val = dimensions[dim]
-                weight = weights.get(dim)
-                if weight is None:
-                    continue  # dimension not weighted for this track (e.g. consulting omits portal_friction)
+            for dim, weight in weights.items():
+                val = dimensions.get(dim, 5)  # pillar dims default to 5 (matches compute_composite)
                 contrib = val * weight
                 print(f"  {dim:<25s} {int(val):>5d}  {weight:>5.0%}  {contrib:>7.2f}")
             print(f"  {'COMPOSITE':<25s}        {'':>6s}  {new_score:>7.1f}")

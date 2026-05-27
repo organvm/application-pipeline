@@ -314,9 +314,9 @@ class PipelineAgent:
                             "severity": "routine",
                         })
 
-            # Rule 5: Staged, deadline < max_days
+            # Rule 5: Staged, deadline within the submission window (excl. expired)
             elif status == "staged" and _rule_enabled("flag_staged_for_submission"):
-                if days_left is not None and days_left < STAGED_SUBMIT_MAX_DAYS:
+                if days_left is not None and 0 <= days_left < STAGED_SUBMIT_MAX_DAYS:
                     actions.append({
                         "entry_id": entry_id,
                         "action": "flag_for_submission",
