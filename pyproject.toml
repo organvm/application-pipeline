@@ -21,6 +21,7 @@ dependencies = [
 dev = [
     "pytest>=9.0.3",
     "pytest-mock",
+    "pytest-timeout",
     "ruff",
 ]
 jobspy = [
@@ -41,6 +42,9 @@ pipeline = "scripts.cli:app"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# Per-test timeout so a single hanging test fails (with a traceback naming the
+# culprit) instead of stalling the whole CI job until GitHub's 6h cap.
+timeout = 300
 markers = [
     "synthetic: tests that perform live API calls to ATS platforms"
 ]
