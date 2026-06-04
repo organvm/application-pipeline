@@ -133,12 +133,11 @@ def test_account_public_view_includes_plan_and_caps():
     assert "api" in view["surfaces"]
 
 
-def test_billing_provider_is_null_seam():
-    provider = auth.get_billing_provider()
-    url = provider.checkout_url("acme", "pro")
-    assert "acme" in url and "pro" in url
-    assert provider.record_usage("acme", 5) is None
-
-
 def test_plans_cover_all_tiers():
     assert set(auth.PLANS) == set(auth.TIERS)
+
+
+def test_billing_reexports_are_available():
+    # Backward-compat: billing symbols importable from conductor_auth.
+    assert hasattr(auth, "get_billing_provider")
+    assert hasattr(auth, "default_registry")

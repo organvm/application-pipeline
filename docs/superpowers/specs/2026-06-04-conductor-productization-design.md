@@ -82,9 +82,15 @@ Agent Communication Protocol surface: agent manifest at `/agents`, synchronous r
   unchanged.
 - **Quota.** Per-account sliding-window rate limiting by tier (free 30/min … institution
   unlimited); exceeding it returns `429`.
-- **Billing seam.** `BillingProvider` protocol + `NullBillingProvider` and a `PLANS`
-  registry (tier → price). `GET /api/account` returns the account, plan, and a checkout URL
-  stub — the documented attach point for a real provider (Stripe). No real charge is wired.
+- **Multi-rail billing (`scripts/conductor_billing.py`).** Never a single payment rail.
+  Billing is two independent axes — *tiers* (free/pro/studio/institution, in `conductor_auth`)
+  × *rails* (Stripe, PayPal, GitHub Sponsors, Invoice/PO). For any paid tier, **every enabled
+  rail** is surfaced as a distinct entry point, so a customer who can't use one door always
+  has another (GitHub Sponsors is a live link; a card-free invoice rail always exists). Rails
+  are env-selected (`CONDUCTOR_BILLING_PROVIDERS`); adding one is a `PaymentProvider`
+  subclass. `GET /api/billing/plans`, `GET /api/billing/options?tier=`, and `/api/account`
+  surface them; the dashboard renders a "Plans & ways to pay" panel. Seam, not a charge —
+  fulfilment/webhooks attach behind each provider.
 - The dashboard surfaces the current write-mode as a header badge.
 - FastAPI is an **optional** dependency (`pip install -e ".[web]"`). `web_api.py`,
   `acp_server.py`, and `conductor_auth.py` import without it (apps built lazily in
@@ -120,7 +126,7 @@ market, engineering) per the generalization formula.
 | Authentication | ✅ Landed — API-key auth, `CONDUCTOR_AUTH_REQUIRED` (`conductor_auth.py`) |
 | Tier-gated writes | ✅ Landed — per-account capability replaces the global flag |
 | Quota / rate limiting | ✅ Landed — per-account sliding window by tier (`429` on exceed) |
-| Billing | ◑ **Seam only** — plans + `BillingProvider` protocol + `NullBillingProvider`; no real charge |
+| Billing | ◑ **Multi-rail seam** — Stripe + PayPal + GitHub Sponsors + Invoice rails surfaced per tier; no real charge wired yet |
 | Multi-tenant **data isolation** | ✗ Not yet — see below |
 | React/Vite build | ✗ By choice — SPA is intentionally zero-build |
 | ACP async/streaming + run persistence | ✗ Not yet — sync-only, in-memory runs |

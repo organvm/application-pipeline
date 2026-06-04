@@ -269,30 +269,20 @@ def account_public_view(account: Account) -> dict:
 
 
 # --------------------------------------------------------------------------
-# Billing seam (integration point — not a real charge)
+# Billing seam — provider-plural, defined in conductor_billing.
+# Re-exported here for backward compatibility with single-rail callers.
 # --------------------------------------------------------------------------
-class BillingProvider:
-    """Interface a real provider (e.g. Stripe) implements. The seam, not the charge."""
-
-    def checkout_url(self, account_id: str, tier: str) -> str:  # pragma: no cover - interface
-        raise NotImplementedError
-
-    def record_usage(self, account_id: str, units: int) -> None:  # pragma: no cover - interface
-        raise NotImplementedError
-
-
-class NullBillingProvider(BillingProvider):
-    """No-op provider used until a real payment integration is wired."""
-
-    def checkout_url(self, account_id: str, tier: str) -> str:
-        # A real provider returns a hosted checkout link for the plan.
-        return f"about:blank#checkout?account={account_id}&tier={tier}"
-
-    def record_usage(self, account_id: str, units: int) -> None:
-        return None
-
-
-def get_billing_provider() -> BillingProvider:
-    """Return the configured billing provider (null until one is wired)."""
-
-    return NullBillingProvider()
+try:  # package-style
+    from .conductor_billing import (  # noqa: F401
+        BillingProvider,
+        NullBillingProvider,
+        default_registry,
+        get_billing_provider,
+    )
+except ImportError:  # pragma: no cover - script execution fallback
+    from conductor_billing import (  # noqa: F401
+        BillingProvider,
+        NullBillingProvider,
+        default_registry,
+        get_billing_provider,
+    )

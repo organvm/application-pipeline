@@ -65,8 +65,12 @@ Productization path per edition: promote `configured` → `demonstrated` (run on
 
 1. ~~Add authentication + per-account write-gating on top of `CONDUCTOR_ALLOW_WRITES`.~~
    ✅ Done — `scripts/conductor_auth.py` (API-key auth, tiers, quota, billing seam).
-2. Wire a real billing provider into the `BillingProvider` seam (Stripe checkout +
-   webhook → set `tier`); persist accounts in a database rather than a YAML file.
+2. ~~Add a payment integration point.~~ ✅ Done — multi-rail billing
+   (`scripts/conductor_billing.py`): Stripe, PayPal, GitHub Sponsors, and Invoice/PO rails
+   surfaced per tier (`/api/billing/plans`, `/api/billing/options`, dashboard panel). Not
+   everyone has Stripe, so there is always more than one door. **Next:** wire fulfilment
+   behind ≥1 rail (e.g. GitHub Sponsors webhook → set `tier`) and persist accounts in a
+   database rather than a YAML file.
 3. Close the data-isolation gap: per-account `PIPELINE_ROOT` so tenants don't share data.
 4. Deploy the FastAPI app (single container) behind a managed host.
 5. Instrument the dashboard for activation/retention to run real price discovery.

@@ -36,11 +36,13 @@ from typing import Any
 
 try:  # Prefer package-style imports when available.
     from . import pipeline_api as api
-    from .conductor_auth import AccountStore, account_public_view, get_billing_provider
+    from .conductor_auth import PLANS, AccountStore, account_public_view, resolve_tier
+    from .conductor_billing import default_registry
     from .pipeline_lib import ALL_PIPELINE_DIRS_WITH_POOL, load_entries, load_entry_by_id
 except ImportError:  # pragma: no cover - script execution fallback
     import pipeline_api as api
-    from conductor_auth import AccountStore, account_public_view, get_billing_provider
+    from conductor_auth import PLANS, AccountStore, account_public_view, resolve_tier
+    from conductor_billing import default_registry
     from pipeline_lib import ALL_PIPELINE_DIRS_WITH_POOL, load_entries, load_entry_by_id
 
 WEB_DIR = Path(__file__).resolve().parent / "web"
@@ -221,11 +223,42 @@ def create_app():  # noqa: C901 - cohesive route registration
             "auth_required": store.auth_required,
         }
 
+    billing = default_registry()
+
+    def _upgrade_tier_for(account) -> str:
+        """The tier we surface payment options for: renew if paid, else the entry paid tier."""
+
+        return account.tier if PLANS.get(account.tier, PLANS["free"]).monthly_price_usd > 0 else "pro"
+
     @app.get("/api/account", tags=["meta"])
     def account_info(account=Depends(current_account)):
         view = account_public_view(account)
-        view["checkout_url"] = get_billing_provider().checkout_url(account.id, account.tier)
+        tier = _upgrade_tier_for(account)
+        price = PLANS.get(tier, PLANS["pro"]).monthly_price_usd
+        options = billing.options(account.id, tier, price)
+        view["billing_options"] = options  # plural rails — always more than one door
+        view["checkout_url"] = options[0]["url"] if options else None  # primary (compat)
         return ok(view)
+
+    @app.get("/api/billing/plans", tags=["billing"])
+    def billing_plans():
+        return ok(
+            [
+                {"tier": p.tier, "price_usd_month": p.monthly_price_usd, "description": p.description}
+                for p in PLANS.values()
+            ]
+        )
+
+    @app.get("/api/billing/options", tags=["billing"])
+    def billing_options(tier: str = "pro", account=Depends(current_account)):
+        plan = PLANS.get(resolve_tier(tier).name, PLANS["pro"])
+        return ok(
+            {
+                "tier": plan.tier,
+                "price_usd_month": plan.monthly_price_usd,
+                "rails": billing.options(account.id, plan.tier, plan.monthly_price_usd),
+            }
+        )
 
     # ---- Read: pipeline state -------------------------------------------
     @app.get("/api/summary", tags=["pipeline"])

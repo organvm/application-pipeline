@@ -117,6 +117,47 @@ function wire() {
   });
 }
 
+function railChip(o) {
+  const note = o.recurring ? "recurring" : "one-time";
+  return `<a class="rail" href="${o.url}" target="_blank" rel="noopener" title="${o.description}">
+    ${o.label} <span class="rail-kind">${o.kind} · ${note}</span>
+  </a>`;
+}
+
+async function loadRails(tier) {
+  try {
+    const r = await api("/api/billing/options?tier=" + encodeURIComponent(tier));
+    $("#rails").innerHTML =
+      `<div class="rails-head">Ways to pay for <b>${r.tier}</b> ($${r.price_usd_month}/mo):</div>` +
+      r.rails.map(railChip).join("");
+  } catch (err) {
+    $("#rails").textContent = String(err);
+  }
+}
+
+async function loadPlans() {
+  try {
+    const plans = await api("/api/billing/plans");
+    $("#plans").innerHTML = plans
+      .map(
+        (p) => `<button class="plan" data-tier="${p.tier}">
+          <span class="plan-name">${p.tier}</span>
+          <span class="plan-price">${p.price_usd_month ? "$" + p.price_usd_month + "/mo" : "—"}</span>
+          <span class="plan-desc">${p.description}</span>
+        </button>`
+      )
+      .join("");
+    $("#plans").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button.plan");
+      if (btn) loadRails(btn.dataset.tier);
+    });
+    const paid = plans.find((p) => p.price_usd_month > 0);
+    if (paid) loadRails(paid.tier);
+  } catch (err) {
+    $("#plans").textContent = String(err);
+  }
+}
+
 async function refresh() {
   await loadSummary();
   await loadEntries();
@@ -125,3 +166,4 @@ async function refresh() {
 wire();
 refresh();
 loadStandup();
+loadPlans();

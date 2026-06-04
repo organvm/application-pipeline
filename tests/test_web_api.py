@@ -130,6 +130,27 @@ def test_account_endpoint_open_mode(client):
     assert body["anonymous"] is True
     assert body["tier"] == "free"
     assert "checkout_url" in body
+    # plural points of entry — more than one payment rail is always offered
+    assert isinstance(body["billing_options"], list)
+    assert len(body["billing_options"]) >= 2
+    providers = {o["provider"] for o in body["billing_options"]}
+    assert "github_sponsors" in providers  # a non-card door always exists
+
+
+def test_billing_plans_endpoint(client):
+    r = client.get("/api/billing/plans")
+    assert r.status_code == 200
+    tiers = {p["tier"] for p in r.json()}
+    assert {"free", "pro", "studio", "institution"} <= tiers
+
+
+def test_billing_options_endpoint_lists_rails(client):
+    r = client.get("/api/billing/options?tier=studio")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["tier"] == "studio"
+    assert len(body["rails"]) >= 2
+    assert all(rail["tier"] == "studio" for rail in body["rails"])
 
 
 def test_auth_required_rejects_unauthenticated(monkeypatch):

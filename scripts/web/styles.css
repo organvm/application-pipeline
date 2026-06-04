@@ -89,6 +89,18 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
 .mono { font-family: var(--mono); font-size: 12px; color: var(--text); background: #0b0f14; border: 1px solid var(--border); border-radius: 8px; padding: 12px; max-height: 360px; overflow: auto; white-space: pre-wrap; word-break: break-word; }
 .loading { color: var(--muted); padding: 20px; }
 
+.muted-note { color: var(--muted); font-size: 12.5px; }
+.plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 6px 0 16px; }
+.plan { text-align: left; display: flex; flex-direction: column; gap: 4px; background: var(--panel-2); padding: 14px; border-radius: 10px; }
+.plan-name { font-weight: 650; text-transform: capitalize; }
+.plan-price { color: var(--accent); font-size: 13px; }
+.plan-desc { color: var(--muted); font-size: 12px; }
+.rails-head { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+.rails { display: flex; flex-wrap: wrap; gap: 10px; }
+.rail { display: inline-flex; flex-direction: column; gap: 2px; padding: 9px 13px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); font-size: 13px; }
+.rail:hover { border-color: var(--accent); }
+.rail-kind { color: var(--muted); font-size: 11px; }
+
 footer { text-align: center; color: var(--muted); font-size: 12px; padding: 24px; border-top: 1px solid var(--border); }
 footer code { color: var(--accent); }
 
