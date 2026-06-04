@@ -36,9 +36,11 @@ from typing import Any
 
 try:  # Prefer package-style imports when available.
     from . import pipeline_api as api
+    from .conductor_auth import AccountStore, account_public_view, get_billing_provider
     from .pipeline_lib import ALL_PIPELINE_DIRS_WITH_POOL, load_entries, load_entry_by_id
 except ImportError:  # pragma: no cover - script execution fallback
     import pipeline_api as api
+    from conductor_auth import AccountStore, account_public_view, get_billing_provider
     from pipeline_lib import ALL_PIPELINE_DIRS_WITH_POOL, load_entries, load_entry_by_id
 
 WEB_DIR = Path(__file__).resolve().parent / "web"
@@ -169,7 +171,7 @@ def create_app():  # noqa: C901 - cohesive route registration
     """Construct and return the FastAPI application."""
 
     try:
-        from fastapi import FastAPI, HTTPException, Query
+        from fastapi import Depends, FastAPI, Header, HTTPException, Query
         from fastapi.responses import JSONResponse
         from fastapi.staticfiles import StaticFiles
     except ImportError as exc:  # pragma: no cover - exercised only without extra
@@ -186,13 +188,44 @@ def create_app():  # noqa: C901 - cohesive route registration
         ),
     )
 
+    # Account store: built from env. Open mode (anonymous/free) unless an
+    # accounts file + CONDUCTOR_AUTH_REQUIRED are configured.
+    store = AccountStore.from_env()
+
     def ok(obj: Any):
         return JSONResponse(to_jsonable(obj))
+
+    def current_account(
+        x_api_key: str | None = Header(default=None),
+        authorization: str | None = Header(default=None),
+    ):
+        """Resolve and authorize the calling account; enforce quota."""
+
+        key = x_api_key
+        if not key and authorization and authorization.lower().startswith("bearer "):
+            key = authorization.split(" ", 1)[1].strip()
+        account, error = store.resolve_request(key)
+        if error == "unauthorized":
+            raise HTTPException(status_code=401, detail="invalid or missing API key")
+        if error == "rate_limited":
+            raise HTTPException(status_code=429, detail="rate limit exceeded for plan")
+        return account
 
     # ---- Health ----------------------------------------------------------
     @app.get("/api/health", tags=["meta"])
     def health():
-        return {"status": "ok", "service": "conductor", "writes_allowed": writes_allowed()}
+        return {
+            "status": "ok",
+            "service": "conductor",
+            "writes_allowed": writes_allowed(),
+            "auth_required": store.auth_required,
+        }
+
+    @app.get("/api/account", tags=["meta"])
+    def account_info(account=Depends(current_account)):
+        view = account_public_view(account)
+        view["checkout_url"] = get_billing_provider().checkout_url(account.id, account.tier)
+        return ok(view)
 
     # ---- Read: pipeline state -------------------------------------------
     @app.get("/api/summary", tags=["pipeline"])
@@ -230,23 +263,26 @@ def create_app():  # noqa: C901 - cohesive route registration
     def triage(min_score: float = 9.0):
         return ok(api.triage_data(min_score=min_score, dry_run=True))
 
-    # ---- Write: state machine (dry-run unless CONDUCTOR_ALLOW_WRITES) ----
+    # ---- Write: state machine (persisted only if the account's plan allows) --
+    def _may_write(account) -> bool:
+        return account.can_write(legacy_flag=writes_allowed())
+
     @app.post("/api/entries/{entry_id}/score", tags=["actions"])
-    def score(entry_id: str, dry_run: bool = True):
-        effective_dry = dry_run or not writes_allowed()
+    def score(entry_id: str, dry_run: bool = True, account=Depends(current_account)):
+        effective_dry = dry_run or not _may_write(account)
         return ok(api.score_entry(entry_id=entry_id, dry_run=effective_dry))
 
     @app.post("/api/entries/{entry_id}/advance", tags=["actions"])
-    def advance(entry_id: str, to_status: str | None = None, dry_run: bool = True):
-        effective_dry = dry_run or not writes_allowed()
+    def advance(entry_id: str, to_status: str | None = None, dry_run: bool = True, account=Depends(current_account)):
+        effective_dry = dry_run or not _may_write(account)
         return ok(api.advance_entry(entry_id=entry_id, to_status=to_status, dry_run=effective_dry))
 
     @app.post("/api/entries/{entry_id}/validate", tags=["actions"])
-    def validate(entry_id: str):
+    def validate(entry_id: str, account=Depends(current_account)):
         return ok(api.validate_entry(entry_id=entry_id))
 
     @app.post("/api/entries/{entry_id}/submit", tags=["actions"])
-    def submit(entry_id: str):
+    def submit(entry_id: str, account=Depends(current_account)):
         return ok(api.submit_entry(entry_id=entry_id, dry_run=True))
 
     # ---- Dashboard SPA (mounted last so /api/* wins) ---------------------

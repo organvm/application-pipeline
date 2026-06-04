@@ -1,0 +1,29 @@
+# Conductor accounts file (example).
+#
+# Point CONDUCTOR_ACCOUNTS_FILE at a copy of this file to enable per-account
+# auth. With CONDUCTOR_AUTH_REQUIRED=1, requests must present a key via the
+# `X-API-Key` header or `Authorization: Bearer <key>`.
+#
+# Use `api_key` (plaintext) for local/dev — it is hashed (sha256) on load and
+# never stored in plaintext at runtime. Use `api_key_hash` in production:
+#   python -c "import hashlib,sys; print(hashlib.sha256(sys.argv[1].encode()).hexdigest())" sk_live_xxx
+#
+# Tiers (capabilities defined in scripts/conductor_auth.py):
+#   free        — read-only, 30 req/min, surfaces: dashboard, api, mcp
+#   pro         — writes, 120 req/min
+#   studio      — writes + acp, 600 req/min
+#   institution — writes + acp, unlimited
+#
+# NOTE: like .submit-config.yaml and .greenhouse-answers/, real accounts files
+# contain secrets and must NOT be committed. Only this .example is tracked.
+
+accounts:
+  - id: acme-studio
+    name: Acme Studio
+    tier: studio
+    api_key: sk_live_replace_me
+
+  - id: jane-doe
+    name: Jane Doe
+    tier: pro
+    api_key_hash: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08

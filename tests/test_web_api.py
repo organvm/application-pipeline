@@ -121,3 +121,47 @@ def test_score_endpoint_is_dry_run_without_writes(client, monkeypatch):
 
 def test_openapi_docs_available(client):
     assert client.get("/openapi.json").status_code == 200
+
+
+def test_account_endpoint_open_mode(client):
+    r = client.get("/api/account")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["anonymous"] is True
+    assert body["tier"] == "free"
+    assert "checkout_url" in body
+
+
+def test_auth_required_rejects_unauthenticated(monkeypatch):
+    pytest.importorskip("fastapi")
+    pytest.importorskip("httpx")
+    from fastapi.testclient import TestClient
+
+    monkeypatch.setenv("CONDUCTOR_AUTH_REQUIRED", "1")
+    monkeypatch.delenv("CONDUCTOR_ACCOUNTS_FILE", raising=False)
+    c = TestClient(web_api.create_app())
+    # protected (write/account) routes require a key
+    assert c.post("/api/entries/x/score").status_code == 401
+    assert c.get("/api/account").status_code == 401
+    # open read routes still work (no dependency)
+    assert c.get("/api/summary").status_code == 200
+
+
+def test_valid_pro_key_authorizes_writes(monkeypatch, tmp_path):
+    pytest.importorskip("fastapi")
+    pytest.importorskip("httpx")
+    from fastapi.testclient import TestClient
+
+    accounts = tmp_path / "accounts.yaml"
+    accounts.write_text(
+        "accounts:\n  - id: pro1\n    name: Pro One\n    tier: pro\n    api_key: sk_pro_1\n"
+    )
+    monkeypatch.setenv("CONDUCTOR_AUTH_REQUIRED", "1")
+    monkeypatch.setenv("CONDUCTOR_ACCOUNTS_FILE", str(accounts))
+    c = TestClient(web_api.create_app())
+    headers = {"X-API-Key": "sk_pro_1"}
+    acct = c.get("/api/account", headers=headers)
+    assert acct.status_code == 200
+    assert acct.json()["tier"] == "pro" and acct.json()["can_write"] is True
+    # authorized write call returns 200 (engine may still report a not-found error)
+    assert c.post("/api/entries/__nope__/score", headers=headers).status_code == 200

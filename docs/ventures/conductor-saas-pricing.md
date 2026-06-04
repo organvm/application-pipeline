@@ -63,7 +63,11 @@ Productization path per edition: promote `configured` → `demonstrated` (run on
 
 ## 6. Next steps
 
-1. Add authentication + per-account write-gating on top of `CONDUCTOR_ALLOW_WRITES`.
-2. Deploy the FastAPI app (single container) behind a managed host; wire a billing provider.
-3. Instrument the dashboard for activation/retention to run real price discovery.
-4. Promote one registry domain to `demonstrated` to open the institutional tier.
+1. ~~Add authentication + per-account write-gating on top of `CONDUCTOR_ALLOW_WRITES`.~~
+   ✅ Done — `scripts/conductor_auth.py` (API-key auth, tiers, quota, billing seam).
+2. Wire a real billing provider into the `BillingProvider` seam (Stripe checkout +
+   webhook → set `tier`); persist accounts in a database rather than a YAML file.
+3. Close the data-isolation gap: per-account `PIPELINE_ROOT` so tenants don't share data.
+4. Deploy the FastAPI app (single container) behind a managed host.
+5. Instrument the dashboard for activation/retention to run real price discovery.
+6. Promote one registry domain to `demonstrated` to open the institutional tier.

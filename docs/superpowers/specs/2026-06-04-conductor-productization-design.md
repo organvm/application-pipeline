@@ -67,15 +67,29 @@ Agent Communication Protocol surface: agent manifest at `/agents`, synchronous r
 `POST /runs` with ACP message/part shapes. Routes a small command grammar
 (`summary | entries | standup | followups | hygiene | triage | score <id>`) to the engine.
 
-## 4. Safety model
+## 4. Safety & auth model (`scripts/conductor_auth.py`)
 
-- Mutating endpoints default to **dry-run**. Real writes require `CONDUCTOR_ALLOW_WRITES=1`.
-  This is the seam a hosted deployment gates behind authentication and a paid plan.
-- The dashboard surfaces the current write-mode as a header badge (read-only vs writes
-  enabled), so an operator always knows whether actions persist.
-- FastAPI is an **optional** dependency (`pip install -e ".[web]"`). `web_api.py` and
-  `acp_server.py` import without it (app built lazily in `create_app()`), so module
-  discovery, the verification matrix, and non-web tooling never break.
+- **Per-account authentication + tiers.** Accounts load from a YAML file
+  (`CONDUCTOR_ACCOUNTS_FILE`); requests authenticate with `X-API-Key` or
+  `Authorization: Bearer`. Each account has a tier (`free`/`pro`/`studio`/`institution`)
+  defining write capability, rate limit, and allowed surfaces.
+- **Writes are gated by plan, not a global flag.** A state-machine action persists only if
+  the calling account's tier permits writes (`pro`+). The free→pro boundary *is* the
+  write/no-write boundary — the monetization seam.
+- **Backward compatible / open mode.** With no accounts file and `CONDUCTOR_AUTH_REQUIRED`
+  unset, every request resolves to an anonymous `free` account whose write capability still
+  honors the legacy `CONDUCTOR_ALLOW_WRITES` flag — single-user/dev deployments work
+  unchanged.
+- **Quota.** Per-account sliding-window rate limiting by tier (free 30/min … institution
+  unlimited); exceeding it returns `429`.
+- **Billing seam.** `BillingProvider` protocol + `NullBillingProvider` and a `PLANS`
+  registry (tier → price). `GET /api/account` returns the account, plan, and a checkout URL
+  stub — the documented attach point for a real provider (Stripe). No real charge is wired.
+- The dashboard surfaces the current write-mode as a header badge.
+- FastAPI is an **optional** dependency (`pip install -e ".[web]"`). `web_api.py`,
+  `acp_server.py`, and `conductor_auth.py` import without it (apps built lazily in
+  `create_app()`), so module discovery, the verification matrix, and non-web tooling never
+  break.
 
 ## 5. Running it
 
@@ -99,11 +113,24 @@ The four surfaces map to revenue tiers: dashboard (self-serve subscription), API
 (`strategy/domain-surfaces-registry.yaml`) as the path to vertical editions (academic,
 market, engineering) per the generalization formula.
 
-## 8. Non-goals (this iteration)
+## 8. Status of the "honest gaps"
 
-- No authentication / multi-tenancy / billing integration yet (the write-flag is the seam).
-- No React/Vite build; the SPA is intentionally zero-build.
-- ACP is sync-only (no streaming/await runs) and stores runs in memory.
+| Gap (as flagged) | Status |
+|------------------|--------|
+| Authentication | ✅ Landed — API-key auth, `CONDUCTOR_AUTH_REQUIRED` (`conductor_auth.py`) |
+| Tier-gated writes | ✅ Landed — per-account capability replaces the global flag |
+| Quota / rate limiting | ✅ Landed — per-account sliding window by tier (`429` on exceed) |
+| Billing | ◑ **Seam only** — plans + `BillingProvider` protocol + `NullBillingProvider`; no real charge |
+| Multi-tenant **data isolation** | ✗ Not yet — see below |
+| React/Vite build | ✗ By choice — SPA is intentionally zero-build |
+| ACP async/streaming + run persistence | ✗ Not yet — sync-only, in-memory runs |
+
+### Remaining gap: data isolation
+Auth/quota/billing are now per-account, but the **data layer is still single-tenant** —
+`pipeline_lib` reads one shared set of YAML directories. True multi-tenancy needs a
+per-account data root (e.g. `PIPELINE_ROOT` threaded through `load_entries`), which is a
+larger change to the core loaders. This is the next gap to close before hosting multiple
+paying tenants on one deployment.
 
 ## 9. References
 

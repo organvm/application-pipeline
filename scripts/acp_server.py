@@ -29,9 +29,11 @@ from typing import Any
 
 try:  # Prefer package-style imports when available.
     from . import pipeline_api as api
+    from .conductor_auth import AccountStore
     from .web_api import list_entry_summaries, pipeline_summary, to_jsonable
 except ImportError:  # pragma: no cover - script execution fallback
     import pipeline_api as api
+    from conductor_auth import AccountStore
     from web_api import list_entry_summaries, pipeline_summary, to_jsonable
 
 AGENT_NAME = "application-pipeline"
@@ -170,7 +172,7 @@ def create_app():
     """Construct and return the ACP FastAPI application."""
 
     try:
-        from fastapi import Body, FastAPI, HTTPException
+        from fastapi import Body, Depends, FastAPI, Header, HTTPException
     except ImportError as exc:  # pragma: no cover - exercised only without extra
         raise RuntimeError(
             "FastAPI is not installed. Install web extras: pip install -e '.[web]'"
@@ -181,6 +183,22 @@ def create_app():
         version="0.1.0",
         description="Agent Communication Protocol surface for the application pipeline.",
     )
+
+    store = AccountStore.from_env()
+
+    def current_account(
+        x_api_key: str | None = Header(default=None),
+        authorization: str | None = Header(default=None),
+    ):
+        key = x_api_key
+        if not key and authorization and authorization.lower().startswith("bearer "):
+            key = authorization.split(" ", 1)[1].strip()
+        account, error = store.resolve_request(key)
+        if error == "unauthorized":
+            raise HTTPException(status_code=401, detail="invalid or missing API key")
+        if error == "rate_limited":
+            raise HTTPException(status_code=429, detail="rate limit exceeded for plan")
+        return account
 
     @app.get("/agents", tags=["acp"])
     def list_agents():
@@ -193,7 +211,7 @@ def create_app():
         return AGENT_MANIFEST
 
     @app.post("/runs", tags=["acp"])
-    def create_run(body: dict = Body(default=None)):
+    def create_run(body: dict = Body(default=None), account=Depends(current_account)):
         body = body or {}
         agent_name = body.get("agent_name", AGENT_NAME)
         if agent_name != AGENT_NAME:
