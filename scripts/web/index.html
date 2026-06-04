@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conductor — Pipeline Dashboard</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◆</span>
+      <div>
+        <h1>Conductor</h1>
+        <p class="tagline">Precision application pipeline — one engine, four surfaces</p>
+      </div>
+    </div>
+    <nav class="surfaces">
+      <a href="/docs" title="REST API + OpenAPI">API</a>
+      <span title="Model Context Protocol — scripts/mcp_server.py">MCP</span>
+      <span title="Agent Communication Protocol — scripts/acp_server.py">ACP</span>
+      <span class="badge" id="writeBadge">read-only</span>
+    </nav>
+  </header>
+
+  <main>
+    <section class="kpis" id="kpis"><div class="loading">Loading pipeline…</div></section>
+
+    <section class="board">
+      <div class="board-head">
+        <h2>Pipeline</h2>
+        <div class="filters">
+          <select id="statusFilter"><option value="">All statuses</option></select>
+          <select id="trackFilter"><option value="">All tracks</option></select>
+          <button id="refreshBtn" type="button">Refresh</button>
+        </div>
+      </div>
+      <table class="entries">
+        <thead>
+          <tr>
+            <th>Name</th><th>Org</th><th>Track</th><th>Status</th>
+            <th class="num">Score</th><th>Deadline</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="entriesBody"></tbody>
+      </table>
+    </section>
+
+    <section class="panels">
+      <article class="panel">
+        <h3>Standup</h3>
+        <pre id="standup" class="mono">Loading…</pre>
+      </article>
+      <article class="panel">
+        <h3>Detail / Action output</h3>
+        <pre id="detail" class="mono">Select an entry or run an action.</pre>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <span>Conductor · same engine as the CLI &amp; MCP server · writes gated by <code>CONDUCTOR_ALLOW_WRITES</code></span>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

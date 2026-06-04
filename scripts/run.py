@@ -142,6 +142,8 @@ COMMANDS = {
 
     # -- Infrastructure --
     "agent":       ("agent.py", ["--plan"],              "Agent: preview planned autonomous actions"),
+    "serve":       ("web_api.py", [],                    "Conductor: REST API + dashboard (http://127.0.0.1:8000, docs at /docs)"),
+    "acp":         ("acp_server.py", [],                 "Conductor: ACP agent server (http://127.0.0.1:8001, manifest at /agents)"),
     "unblock":     ("unblock_submissions.py", [],        "Identify and resolve submission bottlenecks"),
     "audit":       ("submission_audit.py", [],           "Deep audit of submission materials and history"),
     "automation":  ("launchd_manager.py", ["--status"],  "Launchd automation status"),
