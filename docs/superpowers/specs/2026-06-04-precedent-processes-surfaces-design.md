@@ -143,7 +143,7 @@ one.
 | `apply.py` 10-stage flow | SOP contract + `applications/` bundle | ✅ (SPEC-023) |
 | IRA machinery (`diagnose_ira.py`) | rubric YAML + persona YAML + ICC report | ✅ within pipeline; ⚠️ not yet a standalone package |
 | `standards.py` quorum gate | Level-1 gate result in `apply.py` | ✅ internally; ⚠️ no external API |
-| generalization formula (Ch. 10.4) | *(this spec's registry)* `domain-surfaces-registry.yaml` | ➕ added here |
+| generalization formula (Ch. 10.4) | *(this spec's registry)* `strategy/domain-surfaces-registry.yaml` | ➕ added here |
 
 The first three rows show the pattern is already practiced internally. The gap this spec
 closes is the external surface for *other domains* — which is the product manifestation.

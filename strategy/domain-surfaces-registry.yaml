@@ -4,7 +4,7 @@ description: >
   generalization formula (docs/thesis/10-generalization.md §10.4) for each
   domain implementation. This is the external surface of the formula — the
   "product manifestation" of the domain-agnostic evaluative/pipeline machinery.
-  Each entry maps a domain to the internal precedent process it reuses
+  Each entry maps a domain to the internal precedent processes it reuses
   (docs/superpowers/specs/2026-06-04-precedent-processes-surfaces-design.md §1),
   its domain-specific configuration (pipeline, rubric, panel), and both its
   internal and external surfaces. A future `conductor-ira` package
@@ -58,7 +58,7 @@ domains:
 
     sgo:
       label: "Studium Generale ORGANVM (internal university)"
-      reuses_precedent: evaluative_authority
+      reuses_precedents: [evaluative_authority]
       pipeline: [question_intake, research, draft, defend_before_ira_panel, publish, archive]
       rubric_dimensions: [argument_coherence, evidence_sourcing, methodology_rigor, originality, structural_clarity]
       panel_personas: [literary_critic, domain_expert, academic_reviewer, general_reader]
@@ -70,7 +70,7 @@ domains:
 
     peer_review:
       label: "Academic peer review (first-pass, AI-audited)"
-      reuses_precedent: evaluative_authority
+      reuses_precedents: [evaluative_authority]
       pipeline: [submission, desk_screen, panel_review, agreement_check, editorial_decision, author_revision]
       rubric_dimensions: [methodology, novelty, writing_quality, reproducibility]
       panel_personas: [methodologist, domain_expert, practitioner, skeptic]
@@ -82,7 +82,7 @@ domains:
 
     educational_grading:
       label: "Educational grading / grade-norming"
-      reuses_precedent: evaluative_authority
+      reuses_precedents: [evaluative_authority]
       pipeline: [submission, rubric_apply, norming, consensus, grade_release, pedagogy_feedback]
       rubric_dimensions: [content_mastery, critical_thinking, evidence_use, argument_structure, writing_mechanics, creativity]
       panel_personas: [strict_constructivist, encouraging_formativist, criterion_referrer, discipline_expert]
@@ -97,7 +97,7 @@ domains:
 
     hiring_employer_side:
       label: "Hiring pipeline (employer side — mirror of this pipeline)"
-      reuses_precedent: application_genesis
+      reuses_precedents: [application_genesis]
       pipeline: [scan, match, build, apply, outreach]   # direction reversed vs applicant pipeline
       rubric_dimensions: [technical_skills, cultural_fit, growth_potential, communication_quality, portfolio_depth, referral_strength, compensation_alignment, timeline_feasibility]
       panel_personas: [hiring_manager, technical_lead, hr_partner, peer_interviewer]
@@ -109,7 +109,7 @@ domains:
 
     grant_management_funder_side:
       label: "Grant management (funder/program-officer side)"
-      reuses_precedent: evaluative_authority
+      reuses_precedents: [application_genesis, evaluative_authority]
       pipeline: [call_open, intake, panel_review, agreement_check, award_decision, grantee_followup]
       rubric_dimensions: [narrative_quality, budget_justification, investigator_qualifications, institutional_support, innovation_potential, feasibility, broader_impacts]
       panel_personas: [program_officer, fiscal_reviewer, domain_expert, community_representative]
@@ -121,7 +121,7 @@ domains:
 
     publishing:
       label: "Publishing pipeline (manuscript submission)"
-      reuses_precedent: application_genesis
+      reuses_precedents: [application_genesis]
       pipeline: [discover_cfp, match_scope, build_package, submit, editor_followup]
       rubric_dimensions: [originality, methodology_rigor, writing_quality, contribution_significance, presentation_clarity, ethical_compliance]
       panel_personas: [editor, reviewer_methodology, reviewer_contribution, copy_editor]
@@ -136,7 +136,7 @@ domains:
 
     ci_cd_quality_gate:
       label: "CI/CD multi-dimensional quality gate"
-      reuses_precedent: standards
+      reuses_precedents: [standards, evaluative_authority]
       pipeline: [build, test, diagnostic_phase, gate_decision, deploy]
       rubric_dimensions: [architecture_quality, test_coverage_depth, documentation_currency, security_posture, operational_readiness, backward_compatibility]
       panel_personas: [sre, security_engineer, product_manager, platform_architect]
