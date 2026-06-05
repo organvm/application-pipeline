@@ -46,3 +46,13 @@ def test_differentiation_boost_thresholds():
 def test_score_strategic_value_prestige_match():
     score = score_auto_dimensions.score_strategic_value(_entry())
     assert score == 10
+
+
+def test_effort_base_academic_fallback():
+    """Academic uses the residency/fellowship-kin effort fallback of 5."""
+    assert score_auto_dimensions._get_effort_base_from_market("academic") == 5
+
+
+def test_effort_base_unknown_track_degrades():
+    """A genuinely unknown track degrades to the neutral default of 5, not an error."""
+    assert score_auto_dimensions._get_effort_base_from_market("definitely-not-a-track") == 5

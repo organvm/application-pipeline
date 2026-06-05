@@ -45,7 +45,7 @@ RESUME_BY_IDENTITY = {
     "educator": "resumes/base/educator-resume.pdf",
 }
 
-RESUME_TRACKS = {"job", "fellowship", "grant", "residency", "prize", "program"}
+RESUME_TRACKS = {"job", "fellowship", "grant", "residency", "prize", "program", "academic"}
 
 COVER_LETTER_MAP = {
     "anthropic-fde": "cover-letters/anthropic-fde-custom-agents",
@@ -54,7 +54,7 @@ COVER_LETTER_MAP = {
     "together-ai": "cover-letters/together-ai-lead-dx-documentation",
 }
 
-GRANT_TEMPLATE_TRACKS = {"grant", "residency", "prize"}
+GRANT_TEMPLATE_TRACKS = {"grant", "residency", "prize", "academic"}
 GRANT_TEMPLATE_PATH = "cover-letters/grant-art-template"
 
 # Default blocks_used mappings for job entries, keyed by identity_position.

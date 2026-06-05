@@ -39,6 +39,15 @@ def test_loader_reads_market_intel_when_present(tmp_path):
     assert get_strategic_base()["job"] == 7
 
 
+def test_strategic_base_default_academic(tmp_path):
+    """Academic shares the grant/fellowship strategic base of 7."""
+    _, _, get_strategic_base, _, strategic_base_default = build_market_intelligence_loader(tmp_path)
+
+    assert strategic_base_default["academic"] == 7
+    # With no market-intelligence file present, get_strategic_base() returns the defaults.
+    assert get_strategic_base()["academic"] == 7
+
+
 # ---------------------------------------------------------------------------
 # check_market_intel_freshness
 # ---------------------------------------------------------------------------
