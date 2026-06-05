@@ -279,6 +279,24 @@ def create_app():  # noqa: C901 - cohesive route registration
             raise HTTPException(status_code=404, detail=f"entry '{entry_id}' not found")
         return ok(data)
 
+    @app.get("/api/precedents", tags=["pipeline"])
+    def precedents(domain: str | None = Query(default=None)):
+        """Serve the precedent-processes registry the product is named for.
+
+        Returns the registry's version, precedent processes, boundary conditions,
+        and domain implementations. ``?domain=`` narrows ``domains`` to a single
+        domain (``academic``/``market``/``engineering``); an unknown domain is a
+        404 and a missing registry file is a 503.
+        """
+
+        result = api.load_precedent_registry(domain=domain)
+        if result.status is api.ResultStatus.ERROR:
+            error = result.error or "precedent registry unavailable"
+            if domain is not None and error.startswith("unknown domain"):
+                raise HTTPException(status_code=404, detail=error)
+            raise HTTPException(status_code=503, detail=error)
+        return ok(result)
+
     # ---- Read: operational views ----------------------------------------
     @app.get("/api/standup", tags=["ops"])
     def standup(hours: float = 3.0, section: str | None = None):

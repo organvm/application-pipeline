@@ -7,6 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 from mcp_server import (
+    list_precedents,
     mcp,
     pipeline_apply,
     pipeline_enrich,
@@ -23,7 +24,35 @@ from mcp_server import (
 
 def test_mcp_tool_count_is_twenty_nine():
     tools = mcp._tool_manager._tools
-    assert len(tools) >= 29
+    assert len(tools) >= 30  # +1: list_precedents serves the precedent registry
+
+
+def test_list_precedents_returns_parseable_json():
+    result = list_precedents()
+    data = json.loads(result)
+    assert data["status"] == "success"
+    assert data["version"] is not None
+    # Three named precedent processes match the registry.
+    assert set(data["precedents"]) == {"application_genesis", "evaluative_authority", "standards"}
+    # Four boundary conditions a domain must meet.
+    assert len(data["boundary_conditions"]) == 4
+    assert set(data["domains"]) == {"academic", "market", "engineering"}
+    assert data["domains"]["academic"]["sgo"]["validation_status"] == "demonstrated"
+
+
+def test_list_precedents_domain_filter():
+    result = list_precedents(domain="engineering")
+    data = json.loads(result)
+    assert data["status"] == "success"
+    assert set(data["domains"]) == {"engineering"}
+    assert "ci_cd_quality_gate" in data["domains"]["engineering"]
+
+
+def test_list_precedents_unknown_domain():
+    result = list_precedents(domain="__nope__")
+    data = json.loads(result)
+    assert data["status"] == "error"
+    assert "unknown domain" in data["error"]
 
 
 def test_pipeline_followup_returns_json():

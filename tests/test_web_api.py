@@ -110,6 +110,34 @@ def test_entry_not_found(client):
     assert r.status_code == 404
 
 
+def test_precedents_endpoint_structure(client):
+    r = client.get("/api/precedents")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["status"] == "success"
+    assert body["version"] is not None
+    # Three named precedent processes.
+    assert set(body["precedents"]) == {"application_genesis", "evaluative_authority", "standards"}
+    # Four boundary conditions.
+    assert len(body["boundary_conditions"]) == 4
+    # All domains present; the single demonstrated instance is reported honestly.
+    assert set(body["domains"]) == {"academic", "market", "engineering"}
+    assert body["domains"]["academic"]["sgo"]["validation_status"] == "demonstrated"
+
+
+def test_precedents_endpoint_domain_filter(client):
+    r = client.get("/api/precedents?domain=market")
+    assert r.status_code == 200
+    body = r.json()
+    assert set(body["domains"]) == {"market"}
+    assert "hiring_employer_side" in body["domains"]["market"]
+
+
+def test_precedents_endpoint_unknown_domain(client):
+    r = client.get("/api/precedents?domain=__nope__")
+    assert r.status_code == 404
+
+
 def test_score_endpoint_is_dry_run_without_writes(client, monkeypatch):
     monkeypatch.delenv("CONDUCTOR_ALLOW_WRITES", raising=False)
     r = client.post("/api/entries/__nope__/score")
