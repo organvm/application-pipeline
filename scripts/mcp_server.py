@@ -21,6 +21,7 @@ try:  # Prefer package-style imports when available.
         enrich_entry,
         followup_data,
         hygiene_check,
+        load_precedent_registry,
         score_entry,
         standup_data,
         submit_entry,
@@ -34,6 +35,7 @@ except ImportError:  # pragma: no cover - script execution fallback
         enrich_entry,
         followup_data,
         hygiene_check,
+        load_precedent_registry,
         score_entry,
         standup_data,
         submit_entry,
@@ -164,6 +166,35 @@ def pipeline_validate(target_id: str = None) -> str:
         "warnings": result.warnings,
         "message": result.message,
     }, default=str)
+
+@mcp.tool()
+def list_precedents(domain: str | None = None) -> str:
+    """List the precedent processes and domain implementations the product reuses.
+
+    Serves the domain-surfaces registry that names the product's precedent
+    processes (application_genesis, evaluative_authority, standards), the four
+    boundary conditions a domain must meet, and each domain's instances.
+
+    Args:
+        domain: Narrow to one domain's instances (academic, market, engineering).
+            Omit to return all domains.
+
+    Returns:
+        JSON with version, precedents, boundary_conditions, and domains
+    """
+    result = load_precedent_registry(domain=domain)
+
+    return json.dumps({
+        "status": result.status.value,
+        "version": result.version,
+        "description": result.description,
+        "precedents": result.precedents,
+        "boundary_conditions": result.boundary_conditions,
+        "domains": result.domains,
+        "message": result.message,
+        "error": result.error,
+    }, default=str)
+
 
 @mcp.tool()
 def pipeline_funnel() -> str:

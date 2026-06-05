@@ -720,6 +720,20 @@ class SubmitResult:
             self.issues = []
 
 
+@dataclass
+class PrecedentRegistryResult:
+    """Result of loading the domain-surfaces / precedent-processes registry."""
+
+    status: ResultStatus
+    version: str | None = None
+    description: str | None = None
+    precedents: dict | None = None
+    boundary_conditions: list[str] | None = None
+    domains: dict | None = None
+    message: str = ""
+    error: str | None = None
+
+
 def enrich_entry(
     entry_id: str | None = None,
     all_entries: bool = False,
@@ -969,6 +983,77 @@ def submit_entry(
         )
 
 
+# Canonical location of the precedent-processes / domain-surfaces registry.
+PRECEDENT_REGISTRY_PATH = Path(__file__).resolve().parent.parent / "strategy" / "domain-surfaces-registry.yaml"
+
+VALID_PRECEDENT_DOMAINS = ("academic", "market", "engineering")
+
+
+def load_precedent_registry(
+    domain: str | None = None,
+    registry_path: Path | None = None,
+) -> PrecedentRegistryResult:
+    """Load the domain-surfaces registry that names the product's precedent processes.
+
+    Shared loader behind the REST and MCP surfaces — neither parses the YAML
+    directly. Returns the registry's ``version``, ``precedents``,
+    ``boundary_conditions``, and ``domains``. When ``domain`` is given, ``domains``
+    is narrowed to that single domain's instances; an unknown domain is a clean
+    error, and a missing/unreadable registry file is reported structurally rather
+    than raised.
+    """
+
+    path = registry_path or PRECEDENT_REGISTRY_PATH
+    try:
+        if not path.exists():
+            return PrecedentRegistryResult(
+                status=ResultStatus.ERROR,
+                error=f"registry not found: {path}",
+                message="precedent registry unavailable",
+            )
+
+        data = yaml.safe_load(path.read_text())
+        if not isinstance(data, dict):
+            return PrecedentRegistryResult(
+                status=ResultStatus.ERROR,
+                error=f"registry is not a mapping: {path}",
+                message="precedent registry malformed",
+            )
+
+        all_domains = data.get("domains") or {}
+        if domain is not None:
+            if domain not in all_domains:
+                known = ", ".join(sorted(all_domains)) or "(none)"
+                return PrecedentRegistryResult(
+                    status=ResultStatus.ERROR,
+                    error=f"unknown domain '{domain}' (known: {known})",
+                    message="unknown precedent domain",
+                )
+            domains = {domain: all_domains[domain]}
+        else:
+            domains = all_domains
+
+        return PrecedentRegistryResult(
+            status=ResultStatus.SUCCESS,
+            version=data.get("version"),
+            description=data.get("description"),
+            precedents=data.get("precedents") or {},
+            boundary_conditions=data.get("boundary_conditions") or [],
+            domains=domains,
+            message=(
+                f"loaded domain '{domain}'"
+                if domain is not None
+                else f"loaded {len(domains)} domains"
+            ),
+        )
+    except API_OPERATION_ERRORS as exc:
+        return PrecedentRegistryResult(
+            status=ResultStatus.ERROR,
+            error=f"{type(exc).__name__}: {exc}",
+            message="precedent registry load failed",
+        )
+
+
 __all__ = [
     "ResultStatus",
     "ScoreResult",
@@ -982,6 +1067,7 @@ __all__ = [
     "StandupResult",
     "TriageResult",
     "SubmitResult",
+    "PrecedentRegistryResult",
     "score_entry",
     "advance_entry",
     "draft_entry",
@@ -993,4 +1079,5 @@ __all__ = [
     "standup_data",
     "triage_data",
     "submit_entry",
+    "load_precedent_registry",
 ]
