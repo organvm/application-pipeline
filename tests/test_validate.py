@@ -170,7 +170,7 @@ def test_all_valid_tracks():
     """All valid track values should pass validation."""
     valid_tracks = [
         "grant", "residency", "job", "fellowship",
-        "writing", "emergency", "prize", "program", "consulting",
+        "writing", "emergency", "prize", "program", "consulting", "academic",
     ]
     for track in valid_tracks:
         with tempfile.TemporaryDirectory() as tmp:

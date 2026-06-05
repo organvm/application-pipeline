@@ -90,6 +90,20 @@ submission:
 last_touched: "2026-01-15"
 """
 
+SAMPLE_ACADEMIC = """id: test-academic
+name: Test Academic Position
+track: academic
+status: staged
+outcome: null
+submission:
+  effort_level: standard
+  blocks_used: {}
+  variant_ids: {}
+  materials_attached: []
+  portfolio_url: https://example.com
+last_touched: "2026-01-15"
+"""
+
 SAMPLE_WITH_VARIANTS = """id: test-entry
 name: Test Entry
 track: job
@@ -166,6 +180,28 @@ def test_enrich_materials_preserves_existing():
             "submission": {"materials_attached": ["resumes/multimedia-specialist.pdf"]},
         })
         assert result is False
+    finally:
+        filepath.unlink()
+
+
+def test_academic_in_resume_and_grant_template_tracks():
+    """Academic applications carry CVs (resume) and use the grant cover-letter template."""
+    assert "academic" in RESUME_TRACKS
+    assert "academic" in GRANT_TEMPLATE_TRACKS
+
+
+def test_enrich_materials_populates_academic_track():
+    """Academic entries get a resume wired in, like grants — they carry CVs."""
+    filepath = _make_temp_yaml(SAMPLE_ACADEMIC)
+    try:
+        result = enrich_materials(filepath, {
+            "track": "academic",
+            "submission": {"materials_attached": []},
+        })
+        assert result is True
+        content = filepath.read_text()
+        assert DEFAULT_RESUME in content
+        assert "materials_attached: []" not in content
     finally:
         filepath.unlink()
 
@@ -455,13 +491,13 @@ def test_detect_gaps_no_variant_gap_when_populated():
 
 def test_resume_tracks_complete():
     """Ensure RESUME_TRACKS covers expected tracks."""
-    expected = {"job", "fellowship", "grant", "residency", "prize", "program"}
+    expected = {"job", "fellowship", "grant", "residency", "prize", "program", "academic"}
     assert RESUME_TRACKS == expected
 
 
 def test_grant_template_tracks():
     """Ensure GRANT_TEMPLATE_TRACKS covers expected tracks."""
-    expected = {"grant", "residency", "prize"}
+    expected = {"grant", "residency", "prize", "academic"}
     assert GRANT_TEMPLATE_TRACKS == expected
 
 

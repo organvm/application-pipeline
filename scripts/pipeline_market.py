@@ -114,6 +114,7 @@ def build_market_intelligence_loader(
         "emergency": 3,
         "job": 6,
         "consulting": 3,
+        "academic": 7,
     }
 
     def load_market_intelligence() -> dict:

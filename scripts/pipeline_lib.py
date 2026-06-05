@@ -153,7 +153,7 @@ LEGACY_ID_MAP = {
     "rauschenberg-emergency": "rauschenberg-cycle-36",
 }
 
-VALID_TRACKS = {"grant", "residency", "job", "fellowship", "writing", "emergency", "prize", "program", "consulting"}
+VALID_TRACKS = {"grant", "residency", "job", "fellowship", "writing", "emergency", "prize", "program", "consulting", "academic"}
 VALID_STATUSES = {"research", "qualified", "drafting", "staged", "deferred", "submitted", "acknowledged", "interview", "outcome", "withdrawn"}
 ACTIONABLE_STATUSES = {"qualified", "drafting", "staged"}  # research is pre-pipeline (lives in research_pool/)
 

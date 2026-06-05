@@ -169,6 +169,7 @@ def _get_effort_base_from_market(track: str) -> int:
         "program": 5,
         "consulting": 6,
         "job": 6,
+        "academic": 5,
     }
     intel = load_market_intelligence()
     data = intel.get("track_benchmarks", {}).get(track, {})

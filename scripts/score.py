@@ -108,7 +108,7 @@ WEIGHTS_GRANT = _RUBRIC.get("weights_grant", _DEFAULT_WEIGHTS_GRANT)
 WEIGHTS_CONSULTING = _RUBRIC.get("weights_consulting", _DEFAULT_WEIGHTS_CONSULTING)
 
 # Pillar track mapping
-_GRANT_TRACKS = {"grant", "residency", "fellowship", "prize", "writing", "emergency"}
+_GRANT_TRACKS = {"grant", "residency", "fellowship", "prize", "writing", "emergency", "academic"}
 _CONSULTING_TRACKS = {"consulting"}
 
 # Validate weight dicts sum to 1.0

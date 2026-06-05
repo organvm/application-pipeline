@@ -832,10 +832,20 @@ def test_get_weights_job():
 
 def test_get_weights_creative():
     """get_weights returns grant/creative weights for grant-pillar tracks."""
-    for track in ("grant", "fellowship", "residency", "writing"):
+    for track in ("grant", "fellowship", "residency", "writing", "academic"):
         assert get_weights(track) is WEIGHTS_GRANT
     # Unknown/empty track falls back to the legacy WEIGHTS default.
     assert get_weights("") is WEIGHTS
+
+
+def test_get_weights_academic_routes_to_grant_pillar():
+    """The academic track routes to the grant-like pillar (WEIGHTS_GRANT)."""
+    assert get_weights("academic") is WEIGHTS_GRANT
+
+
+def test_get_weights_unknown_track_degrades_to_default():
+    """A genuinely unknown track degrades to the legacy default, not a hard error."""
+    assert get_weights("definitely-not-a-track") is WEIGHTS
 
 
 def test_get_qualification_threshold_job():
