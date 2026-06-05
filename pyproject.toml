@@ -27,6 +27,11 @@ dev = [
 jobspy = [
     "python-jobspy>=1.1",
 ]
+web = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "httpx>=0.27",
+]
 
 [build-system]
 # setuptools>=68 + wheel: Python 3.12 removed stdlib distutils, so the build

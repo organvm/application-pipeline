@@ -25,6 +25,8 @@ credentials.*
 scripts/.submit-config.yaml
 scripts/.greenhouse-answers/
 scripts/.lever-answers/
+scripts/.conductor-accounts.yaml
+!scripts/.conductor-accounts.example.yaml
 scripts/.ashby-answers/
 scripts/.alchemize-work/
 scripts/.job-sources.yaml

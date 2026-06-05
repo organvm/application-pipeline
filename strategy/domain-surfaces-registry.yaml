@@ -1,0 +1,147 @@
+version: "1.0"
+description: >
+  Domain-surfaces registry: declarative instantiation of the conductor
+  generalization formula (docs/thesis/10-generalization.md §10.4) for each
+  domain implementation. This is the external surface of the formula — the
+  "product manifestation" of the domain-agnostic evaluative/pipeline machinery.
+  Each entry maps a domain to the internal precedent processes it reuses
+  (docs/superpowers/specs/2026-06-04-precedent-processes-surfaces-design.md §1),
+  its domain-specific configuration (pipeline, rubric, panel), and both its
+  internal and external surfaces. A future `conductor-ira` package
+  (thesis §10.6.2) consumes this registry; until then it specifies what each
+  domain implementation configures.
+  Steps 1-3 (pipeline/rubric/panel) are domain-specific configuration.
+  Steps 4-6 (agreement/consensus/feedback) are the domain-agnostic machinery,
+  solved once in this pipeline and reused unchanged.
+
+# --------------------------------------------------------------------------
+# PRECEDENT PROCESSES — the internal first-instances each domain reuses.
+# See spec §1. Domains MUST reuse a precedent rather than build new machinery.
+# --------------------------------------------------------------------------
+precedents:
+  application_genesis:
+    mechanism: "10-stage gated submission pipeline"
+    governing_artifact: "SPEC-023 / docs/SOP-application-genesis.md"
+    domain_agnostic_core: "staged-pipeline-with-quality-gates contract"
+  evaluative_authority:
+    mechanism: "9-dimension x 4-rater multi-model IRA"
+    governing_artifact: "strategy/system-grading-rubric.yaml, strategy/rater-personas.yaml"
+    domain_agnostic_core: "ICC(2,1), Cohen's kappa, Fleiss' kappa, consensus, feedback"
+  standards:
+    mechanism: "5-level oversight, triad regulators, >=2/3 quorum gate"
+    governing_artifact: "scripts/standards.py"
+    domain_agnostic_core: "quorum-of-regulators approval before irreversible action"
+
+# --------------------------------------------------------------------------
+# BOUNDARY CONDITIONS — a domain is only eligible if all four hold.
+# Source: thesis §10.5. Recorded per-domain under `boundary_conditions_met`.
+# --------------------------------------------------------------------------
+boundary_conditions:
+  - decomposable_quality_criteria
+  - reproducible_evidence
+  - meaningful_evaluative_diversity
+  - observable_outcomes
+
+# validation_status vocabulary (honest reporting, no overclaiming):
+#   configured   — registry entry exists; not yet run
+#   demonstrated — run on real data at least once (single-domain demonstration)
+#   validated    — multi-rater empirical validation (ICC > 0.61) recorded
+# Per thesis §10.6, only single-domain demonstration exists today.
+
+# --------------------------------------------------------------------------
+# DOMAIN IMPLEMENTATIONS
+# --------------------------------------------------------------------------
+domains:
+
+  # ===== ACADEMIC =========================================================
+  academic:
+
+    sgo:
+      label: "Studium Generale ORGANVM (internal university)"
+      reuses_precedents: [evaluative_authority]
+      pipeline: [question_intake, research, draft, defend_before_ira_panel, publish, archive]
+      rubric_dimensions: [argument_coherence, evidence_sourcing, methodology_rigor, originality, structural_clarity]
+      panel_personas: [literary_critic, domain_expert, academic_reviewer, general_reader]
+      internal_surface: "IRA panel acting as Faculty Senate; defense rubric YAMLs"
+      external_surface: "certified work with ICC + disagreement pattern; arXiv/journal submission"
+      boundary_conditions_met: true
+      validation_status: demonstrated   # live academic client of the authority
+      reference: "docs/superpowers/specs/2026-03-17-studium-generale-organvm-design.md"
+
+    peer_review:
+      label: "Academic peer review (first-pass, AI-audited)"
+      reuses_precedents: [evaluative_authority]
+      pipeline: [submission, desk_screen, panel_review, agreement_check, editorial_decision, author_revision]
+      rubric_dimensions: [methodology, novelty, writing_quality, reproducibility]
+      panel_personas: [methodologist, domain_expert, practitioner, skeptic]
+      internal_surface: "IRA computation over reviewer panel"
+      external_surface: "structured pre-review with ICC + CIs (APA-compliant) for editorial board"
+      boundary_conditions_met: true
+      validation_status: configured
+      reference: "docs/thesis/10-generalization.md#1031-academic-peer-review"
+
+    educational_grading:
+      label: "Educational grading / grade-norming"
+      reuses_precedents: [evaluative_authority]
+      pipeline: [submission, rubric_apply, norming, consensus, grade_release, pedagogy_feedback]
+      rubric_dimensions: [content_mastery, critical_thinking, evidence_use, argument_structure, writing_mechanics, creativity]
+      panel_personas: [strict_constructivist, encouraging_formativist, criterion_referrer, discipline_expert]
+      internal_surface: "AI rater panel + ICC across graders"
+      external_surface: "normed grade + per-dimension disagreement signal informing rubric/pedagogy"
+      boundary_conditions_met: true
+      validation_status: configured
+      reference: "docs/thesis/10-generalization.md#1035-educational-grading"
+
+  # ===== MARKET ===========================================================
+  market:
+
+    hiring_employer_side:
+      label: "Hiring pipeline (employer side — mirror of this pipeline)"
+      reuses_precedents: [application_genesis]
+      pipeline: [scan, match, build, apply, outreach]   # direction reversed vs applicant pipeline
+      rubric_dimensions: [technical_skills, cultural_fit, growth_potential, communication_quality, portfolio_depth, referral_strength, compensation_alignment, timeline_feasibility]
+      panel_personas: [hiring_manager, technical_lead, hr_partner, peer_interviewer]
+      internal_surface: "candidate evaluation across rubric with IRA disagreement detection"
+      external_surface: "candidate scorecard surfacing high-divergence candidates for nuanced decisions"
+      boundary_conditions_met: true
+      validation_status: configured
+      reference: "docs/thesis/10-generalization.md#1032-hiring-pipelines-employer-side"
+
+    grant_management_funder_side:
+      label: "Grant management (funder/program-officer side)"
+      reuses_precedents: [application_genesis, evaluative_authority]
+      pipeline: [call_open, intake, panel_review, agreement_check, award_decision, grantee_followup]
+      rubric_dimensions: [narrative_quality, budget_justification, investigator_qualifications, institutional_support, innovation_potential, feasibility, broader_impacts]
+      panel_personas: [program_officer, fiscal_reviewer, domain_expert, community_representative]
+      internal_surface: "multi-dimensional rubric with per-dimension IRA"
+      external_surface: "merit review finer-grained than NSF two-criterion model"
+      boundary_conditions_met: true
+      validation_status: configured
+      reference: "docs/thesis/10-generalization.md#1033-grant-management"
+
+    publishing:
+      label: "Publishing pipeline (manuscript submission)"
+      reuses_precedents: [application_genesis]
+      pipeline: [discover_cfp, match_scope, build_package, submit, editor_followup]
+      rubric_dimensions: [originality, methodology_rigor, writing_quality, contribution_significance, presentation_clarity, ethical_compliance]
+      panel_personas: [editor, reviewer_methodology, reviewer_contribution, copy_editor]
+      internal_surface: "pre-submission self-assessment via IRA"
+      external_surface: "predicted reviewer response enabling targeted pre-submission revision"
+      boundary_conditions_met: true
+      validation_status: configured
+      reference: "docs/thesis/10-generalization.md#1034-publishing-pipelines"
+
+  # ===== ENGINEERING (etc.) ==============================================
+  engineering:
+
+    ci_cd_quality_gate:
+      label: "CI/CD multi-dimensional quality gate"
+      reuses_precedents: [standards, evaluative_authority]
+      pipeline: [build, test, diagnostic_phase, gate_decision, deploy]
+      rubric_dimensions: [architecture_quality, test_coverage_depth, documentation_currency, security_posture, operational_readiness, backward_compatibility]
+      panel_personas: [sre, security_engineer, product_manager, platform_architect]
+      internal_surface: "diagnostic phase between test and deploy; quorum gate"
+      external_surface: "multi-dimensional release quality score (vs binary tests-pass gate)"
+      boundary_conditions_met: true
+      validation_status: configured
+      reference: "docs/thesis/10-generalization.md#1036-cicd-quality-gates"
