@@ -12,7 +12,7 @@ The cathedral — 113 repos, 49 essays, ~6K+ words, 33 sprints — is the substa
 
 **Cathedral:** "I design environments where creative organisms grow — and then I document the process of growing them."
 
-**Storefront:** "148 repositories across 8 organizations, built and documented by one person using AI as a compositional instrument."
+**Storefront:** "149 repositories across 8 organizations, built and documented by one person using AI as a compositional instrument."
 
 
 *Why:* Numbers are scannable. Concepts require attention the reviewer hasn't committed yet.
@@ -61,7 +61,7 @@ Every reviewer notices what's missing. Frame gaps as trajectory, not absence.
 
 | Gap | How to Frame |
 |-----|-------------|
-| No external awards yet | "The 148-repo system was built in 18 months — this evaluation framework is itself evidence of the methodology" |
+| No external awards yet | "The 149-repo system was built in 18 months — this evaluation framework is itself evidence of the methodology" |
 | No gallery exhibitions | "The portfolio site is a digital exhibition; the public process essays are the curatorial statement" |
 | No published book | "49 essays totaling ~6K+ words — a book-length corpus published as process, not artifact" |
 | No institutional affiliation | "Independent practitioner — the system demonstrates that institutional-scale work doesn't require an institution" |

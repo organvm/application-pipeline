@@ -21,7 +21,7 @@ tier: single
 
 ## Key Claims
 
-- **Scale:** ~6K+ words of structured documentation across 148 repos — not padded prose, but architecture plans, SOPs, session logs, governance rules, registry data, and generated context files
+- **Scale:** ~6K+ words of structured documentation across 149 repos — not padded prose, but architecture plans, SOPs, session logs, governance rules, registry data, and generated context files
 - **Auto-generation:** contextmd system generates CLAUDE.md/GEMINI.md/AGENTS.md from templates + registry; no manual sync across the system
 - **Variable binding:** Live metrics (22,885 code files, 2,349 test files, 104 CI/CD workflows) propagate into all documentation automatically via Python binding layer
 - **Validation:** Every doc format has a JSON Schema contract; automated CI validation on all corpus docs

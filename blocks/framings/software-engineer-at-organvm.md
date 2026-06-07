@@ -15,7 +15,7 @@ tier: single
 
 ## Opening
 
-22,885 code files. 4,274 test files across 70 of 113 repositories. 104 CI/CD pipelines. 50 validated dependency edges with zero violations — all designed, built, and maintained by a single practitioner. This is not freelance consulting or contract work: it is sustained independent production at the scale of a small engineering team, built over five years using Python and TypeScript across 148 repositories coordinated through 8 GitHub organizations.
+22,885 code files. 4,274 test files across 70 of 113 repositories. 104 CI/CD pipelines. 50 validated dependency edges with zero violations — all designed, built, and maintained by a single practitioner. This is not freelance consulting or contract work: it is sustained independent production at the scale of a small engineering team, built over five years using Python and TypeScript across 149 repositories coordinated through 8 GitHub organizations.
 
 **Pattern interrupt note:** Lead with the numbers before naming the solo context. "Solo practitioner" fires a "contractor" pattern in ATS and hiring managers — delay it until after the scale has registered. Always pair the solo framing with the institutional-scale evidence: "not as a team member, but at the scale of a team."
 
@@ -44,7 +44,7 @@ tier: single
 
 | System Metric | Engineering Frame |
 |---------------|-------------------|
-| 22,885 code files | Sustained production-grade Python and TypeScript across 148 repositories |
+| 22,885 code files | Sustained production-grade Python and TypeScript across 149 repositories |
 | 4,274 test files (70 of 113 repositories) | Testing-first methodology with dedicated test suites across the system |
 | 104 CI/CD workflows | Automated quality gates on every active repository |
 | 62 dependency edges, 0 violations | Architectural governance via validated dependency graph |

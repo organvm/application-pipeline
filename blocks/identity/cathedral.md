@@ -19,7 +19,7 @@ I am a systems artist and auteur-producer who builds creative systems at institu
 
 I design environments where creative organisms grow — and then I document the process of growing them.
 
-My practice centers on the eight-organ system: a documented infrastructure coordinating theory, generative art, commercial products, governance, public process, community, and marketing across 148 repositories. I don't produce individual artworks. I produce the *systems* that generate, coordinate, and sustain creative work — and the visible record of how those systems are built is itself the primary creative output.
+My practice centers on the eight-organ system: a documented infrastructure coordinating theory, generative art, commercial products, governance, public process, community, and marketing across 149 repositories. I don't produce individual artworks. I produce the *systems* that generate, coordinate, and sustain creative work — and the visible record of how those systems are built is itself the primary creative output.
 
 The process of creation is the product. The 49 essays I've published aren't reflections on the work; they ARE the work — the creative process rendered into prose in real time. The governance rules — registry design, dependency graphs, promotion pipelines — aren't bureaucratic overhead; they're generative constraints, the way a composer's harmonic rules shape what melodies can emerge. Every architectural decision is an artistic decision.
 
@@ -48,7 +48,7 @@ Key infrastructure: machine-readable registry as single source of truth, automat
 
 ## The Method
 
-The AI-conductor model: AI generates volume, human directs architecture and reviews output. This methodology enabled a single operator to build, document, and validate 148 repositories — demonstrating that the architectural vision and editorial judgment, not the volume of output, are the creative acts.
+The AI-conductor model: AI generates volume, human directs architecture and reviews output. This methodology enabled a single operator to build, document, and validate 149 repositories — demonstrating that the architectural vision and editorial judgment, not the volume of output, are the creative acts.
 
 Solo production at full intensity: not isolation as limitation, but as the only way to maintain a singular vision across theory, art, commerce, governance, public process, community, and marketing. Five years of construction, 33 named sprints, 6,200+ words — built alone because the work required it.
 

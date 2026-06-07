@@ -110,7 +110,7 @@ GET <api-url>/demo/profile  → Full demo profile
 
 **Q3: "In 1-3 sentences, tell us about the project you are most proud of and why."** (80 words)
 
-> I built an eight-organ system that coordinates 148 repositories across 8 GitHub organizations — governing how theory, generative art, commercial products, and community work flow into each other through automated dependency validation, a promotion state machine, and ~6K+ words of public documentation. I'm most proud of it because it demonstrates that governance and art aren't separate categories: the rules that coordinate the system are as carefully designed as any artwork it produces. It's infrastructure that makes its own logic visible.
+> I built an eight-organ system that coordinates 149 repositories across 8 GitHub organizations — governing how theory, generative art, commercial products, and community work flow into each other through automated dependency validation, a promotion state machine, and ~6K+ words of public documentation. I'm most proud of it because it demonstrates that governance and art aren't separate categories: the rules that coordinate the system are as carefully designed as any artwork it produces. It's infrastructure that makes its own logic visible.
 
 ### Links:
 | Field | URL |

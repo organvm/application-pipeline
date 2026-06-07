@@ -2,7 +2,7 @@
 
 ## Why Sponsor ORGANVM?
 
-ORGANVM is a 148-repo open-source creative-institutional system built by a solo
+ORGANVM is a 149-repo open-source creative-institutional system built by a solo
 artist-technologist. It includes a constitutional corpus (27 specs, 84K+ words),
 49 published essays, and infrastructure spanning recursive engines, generative art,
 commercial tools, orchestration, and governance -- all released under MIT and
