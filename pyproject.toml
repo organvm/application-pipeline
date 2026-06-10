@@ -12,7 +12,7 @@ dependencies = [
     "anthropic>=0.87.0",
     "google-genai",
     "mcp",
-    "python-multipart>=0.0.26",
+    "python-multipart>=0.0.27",
     "cryptography>=46.0.7",
     "markdownify>=0.14.1",
 ]
