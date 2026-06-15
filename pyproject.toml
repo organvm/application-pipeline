@@ -9,34 +9,34 @@ dependencies = [
     "pyyaml",
     "ruamel.yaml",
     "typer",
-    "anthropic>=0.87.0",
+    "anthropic>=0.109.1",
     "google-genai",
     "mcp",
-    "python-multipart>=0.0.27",
-    "cryptography>=46.0.7",
-    "markdownify>=0.14.1",
+    "python-multipart>=0.0.32",
+    "cryptography>=49.0.0",
+    "markdownify>=1.2.2",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=9.0.3",
+    "pytest>=9.1.0",
     "pytest-mock",
     "pytest-timeout",
     "ruff",
 ]
 jobspy = [
-    "python-jobspy>=1.1",
+    "python-jobspy>=1.1.82",
 ]
 web = [
-    "fastapi>=0.115",
-    "uvicorn[standard]>=0.30",
-    "httpx>=0.27",
+    "fastapi>=0.137.0",
+    "uvicorn[standard]>=0.49.0",
+    "httpx>=0.28.1",
 ]
 
 [build-system]
-# setuptools>=68 + wheel: Python 3.12 removed stdlib distutils, so the build
+# setuptools>=82.0.1 + wheel: Python 3.12 removed stdlib distutils, so the build
 # backend must use a setuptools recent enough to vendor it (SETUPTOOLS_USE_DISTUTILS=local).
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=82.0.1", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
