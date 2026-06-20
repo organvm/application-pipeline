@@ -9,7 +9,7 @@ dependencies = [
     "pyyaml",
     "ruamel.yaml",
     "typer",
-    "anthropic>=0.109.1",
+    "anthropic>=0.111.0",
     "google-genai",
     "mcp",
     "python-multipart>=0.0.32",
@@ -19,7 +19,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=9.1.0",
+    "pytest>=9.1.1",
     "pytest-mock",
     "pytest-timeout",
     "ruff",
@@ -28,7 +28,7 @@ jobspy = [
     "python-jobspy>=1.1.82",
 ]
 web = [
-    "fastapi>=0.137.0",
+    "fastapi>=0.138.0",
     "uvicorn[standard]>=0.49.0",
     "httpx>=0.28.1",
 ]
